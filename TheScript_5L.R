@@ -3,12 +3,13 @@
 #usethis::edit_r_environ()
 
 # Setup in Correct Directory
-Linux <- file.path("/home", "david", "Documents", "InstrumentQC")
+Linux <- file.path("/Users", "Nate", "Documents", "InstrumentQC", "InstrumentQC")
 Windows <- file.path("C:", "Users", "Aurora", "Documents", "InstrumentQC")
-
+##/Users/Nate/Documents/InstrumentQC
 OperatingSystem <- Sys.info()["sysname"]
-if(OperatingSystem == "Linux"){OS <- Linux
-} else if (OperatingSystem == "Windows"){OS <- Windows}
+# if(OperatingSystem == "Linux"){OS <- Linux
+# } else if (OperatingSystem == "Windows"){OS <- Windows}
+OS <- Linux
 
 WorkingDirectory <- OS
 setwd(WorkingDirectory)
@@ -74,7 +75,7 @@ PotentialAppsDays <- PotentialAppsDays[-AppsRemoveIndex]
 if (!length(PotentialGainDays) == 0){
 # Gain Starting Locations
 
-SetupFolder <- file.path("C:", "CytekbioExport", "Setup")
+SetupFolder <- file.path("/Users", "Documents", "Aurora Setup outputs")
 TheSetupFiles <- list.files(SetupFolder, pattern="DailyQC", full.names=TRUE)
 
 Dates <- as.character(PotentialGainDays)
@@ -93,7 +94,7 @@ if (!length(GainMatches) == 0){
 if (!length(PotentialMFIDays) == 0){
 # MFI Starting Locations
 
-FCSFolder <- file.path("D:", "Aurora 5_FCS Files", "Experiments", "Admin")
+FCSFolder <- file.path(SetupFolder, "DailyQC")
 MonthStyle <- format(Today, "%Y-%m")
 MonthFolder <- paste0("QC_", MonthStyle)
 MonthFolder <- file.path(FCSFolder, MonthFolder)
@@ -112,7 +113,7 @@ walk(.x=Instrument, .f=Luciernaga:::QCBeadParse, MainFolder=MainFolder)
   }
 
 if (!length(PotentialAppsDays) == 0){
-    SetupFolder <- file.path("C:", "CytekbioExport")
+    SetupFolder <- file.path(SetupFolder, "Apps")
     TheSetupFiles <- list.files(SetupFolder, pattern="Application", full.names=TRUE)
     MonthStyle <- format(Today, "%Y-%m")
     MonthStyle <- sub("([0-9]{4})-([0-9]{2})", "\\2-\\1", MonthStyle)
@@ -143,5 +144,5 @@ if (any(length(PotentialGainDays)|length(PotentialMFIDays)|length(PotentialAppsD
     git2r::push(TheRepo, credentials = cred)
     message("Done ", Today)
   } else {message("No files to process ", Today)}
-} else {message("No files to process ", Today)}
+} else {message("No files to process 2", Today)}
 } else {message("Automation Skipped ", Today)}
