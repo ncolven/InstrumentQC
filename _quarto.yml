@@ -10,45 +10,21 @@ website:
     content: "Please see left-sidebar for definitions"
     type: info
     position: below-navbar  
-  title: "UMGCC FCSS"
+  title: "FHCC Flow Core"
   site-path: "/InstrumentQC/"
   navbar:
-    logo: images/hex.svg
+    logo: images/hex.png
     left:
     - text: "Home"
       href: index.qmd
     - text: "Levey-Jennings Plots"
       menu:
-      - text: "Cytek Aurora 3L"
-        href: Aurora3L.qmd
-      - text: "Cytek Aurora 4L"
-        href: Aurora4L.qmd
-      - text: "Cytek Aurora 5L"
-        href: Aurora5L.qmd
-      - text: "Cytek Aurora CS"
-        href: AuroraCS.qmd
-      - text: "BD FACSCanto II "
-        href: CantoII.qmd
-      - text: "BD LSR II"
-        href: LSRII.qmd
-      - text: "BD FACSAria II"
-        href: AriaII.qmd
+      - text: "Cytek Aurora 1"
+        href: Aurora1.qmd
     - text: "Historical"
       menu:
-      - text: "Cytek Aurora 3L"
-        href: https://umgccfcss.github.io/Aurora3L/
-      - text: "Cytek Aurora 4L"
-        href: https://umgccfcss.github.io/Aurora4L/
-      - text: "Cytek Aurora 5L"
+      - text: "Cytek Aurora 1"
         href: https://umgccfcss.github.io/Aurora5L/
-      - text: "Cytek Aurora CS"
-        href: https://umgccfcss.github.io/AuroraCS/
-      - text: "BD FACSCanto II "
-        href: https://umgccfcss.github.io/CantoII/
-      - text: "BD LSR II"
-        href: https://umgccfcss.github.io/LSRII
-      - text: "BD FACSAria II"
-        href: https://umgccfcss.github.io/AriaII
     right:
     - text: "Help"
       href: help.qmd
@@ -67,7 +43,7 @@ website:
       aria-label: GitHub
   page-footer:
     background: light
-    left: University of Maryland, Baltimore
+    left: Fred Hutch Cancer Center, Seattle
     right: Built with [Quarto](https://quarto.org/). How? [Find Out](https://davidrach.github.io/InstrumentQC_Install/){target=_blank}
 
 format:

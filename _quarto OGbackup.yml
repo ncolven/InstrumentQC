@@ -1,0 +1,75 @@
+project:
+  type: website
+  output-dir: docs/
+website:
+  google-analytics: 
+    tracking-id: "G-LZ35J3XE4D"
+  announcement: 
+    icon: info-circle
+    dismissable: true
+    content: "Please see left-sidebar for definitions"
+    type: info
+    position: below-navbar  
+  title: "UMGCC FCSS"
+  site-path: "/InstrumentQC/"
+  navbar:
+    logo: images/hex.svg
+    left:
+    - text: "Home"
+      href: index.qmd
+    - text: "Levey-Jennings Plots"
+      menu:
+      - text: "Cytek Aurora 3L"
+        href: Aurora3L.qmd
+      - text: "Cytek Aurora 4L"
+        href: Aurora4L.qmd
+      - text: "Cytek Aurora 5L"
+        href: Aurora5L.qmd
+      - text: "Cytek Aurora CS"
+        href: AuroraCS.qmd
+      - text: "BD FACSCanto II "
+        href: CantoII.qmd
+      - text: "BD LSR II"
+        href: LSRII.qmd
+      - text: "BD FACSAria II"
+        href: AriaII.qmd
+    - text: "Historical"
+      menu:
+      - text: "Cytek Aurora 3L"
+        href: https://umgccfcss.github.io/Aurora3L/
+      - text: "Cytek Aurora 4L"
+        href: https://umgccfcss.github.io/Aurora4L/
+      - text: "Cytek Aurora 5L"
+        href: https://umgccfcss.github.io/Aurora5L/
+      - text: "Cytek Aurora CS"
+        href: https://umgccfcss.github.io/AuroraCS/
+      - text: "BD FACSCanto II "
+        href: https://umgccfcss.github.io/CantoII/
+      - text: "BD LSR II"
+        href: https://umgccfcss.github.io/LSRII
+      - text: "BD FACSAria II"
+        href: https://umgccfcss.github.io/AriaII
+    right:
+    - text: "Help"
+      href: help.qmd
+    - text: "Download Data"
+      href: Data.qmd
+    - text: "Other"
+      menu:
+      - text: "Miscellaneous"
+        href: Miscellaneous.qmd 
+      - text: "QC Bead Lots"
+        href: CytekQCBead.qmd
+      - text: "Bleach Vs. QC Bead Lot 2006"
+        href: BleachVsLot2006Beads.qmd
+    - icon: github
+      href: https://github.com/UMGCCFCSS/InstrumentQC
+      aria-label: GitHub
+  page-footer:
+    background: light
+    left: University of Maryland, Baltimore
+    right: Built with [Quarto](https://quarto.org/). How? [Find Out](https://davidrach.github.io/InstrumentQC_Install/){target=_blank}
+
+format:
+  html:
+    theme: styles.scss

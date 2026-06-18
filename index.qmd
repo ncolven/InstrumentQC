@@ -19,7 +19,7 @@ library(Luciernaga)
 
 Computer <- getwd()
 MainFolder <- file.path(Computer, "data")
-TheList <- c("3L", "4L", "5L", "CS")
+TheList <- c("3L", "4L", "Aurora-1", "CS")
 
 # Updating Data
 #walk(.x=TheList, MainFolder=MainFolder, .f=Luciernaga:::DailyQCParse)
@@ -33,8 +33,8 @@ Gain_3L <- Luciernaga:::CurrentData(x="3L", MainFolder=MainFolder, type = "Gain"
 MFI_4L <- Luciernaga:::CurrentData(x="4L", MainFolder=MainFolder, type = "MFI")
 Gain_4L <- Luciernaga:::CurrentData(x="4L", MainFolder=MainFolder, type = "Gain")
 
-MFI_5L <- Luciernaga:::CurrentData(x="5L", MainFolder=MainFolder, type = "MFI")
-Gain_5L <- Luciernaga:::CurrentData(x="5L", MainFolder=MainFolder, type = "Gain")
+MFI_5L <- Luciernaga:::CurrentData(x="Aurora-1", MainFolder=MainFolder, type = "MFI")
+Gain_5L <- Luciernaga:::CurrentData(x="Aurora-1", MainFolder=MainFolder, type = "Gain")
 
 MFI_CS <- Luciernaga:::CurrentData(x="CS", MainFolder=MainFolder, type = "MFI")
 Gain_CS <- Luciernaga:::CurrentData(x="CS", MainFolder=MainFolder, type = "Gain")
@@ -81,7 +81,7 @@ ShinyData <- read.csv(HistoricalPath, check.names = FALSE)
 ```
 
 ```{r}
-x <-  list("3L", "4L", "5L", "CS")
+x <-  list("3L", "4L", "Aurora-1", "CS")
 
 DataForPlot <- Luciernaga:::QCHistoryArchive(x=x, historydata=ShinyData, timewindow=24)
 Transposed <- t(DataForPlot)
@@ -92,7 +92,7 @@ DataForPlot1 <- DataForPlot1 %>% tibble::rownames_to_column(., var="Date")
 DataForPlot1$Date <- as.Date(DataForPlot1$Date) 
 Data <- DataForPlot1 |> arrange(desc(Date))
 
-Data <- Data |> relocate("3L", "4L", "5L", "CS", .after="Date")
+Data <- Data |> relocate("3L", "4L", "Aurora-1", "CS", .after="Date")
 
 Data[2:5] <- Data[2:5] |> mutate(across(everything(), ~ na_if(., "Unknown")))
 
@@ -110,8 +110,8 @@ TheStatus3L <- Luciernaga:::CurrentStatus(x="3L", data=Data) %>% Luciernaga:::In
 TheColor3L <- Luciernaga:::CurrentStatus(x="3L", data=Data) %>% Luciernaga:::InstrumentColor(.)
 TheStatus4L <- Luciernaga:::CurrentStatus(x="4L", data=Data) %>% Luciernaga:::InstrumentText(.)
 TheColor4L <- Luciernaga:::CurrentStatus(x="4L", data=Data) %>% Luciernaga:::InstrumentColor(.)
-TheStatus5L <- Luciernaga:::CurrentStatus(x="5L", data=Data) %>% Luciernaga:::InstrumentText(.)
-TheColor5L <- Luciernaga:::CurrentStatus(x="5L", data=Data) %>% Luciernaga:::InstrumentColor(.)
+TheStatus5L <- Luciernaga:::CurrentStatus(x="Aurora-1", data=Data) %>% Luciernaga:::InstrumentText(.)
+TheColor5L <- Luciernaga:::CurrentStatus(x="Aurora-1", data=Data) %>% Luciernaga:::InstrumentColor(.)
 TheStatusCS <- Luciernaga:::CurrentStatus(x="CS", data=Data) %>% Luciernaga:::InstrumentText(.)
 TheColorCS <- Luciernaga:::CurrentStatus(x="CS", data=Data) %>% Luciernaga:::InstrumentColor(.)
 ```
@@ -171,7 +171,7 @@ list(value = paste0("QC Status: ", TheStatus4L),
 
 ```{r}
 #| content: valuebox
-#| title: "5L"
+#| title: "Aurora-1"
 #| icon: cup-hot
 
 list(value = paste0("QC Status: ", TheStatus5L),
@@ -241,7 +241,7 @@ ui <- fluidPage(
              column(12, align = "center",
                     actionButton("btn_3L", label = "3L"),
                     actionButton("btn_4L", label = "4L"),
-                    actionButton("btn_5L", label = "5L"),
+                    actionButton("btn_5L", label = "Aurora-1"),
                     actionButton("btn_CS", label = "CS")
              )
            ),
@@ -286,7 +286,7 @@ server <- function(input, output, session) {
   
   observeEvent(input$btn_3L, { selected_instrument("3L") })
   observeEvent(input$btn_4L, { selected_instrument("4L") })
-  observeEvent(input$btn_5L, { selected_instrument("5L") })
+  observeEvent(input$btn_5L, { selected_instrument("Aurora-1") })
   observeEvent(input$btn_CS, { selected_instrument("CS") })
 
   table_data <- eventReactive(input$render, {

@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>data – UMGCC FCSS</title>
+<title>data – FHCC Flow Core</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -36,14 +39,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ecfe9fce09b22dc5a09f305649d43de3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-ecfe9fce09b22dc5a09f305649d43de3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-ecfe9fce09b22dc5a09f305649d43de3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ea30afd924254e0e4564248187592654.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-ea30afd924254e0e4564248187592654.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ea30afd924254e0e4564248187592654.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-dashboard/quarto-dashboard.js"></script>
 <script src="site_libs/quarto-dashboard/stickythead.js"></script>
 
@@ -101,10 +104,11 @@ gtag('config', 'G-LZ35J3XE4D', { 'anonymize_ip': true});
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./images/hex.svg" alt="" class="navbar-logo">
+    <img src="./images/hex.png" alt="" class="navbar-logo light-content">
+    <img src="./images/hex.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">UMGCC FCSS</span>
+    <span class="navbar-title">FHCC Flow Core</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -123,32 +127,8 @@ gtag('config', 'G-LZ35J3XE4D', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-levey-jennings-plots">    
         <li>
-    <a class="dropdown-item" href="./Aurora3L.html">
- <span class="dropdown-text">Cytek Aurora 3L</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./Aurora4L.html">
- <span class="dropdown-text">Cytek Aurora 4L</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./Aurora5L.html">
- <span class="dropdown-text">Cytek Aurora 5L</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./AuroraCS.html">
- <span class="dropdown-text">Cytek Aurora CS</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./CantoII.html">
- <span class="dropdown-text">BD FACSCanto II</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./LSRII.html">
- <span class="dropdown-text">BD LSR II</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./AriaII.html">
- <span class="dropdown-text">BD FACSAria II</span></a>
+    <a class="dropdown-item" href="./Aurora1.qmd">
+ <span class="dropdown-text">Cytek Aurora 1</span></a>
   </li>  
     </ul>
   </li>
@@ -158,32 +138,8 @@ gtag('config', 'G-LZ35J3XE4D', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-historical">    
         <li>
-    <a class="dropdown-item" href="https://umgccfcss.github.io/Aurora3L/">
- <span class="dropdown-text">Cytek Aurora 3L</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://umgccfcss.github.io/Aurora4L/">
- <span class="dropdown-text">Cytek Aurora 4L</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="https://umgccfcss.github.io/Aurora5L/">
- <span class="dropdown-text">Cytek Aurora 5L</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://umgccfcss.github.io/AuroraCS/">
- <span class="dropdown-text">Cytek Aurora CS</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://umgccfcss.github.io/CantoII/">
- <span class="dropdown-text">BD FACSCanto II</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://umgccfcss.github.io/LSRII">
- <span class="dropdown-text">BD LSR II</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://umgccfcss.github.io/AriaII">
- <span class="dropdown-text">BD FACSAria II</span></a>
+ <span class="dropdown-text">Cytek Aurora 1</span></a>
   </li>  
     </ul>
   </li>
@@ -249,7 +205,7 @@ gtag('config', 'G-LZ35J3XE4D', { 'anonymize_ip': true});
 <div class="bslib-sidebar-layout html-fill-item html-fill-container" data-bslib-sidebar-open="desktop" data-bslib-sidebar-init="true" data-bslib-sidebar-border="false" data-bslib-sidebar-border-radius="false"><div class="main html-fill-container html-fill-item"><div class="sidebar-content html-fill-item html-fill-container">
 <div class="bslib-grid html-fill-item html-fill-container" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
-<div class="bslib-grid html-fill-item html-fill-container" data-height="50%" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, max-content) minmax(3em, max-content) minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="bslib-grid html-fill-item html-fill-container" data-height="50%" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, max-content) minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
 <div class="bslib-grid html-fill-item html-fill-container" data-width="50%" style="display: grid; grid-template-columns: minmax(3em, 33fr) minmax(3em, 67fr);
 grid-auto-rows: minmax(0, 1fr);">
 <div class="card bslib-card html-fill-container html-fill-item" data-title="" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
@@ -306,7 +262,7 @@ grid-auto-rows: minmax(0, 1fr);">
 <i class="bi bi-cup-hot"></i></div>
 <div class="value-box-area">
 <p class="value-box-title">
-5L
+Aurora-1
 </p>
 <p class="value-box-value">
 <div class="cell-output-display html-fill-item html-fill-container">
@@ -351,42 +307,6 @@ Canto II
 <ul>
   <li><a href="data/Canto/Archive/HolisticDataCanto.csv">Gain and MFI</a></li>
   <li><a href="data/QCPlots_Canto.pdf">Plots</a></li>
-</ul>
-
-</div>
-</p>
-</div>
-</div>
-</div>
-<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
-</div>
-<div class="bslib-grid html-fill-item html-fill-container" data-width="50%" style="display: grid; grid-template-columns: minmax(3em, 33fr) minmax(3em, 67fr);
-grid-auto-rows: minmax(0, 1fr);">
-<div class="card bslib-card html-fill-container html-fill-item" data-title="" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
-<div class="card-header dashboard-card-no-title">
-
-</div>
-<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-    <template>Expand</template>
-    <span class="bslib-full-screen-enter badge rounded-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
-    </span>
-</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div><div class="card valuebox cell bslib-card html-fill-container bslib-value-box bg-secondary showcase-left-center html-fill-item" data-bslib-card-init="" data-require-bs-caller="card()">
-<div class="card-body html-fill-item html-fill-container">
-<div class="html-fill-item html-fill-container value-box-grid">
-<div class="value-box-showcase html-fill-item html-fill-container">
-
-<i class="bi bi-cup-hot"></i></div>
-<div class="value-box-area">
-<p class="value-box-title">
-Aria II
-</p>
-<p class="value-box-value">
-<div class="cell-output-display html-fill-item html-fill-container">
-
-<ul>
-  <li><a href="data/Aria/Archive/HolisticDataAria.csv">Gain and MFI</a></li>
-  <li><a href="data/QCPlots_Aria.pdf">Plots</a></li>
 </ul>
 
 </div>
@@ -548,7 +468,7 @@ Extra
 </div>
 </div>
 </div></div><aside id="bslib-sidebar-1" class="sidebar html-fill-container html-fill-item"><div class="html-fill-container html-fill-item">
-<p>Dashboard data last updated on <strong>2026-04-27</strong></p>
+<p>Dashboard data last updated on <strong>2026-06-18</strong></p>
 <p><strong>Contents:</strong></p>
 <p><strong>Gain and RCV</strong> A .csv file containing the Daily Cytek QC data used for the Gain and RCV plots.</p>
 <p><strong>MFI</strong> A .csv file containing Gain and MFI information derrived from before and after Daily QC .fcs files.</p>
@@ -622,13 +542,14 @@ bslib.Sidebar.initCollapsibleAll()
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -974,7 +895,7 @@ bslib.Sidebar.initCollapsibleAll()
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>University of Maryland, Baltimore</p>
+<p>Fred Hutch Cancer Center, Seattle</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

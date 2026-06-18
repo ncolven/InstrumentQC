@@ -25,8 +25,8 @@ The3L <- list.files(MainFolder, pattern="ApplicationData3L", full.names=TRUE, re
 The3L <- read.csv(The3L, check.names=FALSE) |> dplyr::mutate(Instrument = "3L")
 The4L <- list.files(MainFolder, pattern="ApplicationData4L", full.names=TRUE, recursive=TRUE)
 The4L <- read.csv(The4L, check.names=FALSE) |> dplyr::mutate(Instrument = "4L")
-The5L <- list.files(MainFolder, pattern="ApplicationData5L", full.names=TRUE, recursive=TRUE)
-The5L <- read.csv(The5L, check.names=FALSE) |> dplyr::mutate(Instrument = "5L")
+The5L <- list.files(MainFolder, pattern="ApplicationDataAurora-1", full.names=TRUE, recursive=TRUE)
+The5L <- read.csv(The5L, check.names=FALSE) |> dplyr::mutate(Instrument = "Aurora-1")
 Data <- rbind(The3L, The4L, The5L)
 ```
 
@@ -77,7 +77,7 @@ The4L
 #### 5L
 
 ```{r}
-The5L <- Luciernaga:::UsagePlot(data=Data, TheInstrument="5L")
+The5L <- Luciernaga:::UsagePlot(data=Data, TheInstrument="Aurora-1")
 ```
 
 ```{r}
@@ -119,7 +119,7 @@ ui <- fluidPage(
              column(12, align = "center",
                     actionButton("btn_3L", label = "3L"),
                     actionButton("btn_4L", label = "4L"),
-                    actionButton("btn_5L", label = "5L")
+                    actionButton("btn_Aurora-1", label = "Aurora-1")
              )
            ),
            fluidRow(
@@ -165,7 +165,7 @@ server <- function(input, output, session) {
   
   observeEvent(input$btn_3L, { selected_instrument("3L") })
   observeEvent(input$btn_4L, { selected_instrument("4L") })
-  observeEvent(input$btn_5L, { selected_instrument("5L") })
+  observeEvent(input$btn_5L, { selected_instrument("Aurora-1") })
 
   table_data <- eventReactive(input$render, {
     req(input$date, selected_instrument())

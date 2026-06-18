@@ -60,7 +60,7 @@ HTML("
 ")
 ```
 
-### 5L {width="50%"}
+### Aurora-1 {width="50%"}
 
 ::: {.card title="" width="33%"}
 
@@ -68,14 +68,14 @@ HTML("
 
 ```{r}
 #| content: valuebox
-#| title: "5L"
+#| title: "Aurora-1"
 #| icon: cup-hot
 
 HTML("
 <ul>
-  <li><a href='data/5L/Archive/ArchivedData5L.csv'>Gain and %rCV</a></li>
-  <li><a href='data/5L/Archive/BeadData5L.csv'>MFI</a></li>
-  <li><a href='data/QCPlots_5L.pdf'>Plots</a></li>
+  <li><a href='data/Aurora-1/Archive/ArchivedDataAurora-1.csv'>Gain and %rCV</a></li>
+  <li><a href='data/Aurora-1/Archive/BeadDataAurora-1.csv'>MFI</a></li>
+  <li><a href='data/QCPlots_Aurora-1.pdf'>Plots</a></li>
 </ul>
 ")
 ```
@@ -98,26 +98,6 @@ HTML("
 </ul>
 ")
 ```
-
-### Aria {width="50%"}
-
-::: {.card title="" width="33%"}
-
-:::
-
-```{r}
-#| content: valuebox
-#| title: "Aria II"
-#| icon: cup-hot
-
-HTML("
-<ul>
-  <li><a href='data/Aria/Archive/HolisticDataAria.csv'>Gain and MFI</a></li>
-  <li><a href='data/QCPlots_Aria.pdf'>Plots</a></li>
-</ul>
-")
-```
-
 
 
 
