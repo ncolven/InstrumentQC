@@ -242,56 +242,67 @@ For additional information concerning individual parameter tabs, navigate to the
 
 **About**
 
-This dashboard contains the visualized QC data for the Cytek and BD cytometers at the [UMGCC FCSS](https://www.medschool.umaryland.edu/cibr/core/umgccc_flow/)
+This dashboard contains the visualized QC data for the Cytek and BD cytometers at the [FHCC Flow Core](https://www.fredhutch.org/en/research/shared-resources/core-facilities/flow-cytometry.html)
 
-For additional flow cytometry resources, visit our [website](https://sites.google.com/view/umgcccflow/home)
+For additional flow cytometry resources, visit our [website](https://extranet.fredhutch.org/u/shared-resources/training-and-educational-materials/flow-cytometry.html)
 
-This dashboard was created with [Quarto](https://quarto.org/) and is maintained by [David Rach](https://github.com/DavidRach)
+This dashboard was created with [Quarto](https://quarto.org/) and is maintained by [Nate Colven](https://github.com/ncolven). It was adapted from [David Rach's](https://github.com/DavidRach) work at UMGCC.
 
 ## MFI {.tabset}
 
 ```{r}
 #| title: UV
-ggplotly(UVPlotsMFI[[1]])
-ggplotly(UVPlotsMFI[[2]])
-ggplotly(UVPlotsMFI[[3]])
+ggplotly(UVPlotsGain[[1]])
+ggplotly(UVPlotsGain[[2]])
+ggplotly(UVPlotsGain[[3]])
+ggplotly(UVPlotsGain[[4]])
+ggplotly(UVPlotsGain[[5]])
+ggplotly(UVPlotsGain[[6]])
+ggplotly(UVPlotsGain[[7]])
 ```
 
 ```{r}
 #| title: Violet
-ggplotly(VioletPlotsMFI[[1]])
-ggplotly(VioletPlotsMFI[[2]])
-ggplotly(VioletPlotsMFI[[3]])
+ggplotly(VioletPlotsGain[[1]])
+ggplotly(VioletPlotsGain[[2]])
+ggplotly(VioletPlotsGain[[3]])
+ggplotly(VioletPlotsGain[[4]])
+ggplotly(VioletPlotsGain[[5]])
+ggplotly(VioletPlotsGain[[6]])
+ggplotly(VioletPlotsGain[[7]])
+ggplotly(VioletPlotsGain[[8]])
 ```
 
 ```{r}
 #| title: Blue
-ggplotly(BluePlotsMFI[[1]])
-ggplotly(BluePlotsMFI[[2]])
+ggplotly(BluePlotsGain[[1]])
+ggplotly(BluePlotsGain[[2]])
+ggplotly(BluePlotsGain[[3]])
+ggplotly(BluePlotsGain[[4]])
+ggplotly(BluePlotsGain[[5]])
 ```
 
 ```{r}
 #| title: YellowGreen
-ggplotly(YellowGreenPlotsMFI[[1]])
-ggplotly(YellowGreenPlotsMFI[[2]])
-ggplotly(YellowGreenPlotsMFI[[3]])
-ggplotly(YellowGreenPlotsMFI[[4]])
+ggplotly(YellowGreenPlotsGain[[1]])
+ggplotly(YellowGreenPlotsGain[[2]])
+ggplotly(YellowGreenPlotsGain[[3]])
+ggplotly(YellowGreenPlotsGain[[4]])
+ggplotly(YellowGreenPlotsGain[[5]])
+ggplotly(YellowGreenPlotsGain[[6]])
 ```
 
 ```{r}
 #| title: Red
 ggplotly(RedPlotsMFI[[1]])
 ggplotly(RedPlotsMFI[[2]])
+ggplotly(RedPlotsMFI[[3]])
 ```
 
 ```{r}
 #| title: Scatter
 ggplotly(ScatterPlotsMFI[[1]])
 ggplotly(ScatterPlotsMFI[[2]])
-ggplotly(ScatterPlotsMFI[[3]])
-ggplotly(ScatterPlotsMFI[[4]])
-ggplotly(ScatterPlotsMFI[[5]])
-ggplotly(ScatterPlotsMFI[[6]])
 ```
 
 ```{r}
@@ -300,6 +311,7 @@ ggplotly(LaserPlotsGain[[1]])
 ggplotly(LaserPlotsGain[[2]])
 ggplotly(LaserPlotsGain[[3]])
 ggplotly(LaserPlotsGain[[4]])
+ggplotly(LaserPlotsGain[[5]])
 ```
 
 ```{r}
@@ -308,6 +320,7 @@ ggplotly(ScalingPlotsGain[[1]])
 ggplotly(ScalingPlotsGain[[2]])
 ggplotly(ScalingPlotsGain[[3]])
 ggplotly(ScalingPlotsGain[[4]])
+ggplotly(ScalingPlotsGain[[5]])
 ```
 
 ## Gain {.tabset}
@@ -317,6 +330,10 @@ ggplotly(ScalingPlotsGain[[4]])
 ggplotly(UVPlotsGain[[1]])
 ggplotly(UVPlotsGain[[2]])
 ggplotly(UVPlotsGain[[3]])
+ggplotly(UVPlotsGain[[4]])
+ggplotly(UVPlotsGain[[5]])
+ggplotly(UVPlotsGain[[6]])
+ggplotly(UVPlotsGain[[7]])
 ```
 
 ```{r}
@@ -324,12 +341,20 @@ ggplotly(UVPlotsGain[[3]])
 ggplotly(VioletPlotsGain[[1]])
 ggplotly(VioletPlotsGain[[2]])
 ggplotly(VioletPlotsGain[[3]])
+ggplotly(VioletPlotsGain[[4]])
+ggplotly(VioletPlotsGain[[5]])
+ggplotly(VioletPlotsGain[[6]])
+ggplotly(VioletPlotsGain[[7]])
+ggplotly(VioletPlotsGain[[8]])
 ```
 
 ```{r}
 #| title: Blue
 ggplotly(BluePlotsGain[[1]])
 ggplotly(BluePlotsGain[[2]])
+ggplotly(BluePlotsGain[[3]])
+ggplotly(BluePlotsGain[[4]])
+ggplotly(BluePlotsGain[[5]])
 ```
 
 ```{r}
@@ -338,22 +363,21 @@ ggplotly(YellowGreenPlotsGain[[1]])
 ggplotly(YellowGreenPlotsGain[[2]])
 ggplotly(YellowGreenPlotsGain[[3]])
 ggplotly(YellowGreenPlotsGain[[4]])
+ggplotly(YellowGreenPlotsGain[[5]])
+ggplotly(YellowGreenPlotsGain[[6]])
 ```
 
 ```{r}
 #| title: Red
 ggplotly(RedPlotsGain[[1]])
 ggplotly(RedPlotsGain[[2]])
+ggplotly(RedPlotsGain[[3]])
 ```
 
 ```{r}
 #| title: Scatter
 ggplotly(ScatterPlotsGain[[1]])
-ggplotly(LaserPlotsGain[[2]])
-ggplotly(LaserPlotsGain[[2]])
-ggplotly(ScatterPlotsGain[[2]])
-ggplotly(LaserPlotsGain[[2]])
-ggplotly(LaserPlotsGain[[2]])
+#ggplotly(ScatterPlotsGain[[2]])
 ```
 
 ```{r}
@@ -362,6 +386,7 @@ ggplotly(LaserPlotsGain[[1]])
 ggplotly(LaserPlotsGain[[2]])
 ggplotly(LaserPlotsGain[[3]])
 ggplotly(LaserPlotsGain[[4]])
+ggplotly(LaserPlotsGain[[5]])
 ```
 
 ```{r}
@@ -370,6 +395,7 @@ ggplotly(ScalingPlotsGain[[1]])
 ggplotly(ScalingPlotsGain[[2]])
 ggplotly(ScalingPlotsGain[[3]])
 ggplotly(ScalingPlotsGain[[4]])
+ggplotly(ScalingPlotsGain[[5]])
 ```
 
 ## rCV {.tabset}
@@ -379,6 +405,10 @@ ggplotly(ScalingPlotsGain[[4]])
 ggplotly(UVPlotsRCV[[1]])
 ggplotly(UVPlotsRCV[[2]])
 ggplotly(UVPlotsRCV[[3]])
+ggplotly(UVPlotsRCV[[4]])
+ggplotly(UVPlotsRCV[[5]])
+ggplotly(UVPlotsRCV[[6]])
+ggplotly(UVPlotsRCV[[7]])
 ```
 
 ```{r}
@@ -386,12 +416,20 @@ ggplotly(UVPlotsRCV[[3]])
 ggplotly(VioletPlotsRCV[[1]])
 ggplotly(VioletPlotsRCV[[2]])
 ggplotly(VioletPlotsRCV[[3]])
+ggplotly(VioletPlotsRCV[[4]])
+ggplotly(VioletPlotsRCV[[5]])
+ggplotly(VioletPlotsRCV[[6]])
+ggplotly(VioletPlotsRCV[[7]])
+ggplotly(VioletPlotsRCV[[8]])
 ```
 
 ```{r}
 #| title: Blue
 ggplotly(BluePlotsRCV[[1]])
 ggplotly(BluePlotsRCV[[2]])
+ggplotly(BluePlotsRCV[[3]])
+ggplotly(BluePlotsRCV[[4]])
+ggplotly(BluePlotsRCV[[5]])
 ```
 
 ```{r}
@@ -400,22 +438,21 @@ ggplotly(YellowGreenPlotsRCV[[1]])
 ggplotly(YellowGreenPlotsRCV[[2]])
 ggplotly(YellowGreenPlotsRCV[[3]])
 ggplotly(YellowGreenPlotsRCV[[4]])
+ggplotly(YellowGreenPlotsRCV[[5]])
+ggplotly(YellowGreenPlotsRCV[[6]])
 ```
 
 ```{r}
 #| title: Red
 ggplotly(RedPlotsRCV[[1]])
 ggplotly(RedPlotsRCV[[2]])
+ggplotly(RedPlotsRCV[[3]])
 ```
 
 ```{r}
 #| title: Scatter
 ggplotly(ScatterPlotsRCV[[1]])
 ggplotly(ScatterPlotsRCV[[2]])
-ggplotly(ScatterPlotsRCV[[3]])
-ggplotly(ScatterPlotsRCV[[4]])
-ggplotly(ScatterPlotsRCV[[5]])
-ggplotly(ScatterPlotsRCV[[6]])
 ```
 
 ```{r}
@@ -425,6 +462,7 @@ ggplotly(LaserPlotsGain[[1]])
 ggplotly(LaserPlotsGain[[2]])
 ggplotly(LaserPlotsGain[[3]])
 ggplotly(LaserPlotsGain[[4]])
+ggplotly(LaserPlotsGain[[5]])
 ```
 
 ```{r}
