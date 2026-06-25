@@ -498,3 +498,30 @@ function (x, data)
 }
 <bytecode: 0x7faa0bb77b38>
   <environment: namespace:Luciernaga>  
+  
+  
+  
+  Luciernaga:::SmallTable
+function (data) 
+{
+  table <- data %>% gt() %>% data_color(columns = c(Gain, rCV), 
+                                        fn = function(x) {
+                                          dplyr::case_when(x == "Green" ~ "#0B6623", x == "Orange" ~ 
+                                                             "#FF6E00", x == "Yellow" ~ "#BA8E23", x == "Red" ~ 
+                                                             "#C80815", x == "Gray" ~ "#D3D3D3", TRUE ~ NA_character_)
+                                        })
+  Substituted <- sub_values(sub_values(sub_values(sub_values(sub_values(table, 
+                                                                        values = c("Green"), replacement = "Pass"), values = c("Orange"), 
+                                                             replacement = "Warning"), values = c("Yellow"), replacement = "Caution"), 
+                                       values = c("Red"), replacement = "Fail"), values = c("Gray"), 
+                            replacement = "")
+  Bolded <- cols_align(opt_table_font(Substituted, font = "Montserrat"), 
+                       align = "center")
+  Final <- cols_label(cols_label(tab_spanner(tab_spanner(Bolded, 
+                                                         label = "Gain ", columns = c(GainValue, Gain)), label = "%RCV ", 
+                                             columns = c(rCVValue, rCV)), GainValue = "Value", Gain = "Status"), 
+                      rCVValue = "Value", rCV = "Status")
+  return(Final)
+}
+<bytecode: 0x7faa21175448>
+  <environment: namespace:Luciernaga>  

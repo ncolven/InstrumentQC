@@ -19,7 +19,7 @@ library(Luciernaga)
 
 Computer <- getwd()
 MainFolder <- file.path(Computer, "data")
-TheList <- c("3L", "4L", "Aurora-1", "CS")
+TheList <- c("Symphony-2", "Fortessa", "Aurora-1", "CS")
 
 # Updating Data
 #walk(.x=TheList, MainFolder=MainFolder, .f=Luciernaga:::DailyQCParse)
@@ -38,6 +38,9 @@ Gain_5L <- Luciernaga:::CurrentData(x="Aurora-1", MainFolder=MainFolder, type = 
 
 MFI_CS <- Luciernaga:::CurrentData(x="CS", MainFolder=MainFolder, type = "MFI")
 Gain_CS <- Luciernaga:::CurrentData(x="CS", MainFolder=MainFolder, type = "Gain")
+
+MFI_Fort <- Luciernaga:::CurrentData(x="Fortessa", MainFolder=MainFolder, type = "Both")
+Gain_Fort
 ```
 
 ```{r}
@@ -55,6 +58,8 @@ Gain_5L <- Gain_5L |> filter(DateTime >= WindowOfInterest)
 
 MFI_CS <- MFI_CS |> filter(DateTime >= WindowOfInterest)
 Gain_CS <- Gain_CS |> filter(DateTime >= WindowOfInterest)
+
+MFI_Fort <- MFI_Fort |> filter(DateTime >= WindowOfInterest)
 ```
 
 ```{r}
