@@ -3,7 +3,7 @@ project:
   output-dir: docs/
 website:
   google-analytics: 
-    tracking-id: "G-LZ35J3XE4D"
+    tracking-id: "asdas"
   announcement: 
     icon: info-circle
     dismissable: true
@@ -20,7 +20,11 @@ website:
     - text: "Levey-Jennings Plots"
       menu:
       - text: "Cytek Aurora 1"
-        href: Aurora1.qmd
+        href: Aurora-1.html
+      - text: "BD Symphony 2"
+        href: Symphony-2.html
+      - text: "Fortessa"
+        href: Fortessa.html  
     - text: "Historical"
       menu:
       - text: "Cytek Aurora 1"
@@ -39,7 +43,7 @@ website:
       - text: "Bleach Vs. QC Bead Lot 2006"
         href: BleachVsLot2006Beads.qmd
     - icon: github
-      href: https://github.com/UMGCCFCSS/InstrumentQC
+      href: https://github.com/ncolven/InstrumentQC
       aria-label: GitHub
   page-footer:
     background: light

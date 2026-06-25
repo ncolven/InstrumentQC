@@ -1,0 +1,12 @@
+QC procedure
+1. QC is run during morning startup
+2. After QC has been recorded, operator must run instrument specific R script to move data to central location
+    a. Alternatively, set up scheduled task to transfer files
+        i. Potentially could conflict with Cirro transfer, store files in different directory?
+    b. Requires R to be installed on instrument computers
+    c. Operators may need to be more vigilant to not generate bad QC results
+3. Central computer renders Quarto pages
+    a. Manual or automated?
+    b. Dashboard for ~20 instruments may become crowded
+4. Website is published
+    a. Extranet, Google webpage, or github page?

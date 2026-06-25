@@ -1,0 +1,11 @@
+Luciernaga function notes
+
+:::CurentData - WORKS
+lubridates data from instrument, arranges by date and time.
+
+:::VisualQCSummary - WORKS
+Presents data from archived CSVs in tidy format, passes to :::QCSummaryCheck to determine individual dectector pass/fail,
+  then assigns green/red accordingly
+  
+:::QCSummaryCheck - WORKS FOR AURORA
+Checks for gain and rCV flags from Aurora QC csvs. Does not seem to do anything with BD instruments.
