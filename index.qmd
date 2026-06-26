@@ -40,7 +40,7 @@ MFI_CS <- Luciernaga:::CurrentData(x="CS", MainFolder=MainFolder, type = "MFI")
 Gain_CS <- Luciernaga:::CurrentData(x="CS", MainFolder=MainFolder, type = "Gain")
 
 MFI_Fort <- Luciernaga:::CurrentData(x="Fortessa", MainFolder=MainFolder, type = "Both")
-Gain_Fort
+#Gain_Fort
 ```
 
 ```{r}
