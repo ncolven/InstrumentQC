@@ -19,6 +19,9 @@ source("renv/activate.R")
 
 library(stringr)
 library(purrr)
+library(flowWorkspace)
+library(flowCore)
+library(lubridate)
 
 # Find out current date
 Today <- Sys.Date()
@@ -108,6 +111,7 @@ MFIMatches <- TheFCSFiles[str_detect(basename(TheFCSFiles), str_c(days, collapse
 
 if (!length(MFIMatches) == 0){
 file.copy(MFIMatches, WorkingFolder)
+Template <- file.path(WorkingDirectory, "Aurora-1.csv")
 walk(.x=Instrument, .f=Luciernaga:::QCBeadParse, MainFolder=MainFolder)
 }
 } else {message("QC data has already been transferred")
@@ -148,3 +152,54 @@ if (any(length(PotentialGainDays)|length(PotentialMFIDays)|length(PotentialAppsD
   } else {message("No files to process ", Today)}
 } else {message("No files to process 2", Today)}
 } else {message("Automation Skipped ", Today)}
+
+
+QbSureParse <- function (x, MainFolder, Template) {
+  Folder <- file.path(MainFolder, x)
+  FCS_Files <- list.files(Folder, pattern = "fcs", full.names = TRUE)
+  if (!length(FCS_Files) == 0) {
+    The_CS <- load_cytoset_from_fcs(files = FCS_Files, 
+                                            transformation = FALSE, truncate_max_range = FALSE)
+    Gating <- data.table::fread(Template)
+    MyGatingSet <- GatingSet(The_CS)
+    MyGatingTemplate <- gatingTemplate(Gating)
+    gt_gating(MyGatingTemplate, MyGatingSet)
+    BeforeAfter <- map(.x = MyGatingSet, .f = Luciernaga:::QC_GainMonitoring, #### STOPPED HERE 6/30/26, errors out
+                       sample.name = "TUBENAME", stats = "median") %>% bind_rows()
+    BeforeAfter <- BeforeAfter %>% mutate(DateTime = DATE + 
+                                            TIME) %>% relocate(DateTime, .before = DATE)
+    BeforeAfter <- BeforeAfter %>% arrange(desc(DateTime))
+    ArchiveFolder <- file.path(Folder, "Archive")
+    ArchiveCSV <- list.files(ArchiveFolder, pattern = "Bead", 
+                             full.names = TRUE)
+    if (!length(ArchiveCSV) == 0) {
+      if (!length(ArchiveCSV) > 1) {
+        ArchiveData <- read.csv(ArchiveCSV, check.names = FALSE)
+        ArchiveData$DateTime <- lubridate::ymd_hms(ArchiveData$DateTime)
+        ArchiveData$DATE <- lubridate::ymd(ArchiveData$DATE)
+        ArchiveData$TIME <- lubridate::hms(ArchiveData$TIME)
+        if (!ncol(BeforeAfter) == ncol(ArchiveData)) {
+          stop("Mismatched Number of Columns")
+        }
+        NewData <- BeforeAfter %>% anti_join(ArchiveData, 
+                                             by = c("DATE", "TIME"))
+        UpdatedData <- rbind(NewData, ArchiveData)
+        file.remove(ArchiveCSV)
+      }
+      else {
+        stop("Two BeadData csv files in the archive folder!")
+      }
+    }
+    else {
+      UpdatedData <- BeforeAfter
+    }
+    UpdatedData <- UpdatedData %>% arrange(desc(DateTime))
+    file.remove(FCS_Files)
+    name <- paste0("BeadData", x, ".csv")
+    StorageLocation <- file.path(ArchiveFolder, name)
+    write.csv(UpdatedData, StorageLocation, row.names = FALSE)
+  }
+  else {
+    message("No fcs files to update with in ", x)
+  }
+}
