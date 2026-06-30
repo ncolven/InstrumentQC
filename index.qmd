@@ -328,25 +328,25 @@ list(value = paste0("QC Status: ", TheStatusCS),
 
 ### Row 
 ```{r}
-#| title: "More Instrument Data"
+#| title: "Instrument Data"
 
 HTML("
 <ul>
   <li><a href='data/3L/Archive/ArchivedData3L.csv'>Symphony-1</a></li>
   <li><a href='data/3L/Archive/BeadData3L.csv'>Symphony-2</a></li>
   <li><a href='data/QCPlots_3L.pdf'>SP Symphony-3</a></li>
-    <li><a href='data/3L/Archive/ArchivedData3L.csv'>Symphony-1</a></li>
-  <li><a href='data/3L/Archive/BeadData3L.csv'>Symphony-2</a></li>
-  <li><a href='data/QCPlots_3L.pdf'>SP Symphony-3</a></li>
-    <li><a href='data/3L/Archive/ArchivedData3L.csv'>Symphony-1</a></li>
-  <li><a href='data/3L/Archive/BeadData3L.csv'>Symphony-2</a></li>
-  <li><a href='data/QCPlots_3L.pdf'>SP Symphony-3</a></li>
-    <li><a href='data/3L/Archive/ArchivedData3L.csv'>Symphony-1</a></li>
-  <li><a href='data/3L/Archive/BeadData3L.csv'>Symphony-2</a></li>
-  <li><a href='data/QCPlots_3L.pdf'>SP Symphony-3</a></li>
-    <li><a href='data/3L/Archive/ArchivedData3L.csv'>Symphony-1</a></li>
-  <li><a href='data/3L/Archive/BeadData3L.csv'>Symphony-2</a></li>
-  <li><a href='data/QCPlots_3L.pdf'>SP Symphony-3</a></li>
+    <li><a href='data/3L/Archive/ArchivedData3L.csv'>SP Symphony-4</a></li>
+  <li><a href='data/3L/Archive/BeadData3L.csv'>Symphony-5</a></li>
+  <li><a href='data/QCPlots_3L.pdf'>Fortessa</a></li>
+    <li><a href='data/3L/Archive/ArchivedData3L.csv'>Symphony A3</a></li>
+  <li><a href='data/3L/Archive/BeadData3L.csv'>Celesta-1</a></li>
+  <li><a href='data/QCPlots_3L.pdf'>SP Celesta-2</a></li>
+    <li><a href='data/3L/Archive/ArchivedData3L.csv'>SP Celesta-3</a></li>
+  <li><a href='data/3L/Archive/BeadData3L.csv'>SP Aurora-1</a></li>
+  <li><a href='data/QCPlots_3L.pdf'>Aurora-2</a></li>
+    <li><a href='data/3L/Archive/ArchivedData3L.csv'>Symphony S6-1</a></li>
+  <li><a href='data/3L/Archive/BeadData3L.csv'>SP Symphony S6-2</a></li>
+  <li><a href='data/QCPlots_3L.pdf'>Symphony S6-3</a></li>
 </ul>
 ")
 ```
