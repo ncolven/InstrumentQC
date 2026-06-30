@@ -12,6 +12,7 @@ library(dplyr)
 library(purrr)
 library(stringr)
 library(plotly)
+library(data.table)
 library(Luciernaga)
 
 FHCCQCParse <- function (x, MainFolder, Template = NULL, subsets = NULL,

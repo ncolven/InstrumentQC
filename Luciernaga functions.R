@@ -1,3 +1,289 @@
+Luciernaga:::DailyQCParse
+function (MainFolder, x) 
+{
+  Folder <- file.path(MainFolder, x)
+  DailyQCFiles <- list.files(Folder, pattern = "DailyQC", full.names = TRUE)
+  if (!length(DailyQCFiles) == 0) {
+    if (length(DailyQCFiles) >= 1) {
+      Parsed <- bind_rows(map(.x = DailyQCFiles, .f = Luciernaga:::QC_FilePrep_DailyQC))
+      Parsed <- mutate(Parsed, across(starts_with("Flag"), 
+                                      ~as.logical(.)))
+    }
+    else {
+      stop("Two csv files in the folder found!")
+    }
+    ShinyData <- Luciernaga:::ShinyQCSummary(x = Parsed, Instrument = x)
+    HistoricalPath <- file.path(MainFolder, "HistoricalData.csv")
+    History <- list.files(MainFolder, pattern = "HistoricalData.csv", 
+                          full.names = TRUE)
+    if (length(History == 1)) {
+      HistoricalData <- read.csv(HistoricalPath, check.names = FALSE)
+      HistoricalData$Date <- lubridate::ymd(HistoricalData$Date)
+      if (ncol(ShinyData) == ncol(HistoricalData)) {
+        TheShiniestData <- bind_rows(ShinyData, HistoricalData)
+        write.csv(TheShiniestData, HistoricalPath, row.names = FALSE)
+      }
+      else {
+        stop("Shiny Historical Data Conflicting Column Numbers")
+      }
+    }
+    else {
+      write.csv(ShinyData, HistoricalPath, row.names = FALSE)
+    }
+    TheArchive <- file.path(Folder, "Archive")
+    ArchivedDataFile <- list.files(TheArchive, pattern = "Archived", 
+                                   full.names = TRUE)
+    if (!length(ArchivedDataFile) == 0) {
+      if (length(ArchivedDataFile) == 1) {
+        ArchivedData <- read.csv(ArchivedDataFile[1], 
+                                 check.names = FALSE)
+      }
+      else {
+        message("Two csv files in the folder found!")
+      }
+      ArchivedData$DateTime <- lubridate::ymd_hms(ArchivedData$DateTime)
+      ArchivedData <- mutate(ArchivedData, across(starts_with("Flag"), 
+                                                  ~as.logical(.)))
+      if (!ncol(ArchivedData) == ncol(Parsed)) {
+        Recent <- setdiff(colnames(ArchivedData), colnames(Parsed))
+        Previous <- setdiff(colnames(Parsed), colnames(ArchivedData))
+        if (length(Previous) == 0) {
+          UpToHere <- nrow(Parsed)
+          WorkAround <- bind_rows(Parsed, ArchivedData)
+          WorkAround1 <- WorkAround[1:UpToHere, ]
+          NewData <- generics::setdiff(WorkAround1, ArchivedData)
+          UpdatedData <- rbind(NewData, ArchivedData)
+        }
+        else {
+          stop("Mismatched Columns, newer data fewer columns than old data")
+        }
+      }
+      else {
+        NewData <- generics::setdiff(Parsed, ArchivedData)
+        UpdatedData <- rbind(NewData, ArchivedData)
+      }
+      file.remove(ArchivedDataFile)
+    }
+    else {
+      UpdatedData <- Parsed
+    }
+    file.remove(DailyQCFiles)
+    UpdatedData <- arrange(UpdatedData, desc(DateTime))
+    name <- paste0("ArchivedData", x, ".csv")
+    StorageLocation <- file.path(TheArchive, name)
+    write.csv(UpdatedData, StorageLocation, row.names = FALSE)
+  }
+  else {
+    message("No DailyQCFiles files to update with in ", x)
+  }
+}
+<bytecode: 0x9b8daac48>
+  <environment: namespace:Luciernaga>
+############################
+############################
+############################
+############################
+Luciernaga:::QCBeadParse
+function (x, MainFolder) 
+{
+  Folder <- file.path(MainFolder, x)
+  FCS_Files <- list.files(Folder, pattern = "fcs", full.names = TRUE)
+  if (!length(FCS_Files) == 0) {
+    QCBeads <- FCS_Files[grep("Before|After", FCS_Files)]
+    BeforeAfter_CS <- load_cytoset_from_fcs(files = QCBeads, 
+                                            transformation = FALSE, truncate_max_range = FALSE)
+    BeforeAfter <- map(.x = BeforeAfter_CS, .f = Luciernaga:::QC_GainMonitoring, 
+                       sample.name = "TUBENAME", stats = "median") %>% bind_rows()
+    BeforeAfter <- BeforeAfter %>% mutate(DateTime = DATE + 
+                                            TIME) %>% relocate(DateTime, .before = DATE)
+    BeforeAfter <- BeforeAfter %>% arrange(desc(DateTime))
+    ArchiveFolder <- file.path(Folder, "Archive")
+    ArchiveCSV <- list.files(ArchiveFolder, pattern = "Bead", 
+                             full.names = TRUE)
+    if (!length(ArchiveCSV) == 0) {
+      if (!length(ArchiveCSV) > 1) {
+        ArchiveData <- read.csv(ArchiveCSV, check.names = FALSE)
+        ArchiveData$DateTime <- lubridate::ymd_hms(ArchiveData$DateTime)
+        ArchiveData$DATE <- lubridate::ymd(ArchiveData$DATE)
+        ArchiveData$TIME <- lubridate::hms(ArchiveData$TIME)
+        if (!ncol(BeforeAfter) == ncol(ArchiveData)) {
+          stop("Mismatched Number of Columns")
+        }
+        NewData <- BeforeAfter %>% anti_join(ArchiveData, 
+                                             by = c("DATE", "TIME"))
+        UpdatedData <- rbind(NewData, ArchiveData)
+        file.remove(ArchiveCSV)
+      }
+      else {
+        stop("Two BeadData csv files in the archive folder!")
+      }
+    }
+    else {
+      UpdatedData <- BeforeAfter
+    }
+    UpdatedData <- UpdatedData %>% arrange(desc(DateTime))
+    file.remove(FCS_Files)
+    name <- paste0("BeadData", x, ".csv")
+    StorageLocation <- file.path(ArchiveFolder, name)
+    write.csv(UpdatedData, StorageLocation, row.names = FALSE)
+  }
+  else {
+    message("No fcs files to update with in ", x)
+  }
+}
+<bytecode: 0xaa13e6cf0>
+  <environment: namespace:Luciernaga>
+############################
+############################
+############################
+############################
+Luciernaga:::QC_GainMonitoring
+function (x, sample.name, stats, subsets = NULL, inverse.transform = FALSE) 
+{
+  if (class(x) == "GatingHierarchy") {
+    SayTheName <- sampleNames(x)
+    cs <- gs_pop_get_data(x, subsets, inverse.transform = inverse.transform)
+    if (nrow(cs[[1]]) != 0) {
+      x <- cs[[1]]
+    }
+    else {
+      message("No cells retained in ", SayTheName, ", passing original .fcs file")
+      cs <- gs_pop_get_data(x, "root", inverse.transform = inverse.transform)
+      if (nrow(cs[[1]]) != 0) {
+        x <- cs[[1]]
+      }
+      else {
+        message("No cells present in ", SayTheName)
+      }
+    }
+  }
+  Guts <- QC_Retrieval(x = x, sample.name = sample.name)
+  Data <- data.frame(exprs(x), check.names = FALSE)
+  These <- colnames(Data)
+  These <- These[These != "Time"]
+  TheRCVs <- bind_cols(map(.x = These, .f = InternalRCV, data = Data))
+  TheRCVs <- round(TheRCVs * 100, 2)
+  colnames(TheRCVs) <- paste0(colnames(TheRCVs), "-% rCV")
+  Data <- AveragedSignature(Data, stats)
+  Data <- select(Data, -Time)
+  Bound <- cbind(Guts, TheRCVs, Data)
+  Bound[["SAMPLE"]] <- NameCleanUp(Bound[["SAMPLE"]], removestrings = ".fcs")
+  Bound[["SAMPLE"]] <- NameCleanUp(Bound[["SAMPLE"]], removestrings = ".fcs")
+  if (str_detect(Bound[["SAMPLE"]], "efore")) {
+    Bound <- relocate(mutate(Bound, Timepoint = "Before"), 
+                      Timepoint, .after = TIME)
+  }
+  else if (str_detect(Bound[["SAMPLE"]], "fter")) {
+    Bound <- relocate(mutate(Bound, Timepoint = "After"), 
+                      Timepoint, .after = TIME)
+  }
+  else {
+    Bound <- relocate(mutate(Bound, Timepoint = "Unknown"), 
+                      Timepoint, .after = TIME)
+  }
+  return(Bound)
+}
+<bytecode: 0x9b4db1930>
+  <environment: namespace:Luciernaga>
+############################
+############################
+############################
+############################
+Luciernaga::QC_Retrieval
+function (x, sample.name) 
+{
+  KeywordsList <- keyword(x)
+  KeywordsDF <- data.frame(KeywordsList, check.names = FALSE)
+  TheColumnNames <- colnames(KeywordsDF)
+  SAMPLE <- keyword(x)[[sample.name]]
+  DATE <- keyword(x)$`$DATE`
+  DATE <- dmy(DATE)
+  TIME <- keyword(x)$`$BTIM`
+  TIME <- hms(TIME)
+  CYT <- keyword(x)$`$CYT`
+  if (is.null(CYT)) {
+    CYTN <- "Unknown"
+  }
+  CYTSN <- keyword(x)$`$CYTSN`
+  if (is.null(CYTSN)) {
+    CYTSN <- keyword(x)$CYTNUM
+  }
+  if (is.null(CYTSN)) {
+    CYTSN <- "Unknown"
+  }
+  OP <- keyword(x)$`$OP`
+  if (is.null(OP)) {
+    OP <- "Unknown"
+  }
+  PN_Names1 <- TheColumnNames[grepl("^\\$P[0-9]{1}N$", TheColumnNames)]
+  PN_Names2 <- TheColumnNames[grepl("^\\$P[0-9]{2}N$", TheColumnNames)]
+  PN_Names3 <- TheColumnNames[grepl("^\\$P[0-9]{3}N$", TheColumnNames)]
+  PV_Gains1 <- TheColumnNames[grepl("^\\$P[0-9]{1}V$", TheColumnNames)]
+  PV_Gains2 <- TheColumnNames[grepl("^\\$P[0-9]{2}V$", TheColumnNames)]
+  PV_Gains3 <- TheColumnNames[grepl("^\\$P[0-9]{3}V$", TheColumnNames)]
+  if (length(PN_Names3) > 0) {
+    PN_Names <- c(PN_Names1, PN_Names2, PN_Names3)
+  }
+  else {
+    PN_Names <- c(PN_Names1, PN_Names2)
+  }
+  PN_Names <- PN_Names[-1]
+  if (length(PV_Gains3) > 0) {
+    PV_Gains <- c(PV_Gains1, PV_Gains2, PV_Gains3)
+  }
+  else {
+    PV_Gains <- c(PV_Gains1, PV_Gains2)
+  }
+  ParameterRows <- map2(.x = PN_Names, .y = PV_Gains, .f = Luciernaga:::RetrievalMerge, 
+                        TheData = KeywordsDF) %>% bind_cols()
+  Laser_Name <- TheColumnNames[grepl("^\\LASER[0-9]{1}NAME$", 
+                                     TheColumnNames)]
+  Laser_Delay <- TheColumnNames[grepl("^\\LASER[0-9]{1}DELAY$", 
+                                      TheColumnNames)]
+  Laser_ASF <- TheColumnNames[grepl("^\\LASER[0-9]{1}ASF$", 
+                                    TheColumnNames)]
+  LaserDelayRows <- map2(.x = Laser_Name, .y = Laser_Delay, 
+                         .f = Luciernaga:::RetrievalMerge, TheData = KeywordsDF) %>% 
+    bind_cols()
+  colnames(LaserDelayRows) <- paste0(colnames(LaserDelayRows), 
+                                     "_LaserDelay")
+  LaserASFRows <- map2(.x = Laser_Name, .y = Laser_ASF, .f = Luciernaga:::RetrievalMerge, 
+                       TheData = KeywordsDF) %>% bind_cols()
+  colnames(LaserASFRows) <- paste0(colnames(LaserASFRows), 
+                                   "_AreaScalingFactor")
+  ParameterRows <- ParameterRows %>% mutate(across(everything(), 
+                                                   as.numeric))
+  colnames(ParameterRows) <- paste0(colnames(ParameterRows), 
+                                    "_Gain")
+  LaserDelayRows <- LaserDelayRows %>% mutate(across(everything(), 
+                                                     as.numeric))
+  if (ncol(LaserDelayRows) == 0) {
+    LaserDelayRows <- NULL
+  }
+  LaserASFRows <- LaserASFRows %>% mutate(across(everything(), 
+                                                 as.numeric))
+  if (ncol(LaserASFRows) == 0) {
+    LaserASFRows <- NULL
+  }
+  if (is.null(SAMPLE)) {
+    stop("sample.name keyword not recognized")
+  }
+  RecoveredQC <- cbind(SAMPLE, DATE, TIME, CYT, CYTSN, OP, 
+                       ParameterRows)
+  if (!is.null(LaserDelayRows)) {
+    RecoveredQC <- cbind(RecoveredQC, LaserDelayRows)
+  }
+  if (!is.null(LaserASFRows)) {
+    RecoveredQC <- cbind(RecoveredQC, LaserASFRows)
+  }
+  return(RecoveredQC)
+}
+<bytecode: 0x9b4f637e0>
+  <environment: namespace:Luciernaga>
+############################
+############################
+############################
+############################  
 > Luciernaga:::HolisticQCParse
 function (x, MainFolder, Template = NULL, subsets = NULL, FuckIt = FALSE, 
           sample.name = "$DATE") 
