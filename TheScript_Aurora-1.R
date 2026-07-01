@@ -86,8 +86,8 @@ if (length(AnyFlags) == 0){
 
 # Git Pull
 RepositoryPath <- WorkingDirectory
-#RepositoryPath <- file.path(RepositoryPath, ".git")
-#TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
+RepositoryPath <- file.path(RepositoryPath, ".git")
+TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
 #TheRepo <- git2r::repository(RepositoryPath)
 #git2r::pull(TheRepo)
 
@@ -151,8 +151,7 @@ if (!length(PotentialMFIDays) == 0){
 # MFI Starting Locations
 
 FCSFolder <- file.path(SetupFolder, "DailyQC")
-MonthStyle <- format(Today, "%Y-%m")
-MonthFolder <- paste0("QC_", MonthStyle)
+MonthFolder <- format(Today, "%B %Y")
 MonthFolder <- file.path(FCSFolder, MonthFolder)
 TheFCSFiles <- list.files(MonthFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
 
@@ -163,7 +162,7 @@ MFIMatches <- TheFCSFiles[str_detect(basename(TheFCSFiles), str_c(days, collapse
 if (!length(MFIMatches) == 0){
 file.copy(MFIMatches, WorkingFolder)
 Template <- file.path(WorkingDirectory, "Aurora-1.csv")
-walk(.x=Instrument, .f=Luciernaga:::QCBeadParse, MainFolder=MainFolder)
+walk(.x=Instrument, .f=QbSureParse, MainFolder=MainFolder, Template=Template)
 }
 } else {message("QC data has already been transferred")
   MFIMatches <- NULL
@@ -197,7 +196,8 @@ if (any(length(PotentialGainDays)|length(PotentialMFIDays)|length(PotentialAppsD
     
     TheCommitMessage <- paste0("Update for ", Instrument, " on ", Today)
     git2r::commit(TheRepo, message = TheCommitMessage)
-    cred <- git2r::cred_token(token = "GITHUB_PAT")
+    #cred <- git2r::cred_token(token = "GITHUB_PAT")
+    cred <- git2r::cred_ssh_key(publickey = ssh_path("id_ed25519.pub"), privatekey = ssh_path("id_ed25519"))
     git2r::push(TheRepo, credentials = cred)
     message("Done ", Today)
   } else {message("No files to process ", Today)}
