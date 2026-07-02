@@ -16,6 +16,6 @@ FlagRemoval.log
 InstrumentQC.Rproj
 TheScript.R
 .Rprofile
-
+.DS_Store
 **/*.quarto_ipynb
 .positai
