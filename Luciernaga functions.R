@@ -284,7 +284,7 @@ function (x, sample.name)
 ############################
 ############################
 ############################  
-> Luciernaga:::HolisticQCParse
+Luciernaga:::HolisticQCParse
 function (x, MainFolder, Template = NULL, subsets = NULL, FuckIt = FALSE, 
           sample.name = "$DATE") 
 {
