@@ -1,12 +1,17 @@
 BDSummary <- function (x, Instrument, detectorType = "-A"){
-  MFICheck <- function(x){ 
-    sapply(if (x <=7999){
-    x <- "Red"
-  }else if (x >=12001){
-    x <- "Orange"
-  }else{
-    x <- "Green"
-    })
+  MFICheck <- function(x){
+    for (i in 1:nrow(x)){
+      for (j in 1:ncol(x)){
+        if (x[i,j] <=7999){
+          x[i,j] <- "Red"
+        }else if (x[i,j] >=12001){
+          x[i,j] <- "Orange"
+        }else{
+          x[i,j] <- "Green"
+        }
+      }
+    }
+    return(x)
   }
   WindowOfInterest <- Sys.time() - weeks(1)
   if (nrow(x) > 1) {
@@ -39,5 +44,9 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
     YellowGreenMFI <- Data[,YellowGreenNames]
     RedMFI <- Data[,RedNames]
   }
-  UVStatus <- lapply(UVMFI, MFICheck)
+  UVStatus <- MFICheck(UVMFI)
+  VioletStatus <- MFICheck(VioletMFI)
+  BlueStatus <- MFICheck(BlueMFI)
+  YellowGreenStatus <- MFICheck(YellowGreenMFI)
+  RedStatus <- MFICheck(RedMFI)
 }
