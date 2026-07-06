@@ -20,7 +20,7 @@ library(htmltools)
 
 Computer <- getwd()
 MainFolder <- file.path(Computer, "data")
-TheList <- c("Symphony-2", "Fortessa", "Aurora-1", "CS")
+TheList <- c("Symphony-2", "Fortessa", "Aurora-1", "Aurora-2")
 
 # Updating Data
 #walk(.x=TheList, MainFolder=MainFolder, .f=Luciernaga:::DailyQCParse)
