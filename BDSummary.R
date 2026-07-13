@@ -63,6 +63,12 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
     BlueNames <- TheColumnNames[3:7]
     YellowGreenNames <- TheColumnNames[26:30]
     RedNames <- TheColumnNames[8:10]
+  } else if(Instrument == "Symphony-4"){
+    UVNames <- TheColumnNames[20:27]  
+    VioletNames <- TheColumnNames[12:19]
+    BlueNames <- TheColumnNames[3:8]
+    YellowGreenNames <- TheColumnNames[28:32]
+    RedNames <- TheColumnNames[9:11]
   }
   
   VioletMFI <- Data[,VioletNames]
@@ -111,6 +117,12 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
       BlueNames <- TheColumnNames[3:7]
       YellowGreenNames <- TheColumnNames[26:30]
       RedNames <- TheColumnNames[8:10]
+    }else if(Instrument == "Symphony-4"){
+      UVNames <- TheColumnNames[20:27]  
+      VioletNames <- TheColumnNames[12:19]
+      BlueNames <- TheColumnNames[3:8]
+      YellowGreenNames <- TheColumnNames[28:32]
+      RedNames <- TheColumnNames[9:11]
     }
     VioletRCV <- Data[,VioletNames]
     BlueRCV <- Data[,BlueNames]
