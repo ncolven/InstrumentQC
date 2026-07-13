@@ -11,7 +11,7 @@ Windows <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 OperatingSystem <- Sys.info()["sysname"]
 # if(OperatingSystem == "Linux"){OS <- Linux
 # } else if (OperatingSystem == "Windows"){OS <- Windows}
-OS <- Windows
+OS <- Linux
 
 WorkingDirectory <- OS
 setwd(WorkingDirectory)
@@ -43,7 +43,7 @@ if (length(AnyFlags) == 0){
   #git2r::pull(TheRepo)
   
   # Locating Archive Folder
-  Instrument <- "Fortessa"
+  Instrument <- "Symphony-1"
   MainFolder <- file.path(WorkingDirectory, "data")
   WorkingFolder <- file.path(WorkingDirectory, "data", Instrument)
   StorageFolder <- file.path(WorkingFolder, "Archive")
@@ -68,7 +68,7 @@ if (length(AnyFlags) == 0){
     
     if (!length(MFIMatches) == 0){
       file.copy(MFIMatches, WorkingFolder)
-      Template <- file.path(WorkingDirectory, "Fortessa.csv")
+      Template <- file.path(WorkingDirectory, "Symphony-1.csv")
       # Rainbow bead Parse
       {
         Folder <- file.path(MainFolder, Instrument)
