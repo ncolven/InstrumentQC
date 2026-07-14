@@ -63,6 +63,12 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
     BlueNames <- TheColumnNames[3:7]
     YellowGreenNames <- TheColumnNames[26:30]
     RedNames <- TheColumnNames[8:10]
+  } else if(Instrument == "Symphony-2"){
+    UVNames <- c(TheColumnNames[9],TheColumnNames[18],TheColumnNames[25:28],TheColumnNames[10])
+    VioletNames <- c(TheColumnNames[7],TheColumnNames[14],TheColumnNames[22],TheColumnNames[16:17],TheColumnNames[23:24], TheColumnNames[8])
+    BlueNames <- c(TheColumnNames[3],TheColumnNames[19:20],TheColumnNames[4],TheColumnNames[21])
+    YellowGreenNames <- c(TheColumnNames[11],TheColumnNames[15],TheColumnNames[29:30],TheColumnNames[12])
+    RedNames <- c(TheColumnNames[5],TheColumnNames[13],TheColumnNames[6])
   } else if(Instrument == "Symphony-4"){
     UVNames <- TheColumnNames[20:27]  
     VioletNames <- TheColumnNames[12:19]
