@@ -19,6 +19,8 @@ source("renv/activate.R")
 
 library(stringr)
 library(purrr)
+library(dplyr)
+library(openCyto)
 library(flowWorkspace)
 library(flowCore)
 library(lubridate)
@@ -51,16 +53,16 @@ if (length(AnyFlags) == 0){
   LastMFIsItem <- MFIs |> dplyr::slice(1) |> dplyr::pull(DateTime)
   LastMFIsItem <- lubridate::ymd_hms(LastMFIsItem)
   LastMFIsItem <- as.Date(LastMFIsItem)
-  PotentialMFIsDays <- seq.Date(from = LastMFIsItem, to = Today, by = "day")
-  MFIsRemoveIndex <- which(PotentialMFIsDays == LastMFIsItem)
-  PotentialMFIsDays <- PotentialMFIsDays[-MFIsRemoveIndex]
+  PotentialMFIDays <- seq.Date(from = LastMFIsItem, to = Today, by = "day")
+  MFIsRemoveIndex <- which(PotentialMFIDays == LastMFIsItem)
+  PotentialMFIDays <- PotentialMFIDays[-MFIsRemoveIndex]
   
   if (!length(PotentialMFIDays) == 0){
     # MFI Starting Locations
-    #SetupFolder <- #file.path(SetupFolder, "DailyQC")
+    SetupFolder <- file.path(SetupFolder, "DailyQC")
     TheFCSFiles <- list.files(SetupFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
     
-    days <- format(PotentialMFIsDays, "%m%d")
+    days <- format(PotentialMFIDays, "%m%d")
     
     MFIMatches <- TheFCSFiles[str_detect(basename(TheFCSFiles), str_c(days, collapse = "|"))]
     
@@ -129,7 +131,7 @@ if (length(AnyFlags) == 0){
           }
           UpdatedData <- UpdatedData %>% arrange(desc(DateTime))
           file.remove(FCS_Files)
-          name <- paste0("HolisticData", x, ".csv")
+          name <- paste0("HolisticData", Instrument, ".csv")
           StorageLocation <- file.path(ArchiveFolder, name)
           write.csv(UpdatedData, StorageLocation, row.names = FALSE)
         }
@@ -142,7 +144,7 @@ if (length(AnyFlags) == 0){
   }
   
   
-  if (length(PotentialMFIsDays) > 0){
+  if (length(PotentialMFIDays) > 0){
     
     if (length(MFIMatches) > 0){
       # Stage to Git
