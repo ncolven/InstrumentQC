@@ -24,6 +24,7 @@ library(openCyto)
 library(flowWorkspace)
 library(flowCore)
 library(lubridate)
+library(Luciernaga)
 
 # Find out current date
 Today <- Sys.Date()
@@ -134,12 +135,12 @@ if (length(AnyFlags) == 0){
           name <- paste0("HolisticData", Instrument, ".csv")
           StorageLocation <- file.path(ArchiveFolder, name)
           write.csv(UpdatedData, StorageLocation, row.names = FALSE)
-        }
-        else {
+        } else {
           message("No fcs files to update with in ", x)
         }
-      }}
-  } else {message("QC data has already been transferred")
+      }
+      }
+    } else {message("QC data has already been transferred")
     MFIMatches <- NULL
   }
   
