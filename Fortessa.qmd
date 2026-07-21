@@ -385,3 +385,5 @@ ggplotly(ScalingPlotsGain[[3]])
 ggplotly(ScalingPlotsGain[[4]])
 ggplotly(ScalingPlotsGain[[5]])
 ```
+
+## Individual Detectors

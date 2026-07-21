@@ -29,12 +29,11 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
   }
   WindowOfInterest <- Sys.time() - weeks(1)
   if (nrow(x) > 1) {
-    Data <- filter(x, DateTime > WindowOfInterest)
+    Data <- dplyr::filter(x, DateTime > WindowOfInterest)
     if (nrow(Data) == 0) {
       Data <- slice(x, 1)
     }
-  }
-  else {
+  }else {
     Data <- x
   }
   TheColumns <- Data %>% select(where(~is.numeric(.)||is.integer(.))) %>% colnames()
@@ -99,9 +98,6 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
     MFIStatus <- relocate(mutate(bind_cols(c(VioletStatus,BlueStatus,YellowGreenStatus,RedStatus)), 
                                  DateTime = Data$DateTime), DateTime, .before = 1)
   }
-  InstrumentMFI <- tidyr::pivot_longer(InstrumentMFI, !DateTime, names_to = "Detector", values_to = "MFI")
-  MFIStatus <- tidyr::pivot_longer(MFIStatus, !DateTime, names_to = "Detector", values_to = "Status")
-  MFITable <- mutate(InstrumentMFI, Status = MFIStatus$Status)
   }
   # rCVs
   {
@@ -158,11 +154,7 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
       RCVStatus <- relocate(mutate(bind_cols(c(VioletStatus,BlueStatus,YellowGreenStatus,RedStatus)), 
                                  DateTime = Data$DateTime), DateTime, .before = 1)
     }
-    InstrumentRCV <- tidyr::pivot_longer(InstrumentRCV, !DateTime, names_to = "Detector", values_to = "RCV")
-    RCVStatus <- tidyr::pivot_longer(RCVStatus, !DateTime, names_to = "Detector", values_to = "Status")
-    RCVTable <- mutate(InstrumentRCV, Status = RCVStatus$Status)
   }
-  InstrumentStatus <- mutate(MFITable[,1:3], MFIStatus=MFITable$Status, 
-                             RCV = RCVTable$RCV, RCVStatus = RCVStatus$Status)
+  InstrumentStatus <- bind_cols(InstrumentMFI, InstrumentRCV[,-1])
   return(InstrumentStatus)
 }
