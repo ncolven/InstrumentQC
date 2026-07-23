@@ -138,7 +138,8 @@ if (length(AnyFlags) == 0){
         else {
           message("No fcs files to update with in ", x)
         }
-      }}
+      }
+      }
   } else {message("QC data has already been transferred")
     MFIMatches <- NULL
   }
