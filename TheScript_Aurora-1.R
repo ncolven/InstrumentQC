@@ -21,6 +21,7 @@ library(stringr)
 library(purrr)
 library(flowWorkspace)
 library(flowCore)
+library(openCyto)
 library(lubridate)
 
 QbSureParse <- function (x, MainFolder, Template) {
