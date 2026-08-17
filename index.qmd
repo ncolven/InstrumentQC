@@ -339,7 +339,7 @@ HTML("
   <li><a href='data/3L/Archive/BeadData3L.csv'>Symphony-5</a></li>
   <li><a href='Fortessa.html'>Fortessa</a></li>
     <li><a href='data/3L/Archive/ArchivedData3L.csv'>Symphony A3</a></li>
-  <li><a href='data/3L/Archive/BeadData3L.csv'>Celesta-1</a></li>
+  <li><a href='Celesta-1.html'>Celesta-1</a></li>
   <li><a href='data/QCPlots_3L.pdf'>SP Celesta-2</a></li>
     <li><a href='data/3L/Archive/ArchivedData3L.csv'>SP Celesta-3</a></li>
   <li><a href='Aurora-1.html'>SP Aurora-1</a></li>

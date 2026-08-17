@@ -44,7 +44,6 @@ Repair5L <- Data %>% filter(instrument %in% "Aurora-1")
 
 ```{r}
 x <- MFI_5L
-x <- x %>% dplyr::filter(Timepoint %in% c("Before", "After"))
 TheColumns <- x %>% select(where(~is.numeric(.)||is.integer(.))) %>% colnames()
 TheColumns <- setdiff(TheColumns, "TIME")
 TheIntermediate <- TheColumns[!str_detect(TheColumns, "Gain")]
@@ -65,39 +64,39 @@ ScalingGains <- TheIntermediate[str_detect(TheIntermediate, "Scaling")]
 ScalingGains <- Luciernaga:::ColorPriority(ScalingGains)
 OtherGains <- c(ScatterGains, LaserGains, ScalingGains)
 
-UltraVioletPlotsMFI <- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=UltraVioletGains,
-                      plotType = "comparison", returntype = "plots",
-                      Metadata="Timepoint", strict = TRUE, YAxisLabel = "MFI",
+UltraVioletPlotsMFI <- QC_Plots(x=x, FailedFlag=FALSE, MeasurementType=UltraVioletGains,
+                      plotType = "individual", returntype = "plots",
+                      strict = TRUE, YAxisLabel = "MFI",
                       RepairVisits=Repair5L)
 
-VioletPlotsMFI <- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=VioletGains,
-                      plotType = "comparison", returntype = "plots",
-                      Metadata="Timepoint", strict = TRUE, YAxisLabel = "MFI",
+VioletPlotsMFI <- QC_Plots(x=x, FailedFlag=FALSE, MeasurementType=VioletGains,
+                      plotType = "individual", returntype = "plots",
+                      strict = TRUE, YAxisLabel = "MFI",
                       RepairVisits=Repair5L)
 
-BluePlotsMFI <- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=BlueGains,
-                      plotType = "comparison", returntype = "plots",
-                      Metadata="Timepoint", strict = TRUE, YAxisLabel = "MFI",
+BluePlotsMFI <- QC_Plots(x=x, FailedFlag=FALSE, MeasurementType=BlueGains,
+                      plotType = "individual", returntype = "plots",
+                      strict = TRUE, YAxisLabel = "MFI",
                       RepairVisits=Repair5L)
 
-YellowGreenPlotsMFI <- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=YellowGreenGains,
-                      plotType = "comparison", returntype = "plots",
-                      Metadata="Timepoint", strict = TRUE, YAxisLabel = "MFI",
+YellowGreenPlotsMFI <- QC_Plots(x=x, FailedFlag=FALSE, MeasurementType=YellowGreenGains,
+                      plotType = "individual", returntype = "plots",
+                      strict = TRUE, YAxisLabel = "MFI",
                       RepairVisits=Repair5L)
 
-RedPlotsMFI <- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=RedGains,
-                     plotType = "comparison", returntype = "plots",
-                     Metadata="Timepoint", strict = TRUE, YAxisLabel = "MFI",
+RedPlotsMFI <- QC_Plots(x=x, FailedFlag=FALSE, MeasurementType=RedGains,
+                     plotType = "individual", returntype = "plots",
+                     strict = TRUE, YAxisLabel = "MFI",
                      RepairVisits=Repair5L)
 
-ScatterPlotsMFI <- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=ScatterGains,
-                     plotType = "comparison", returntype = "plots",
-                     Metadata="Timepoint", strict = TRUE, YAxisLabel = " ",
+ScatterPlotsMFI <- QC_Plots(x=x, FailedFlag=FALSE, MeasurementType=ScatterGains,
+                     plotType = "individual", returntype = "plots",
+                     strict = TRUE, YAxisLabel = " ",
                      RepairVisits=Repair5L)
 
-LaserPlotsMFI <- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=LaserGains,
-                     plotType = "comparison", returntype = "plots",
-                     Metadata="Timepoint", strict = TRUE, YAxisLabel = " ",
+LaserPlotsMFI <- QC_Plots(x=x, FailedFlag=FALSE, MeasurementType=LaserGains,
+                     plotType = "individual", returntype = "plots",
+                     strict = TRUE, YAxisLabel = " ",
                      RepairVisits=Repair5L)
 ```
 
