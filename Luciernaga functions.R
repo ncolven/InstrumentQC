@@ -172,12 +172,10 @@ function (x, sample.name, stats, subsets = NULL, inverse.transform = FALSE)
   if (str_detect(Bound[["SAMPLE"]], "efore")) {
     Bound <- relocate(mutate(Bound, Timepoint = "Before"), 
                       Timepoint, .after = TIME)
-  }
-  else if (str_detect(Bound[["SAMPLE"]], "fter")) {
+  } else if (str_detect(Bound[["SAMPLE"]], "fter")) {
     Bound <- relocate(mutate(Bound, Timepoint = "After"), 
                       Timepoint, .after = TIME)
-  }
-  else {
+  } else {
     Bound <- relocate(mutate(Bound, Timepoint = "Unknown"), 
                       Timepoint, .after = TIME)
   }
@@ -223,15 +221,13 @@ function (x, sample.name)
   PV_Gains3 <- TheColumnNames[grepl("^\\$P[0-9]{3}V$", TheColumnNames)]
   if (length(PN_Names3) > 0) {
     PN_Names <- c(PN_Names1, PN_Names2, PN_Names3)
-  }
-  else {
+  }else {
     PN_Names <- c(PN_Names1, PN_Names2)
   }
   PN_Names <- PN_Names[-1]
   if (length(PV_Gains3) > 0) {
     PV_Gains <- c(PV_Gains1, PV_Gains2, PV_Gains3)
-  }
-  else {
+  }else {
     PV_Gains <- c(PV_Gains1, PV_Gains2)
   }
   ParameterRows <- map2(.x = PN_Names, .y = PV_Gains, .f = Luciernaga:::RetrievalMerge, 
@@ -425,22 +421,19 @@ function (x, FailedFlag, MeasurementType = NULL, Metadata = NULL,
   if (any(str_detect(colnames(x), "DateTime"))) {
     TheDateTime <- x %>% relocate(DateTime, .before = 1)
     TheDateTime[["DateTime"]] <- lubridate::ymd_hms(x[["DateTime"]])
-  }
-  else {
+  } else {
     TheDateTime <- x %>% mutate(DateTime = ymd(DATE) + hms(TIME)) %>% 
       relocate(DateTime, .before = 1)
   }
   if (!is.null(Metadata)) {
     TheDateTime <- TheDateTime %>% select(DateTime, contains(Metadata))
-  }
-  else {
+  } else {
     TheDateTime <- TheDateTime %>% select(DateTime)
   }
   if (!is.null(RepairVisits)) {
     if (!is.data.frame(RepairVisits)) {
       Visit <- read.csv(RepairVisits, check.names = FALSE)
-    }
-    else {
+    } else {
       Visit <- RepairVisits
     }
     Earliest <- TheDateTime %>% arrange(DateTime) %>% slice(1) %>% 
@@ -450,8 +443,7 @@ function (x, FailedFlag, MeasurementType = NULL, Metadata = NULL,
     Visit$date <- lubridate::mdy(Visit$date)
     TimeWindow <- Visit %>% filter(date > Earliest)
     TheEngineerVisits <- TimeWindow %>% pull(date)
-  }
-  else {
+  } else {
     TheEngineerVisits <- NULL
   }
   if (!is.null(MeasurementType)) {
@@ -465,12 +457,10 @@ function (x, FailedFlag, MeasurementType = NULL, Metadata = NULL,
     if (!plotType == "comparison" && FailedFlag == TRUE) {
       Flagged <- x %>% select(all_of(EquivalentFlags))
       ReorderedData <- cbind(Regular, Flagged)
-    }
-    else {
+    } else {
       ReorderedData <- Regular
     }
-  }
-  else {
+  } else {
     Regular <- x %>% select(-starts_with("Flag"))
     Flagged <- x %>% select(starts_with("Flag"))
     ReorderedData <- cbind(Regular, Flagged)
@@ -484,14 +474,12 @@ function (x, FailedFlag, MeasurementType = NULL, Metadata = NULL,
     Plots <- map(.x = DFNames, .f = Luciernaga:::LevyJennings, FailedFlag = FailedFlag, 
                  xValue = "DateTime", TheData = TheData, Metadata = Metadata, 
                  plotType = plotType, YAxisLabel = YAxisLabel, EngineerVisits = NULL)
-  }
-  else if (length(TheEngineerVisits) > 0) {
-    Plots <- map(.x = DFNames, .f = LevyJennings, FailedFlag = FailedFlag, 
+  } else if (length(TheEngineerVisits) > 0) {
+    Plots <- map(.x = DFNames, .f = Luciernaga:::LevyJennings, FailedFlag = FailedFlag, 
                  xValue = "DateTime", TheData = TheData, Metadata = Metadata, 
                  plotType = plotType, YAxisLabel = YAxisLabel, EngineerVisits = TheEngineerVisits)
-  }
-  else {
-    Plots <- map(.x = DFNames, .f = LevyJennings, FailedFlag = FailedFlag, 
+  } else {
+    Plots <- map(.x = DFNames, .f = Luciernaga:::LevyJennings, FailedFlag = FailedFlag, 
                  xValue = "DateTime", TheData = TheData, Metadata = Metadata, 
                  plotType = plotType, YAxisLabel = YAxisLabel, EngineerVisits = NULL)
   }
@@ -811,3 +799,42 @@ function (data)
 }
 <bytecode: 0x7faa21175448>
   <environment: namespace:Luciernaga>  
+#################
+#################
+#################
+Utility_Patchwork
+function (x, filename, outfolder, thecolumns = 2, therows = 3, 
+          width = 7, height = 9, returntype = "pdf", NotListofList = TRUE, 
+          patches = FALSE) 
+{
+  if (NotListofList == TRUE) {
+    theList <- x
+    theList <- Filter(Negate(is.null), theList)
+    theListLength <- length(theList)
+    theoreticalitems <- therows * thecolumns
+    sublists <- split_list(theList, theoreticalitems)
+  }
+  else {
+    sublists <- x
+    if (patches == TRUE) {
+      sublists <- flatten(sublists)
+    }
+  }
+  if (returntype == "pdf") {
+    MergedName <- paste(outfolder, filename, sep = "/")
+    pdf(file = paste(MergedName, ".pdf", sep = "", collapse = NULL), 
+        width = width, height = height)
+    p <- map(sublists, .f = sublist_plots, thecolumns = thecolumns, 
+             therows = therows)
+    print(p)
+    dev.off()
+  }
+  else if (returntype == "patchwork") {
+    p <- map(sublists, .f = sublist_plots, thecolumns = thecolumns, 
+             therows = therows)
+    return(p)
+  }
+}
+<bytecode: 0x7f7aa52362b0>
+  <environment: namespace:Luciernaga>
+  
