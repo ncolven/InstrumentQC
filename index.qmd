@@ -334,18 +334,18 @@ HTML("
 <ul>
   <li><a href='Symphony-1.html'>Symphony-1</a></li>
   <li><a href='Symphony-2.html'>Symphony-2</a></li>
-  <li><a href='data/QCPlots_3L.pdf'>SP Symphony-3</a></li>
+  <li><a href='Symphony-3.html'>SP Symphony-3</a></li>
     <li><a href='Symphony-4.html'>SP Symphony-4</a></li>
   <li><a href='data/3L/Archive/BeadData3L.csv'>Symphony-5</a></li>
   <li><a href='Fortessa.html'>Fortessa</a></li>
-    <li><a href='data/3L/Archive/ArchivedData3L.csv'>Symphony A3</a></li>
+    <li><a href='Symphony_A3.html'>Symphony A3</a></li>
   <li><a href='Celesta-1.html'>Celesta-1</a></li>
-  <li><a href='data/QCPlots_3L.pdf'>SP Celesta-2</a></li>
-    <li><a href='data/3L/Archive/ArchivedData3L.csv'>SP Celesta-3</a></li>
+  <li><a href='Celesta-2.html'>SP Celesta-2</a></li>
+    <li><a href='Celesta-3.html>SP Celesta-3</a></li>
   <li><a href='Aurora-1.html'>SP Aurora-1</a></li>
   <li><a href='data/QCPlots_3L.pdf'>Aurora-2</a></li>
-    <li><a href='data/3L/Archive/ArchivedData3L.csv'>Symphony S6-1</a></li>
-  <li><a href='data/3L/Archive/BeadData3L.csv'>SP Symphony S6-2</a></li>
+    <li><a href='Symphony_S6-1.html'>Symphony S6-1</a></li>
+  <li><a href='Symphony_S6-1.html'>SP Symphony S6-2</a></li>
   <li><a href='data/QCPlots_3L.pdf'>Symphony S6-3</a></li>
 </ul>
 ")

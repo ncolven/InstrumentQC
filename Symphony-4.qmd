@@ -262,7 +262,7 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
 Computer <- getwd()
 MainFolder <- file.path(Computer, "data")
 TheList <- "Symphony-4"
-ArchiveCSV <- read.csv(list.files(file.path(MainFolder,TheList,"Archive"), pattern = "Holistic", full.names = T))
+ArchiveCSV <- read.csv(list.files(file.path(MainFolder,TheList,"Archive"), pattern = "Holistic", full.names = T), check.names = F)
 #MainFolder <- "/home/david/Documents/InstrumentQC/data"
 
 CSTGates <- file.path(Computer, "Symphony-4.csv")

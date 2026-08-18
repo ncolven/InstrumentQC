@@ -14,8 +14,6 @@ library(purrr)
 library(stringr)
 library(plotly)
 library(data.table)
-library(flowWorkspace)
-library(openCyto)
 library(tidyr)
 library(Luciernaga)
 library(gt)
@@ -146,7 +144,7 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
   {
   TheIntermediate <- TheColumns[!str_detect(TheColumns, "Gain")]
   TheIntermediate <- TheIntermediate[!str_detect(TheIntermediate, "rCV")]
-  TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, "-A")]
+  TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, "-A$")]
   if (length(TheColumnNames) == 0){
     TheIntermediate <- TheIntermediate[str_detect(TheIntermediate, ".A")]
     TheColumnNames <- TheIntermediate[!str_detect(TheIntermediate, "_")]
@@ -177,6 +175,24 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
     BlueNames <- TheColumnNames[3:8]
     YellowGreenNames <- TheColumnNames[28:32]
     RedNames <- TheColumnNames[9:11]
+  } else if(Instrument == "Celesta-1"){
+    UVNames <- NULL
+    VioletNames <- TheColumnNames[12:17]
+    BlueNames <- TheColumnNames[3:4]
+    YellowGreenNames <- TheColumnNames[8:11]
+    RedNames <- TheColumnNames[5:7]
+  } else if(Instrument == "Symphony S6-1"){
+    UVNames <- TheColumnNames[26:33]  
+    VioletNames <- TheColumnNames[16:25]
+    BlueNames <- TheColumnNames[3:8]
+    YellowGreenNames <- TheColumnNames[9:13]
+    RedNames <- TheColumnNames[14:16]
+  }else if(Instrument == "Symphony S6-2"){
+    UVNames <- TheColumnNames[32:41]  
+    VioletNames <- TheColumnNames[18:31]
+    BlueNames <- TheColumnNames[3:11]
+    YellowGreenNames <- TheColumnNames[42:50]
+    RedNames <- TheColumnNames[12:17]
   }
   
   VioletMFI <- Data[,VioletNames]
@@ -205,6 +221,7 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
   # rCVs
   {
     TheIntermediate <- TheColumns[str_detect(TheColumns, "rCV")]
+    TheIntermediate <- TheIntermediate[!str_detect(TheIntermediate, "-H-")]
     TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, "-A")]
     if (length(TheColumnNames) == 0){
       TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, ".A")]
@@ -234,7 +251,25 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
       BlueNames <- TheColumnNames[3:8]
       YellowGreenNames <- TheColumnNames[28:32]
       RedNames <- TheColumnNames[9:11]
-    }
+    }else if(Instrument == "Celesta-1"){
+    UVNames <- NULL
+    VioletNames <- TheColumnNames[12:17]
+    BlueNames <- TheColumnNames[3:4]
+    YellowGreenNames <- TheColumnNames[8:11]
+    RedNames <- TheColumnNames[5:7]
+    } else if(Instrument == "Symphony S6-1"){
+    UVNames <- TheColumnNames[26:33]  
+    VioletNames <- TheColumnNames[16:25]
+    BlueNames <- TheColumnNames[3:8]
+    YellowGreenNames <- TheColumnNames[9:13]
+    RedNames <- TheColumnNames[14:16]
+    }else if(Instrument == "Symphony S6-2"){
+    UVNames <- TheColumnNames[32:41]  
+    VioletNames <- TheColumnNames[18:31]
+    BlueNames <- TheColumnNames[3:11]
+    YellowGreenNames <- TheColumnNames[42:50]
+    RedNames <- TheColumnNames[12:17]
+  }
     VioletRCV <- Data[,VioletNames]
     BlueRCV <- Data[,BlueNames]
     YellowGreenRCV <- Data[,YellowGreenNames]
@@ -263,12 +298,11 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
 }
 Computer <- getwd()
 MainFolder <- file.path(Computer, "data")
-TheList <- c("Symphony-2")
-ArchiveFolder <- file.path(MainFolder, TheList, "Archive")
+TheList <- "Symphony S6-2"
 ArchiveCSV <- read.csv(list.files(file.path(MainFolder,TheList,"Archive"), pattern = "Holistic", full.names = T), check.names = F)
 #MainFolder <- "/home/david/Documents/InstrumentQC/data"
 
-CSTGates <- file.path(Computer, "Symphony-2.csv")
+CSTGates <- file.path(Computer, "Symphony S6-2.csv")
 
 # Updating Data (Work through later)
 walk(.x=TheList, .f=FHCCQCParse, MainFolder=MainFolder, Template=CSTGates, subsets="Beads")
@@ -284,7 +318,7 @@ TheDate <- AriaData %>% slice(1) %>% pull(DATE)
 ```{r}
 WindowOfInterest <- Sys.time() - months(24)
 
-Both_Aria <- AriaData %>% filter(DateTime >= WindowOfInterest)
+Both_Aria <- AriaData %>% dplyr::filter(DateTime >= WindowOfInterest)
 ```
 
 ```{r}
@@ -292,9 +326,9 @@ Data <- read.csv("AuroraMaintenance.csv", check.names=FALSE)
 
 #Data <- read.csv("/home/david/Documents/InstrumentQC/AuroraMaintenance.csv", check.names=FALSE)
 
-Data <- Data %>% filter(!str_detect(reason, "lean"))
+Data <- Data %>% dplyr::filter(!str_detect(reason, "lean"))
 
-RepairAria <- Data %>% filter(instrument %in% "Symphony-2")
+RepairAria <- Data %>% dplyr::filter(instrument %in% "Symphony-4")
 Maintenance <- RepairAria
 ```
 
@@ -331,11 +365,11 @@ TheIntermediate <- TheColumns[!str_detect(TheColumns, "Gain")]
 TheIntermediate <- TheIntermediate[!str_detect(TheIntermediate, "rCV")]
 TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, "-A")]
 
-UVGains <- c(TheColumnNames[9], TheColumnNames[18], TheColumnNames[25:28], TheColumnNames[10])
-VioletGains <- c(TheColumnNames[7], TheColumnNames[14], TheColumnNames[22], TheColumnNames[16:17], TheColumnNames[23:24], TheColumnNames[8])
-BlueGains <- c(TheColumnNames[3], TheColumnNames[19:20], TheColumnNames[4], TheColumnNames[21])
-YellowGreenGains <- c(TheColumnNames[11], TheColumnNames[15], TheColumnNames[29:30], TheColumnNames[12])
-RedGains <- c(TheColumnNames[5], TheColumnNames[13], TheColumnNames[6])
+ UVGains <- TheColumnNames[32:41]  
+    VioletGains <- TheColumnNames[18:31]
+    BlueGains <- TheColumnNames[3:11]
+    YellowGreenGains <- TheColumnNames[42:50]
+    RedGains <- TheColumnNames[12:17]
 
 ScatterGains <- TheIntermediate[str_detect(TheIntermediate, "SC-")]
 ScatterGains <- Luciernaga:::ScalePriority(ScatterGains)
@@ -391,11 +425,11 @@ TheIntermediate <- TheColumns[!str_detect(TheColumns, "Gain")]
 TheIntermediate <- TheIntermediate[str_detect(TheIntermediate, "rCV")]
 TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, "-A")]
   
-UVGains <- c(TheColumnNames[9], TheColumnNames[18], TheColumnNames[25:28], TheColumnNames[10])
-VioletGains <- c(TheColumnNames[7], TheColumnNames[14], TheColumnNames[22], TheColumnNames[16:17], TheColumnNames[23:24], TheColumnNames[8])
-BlueGains <- c(TheColumnNames[3], TheColumnNames[19:20], TheColumnNames[4], TheColumnNames[21])
-YellowGreenGains <- c(TheColumnNames[11], TheColumnNames[15], TheColumnNames[29:30], TheColumnNames[12])
-RedGains <- c(TheColumnNames[5], TheColumnNames[13], TheColumnNames[6])
+ UVGains <- TheColumnNames[32:41]  
+    VioletGains <- TheColumnNames[18:31]
+    BlueGains <- TheColumnNames[3:11]
+    YellowGreenGains <- TheColumnNames[42:50]
+    RedGains <- TheColumnNames[12:17]
 
 ScatterGains <- TheIntermediate[str_detect(TheIntermediate, "SC-")]
 ScatterGains <- Luciernaga:::ScalePriority(ScatterGains)
@@ -439,11 +473,11 @@ TheColumns <- setdiff(TheColumns, "TIME")
 TheColumnNames <- TheColumns[str_detect(TheColumns, "Gain")]
 TheColumnNames <- TheColumnNames[str_detect(TheColumnNames, "-A")]
 
-UVGains <- c(TheColumnNames[8], TheColumnNames[17], TheColumnNames[24:27], TheColumnNames[9])
-VioletGains <- c(TheColumnNames[6], TheColumnNames[13], TheColumnNames[21], TheColumnNames[15:16], TheColumnNames[22:23], TheColumnNames[7])
-BlueGains <- c(TheColumnNames[2], TheColumnNames[18:19], TheColumnNames[3], TheColumnNames[20])
-YellowGreenGains <- c(TheColumnNames[12], TheColumnNames[14], TheColumnNames[28:29], TheColumnNames[11])
-RedGains <- c(TheColumnNames[4], TheColumnNames[12], TheColumnNames[5])
+UVGains <- TheColumnNames[31:40]  
+    VioletGains <- TheColumnNames[17:30]
+    BlueGains <- TheColumnNames[2:10]
+    YellowGreenGains <- TheColumnNames[41:49]
+    RedGains <- TheColumnNames[11:16]
 
 ScatterGains <- TheColumnNames[str_detect(TheColumnNames, "SC-")]
 ScatterGains <- Luciernaga:::ScalePriority(ScatterGains)
@@ -492,7 +526,7 @@ ScalingPlotsGain <- QC_Plots(x=x, FailedFlag=FALSE, MeasurementType=ScalingGains
 #| echo: false
 PDFPlots <- c(UVPlotsMFI, VioletPlotsMFI, BluePlotsMFI, YellowGreenPlotsMFI, RedPlotsMFI, ScatterPlotsMFI, UVPlotsGain, VioletPlotsGain, BluePlotsGain, YellowGreenPlotsGain, RedPlotsGain, ScatterPlotsGain, LaserPlotsGain, ScalingPlotsGain, UVPlotsRCV, VioletPlotsRCV, BluePlotsRCV, YellowGreenPlotsRCV, RedPlotsRCV, ScatterPlotsRCV)
 
-Filename <- paste0("QCPlots_Fortessa")
+Filename <- paste0("QCPlots_Symphony S6-2")
 
 PDF <- Utility_Patchwork(x=PDFPlots, filename=Filename, returntype="pdf", outfolder=MainFolder, thecolumns=1)
 ```
@@ -521,9 +555,7 @@ This dashboard was created with [Quarto](https://quarto.org/) and is maintained 
 ```{r}
 DailyTable
 ```
-
 ## MFI {.tabset}
-
 ```{r}
 #| title: UV
 ggplotly(UVPlotsMFI[[1]])
@@ -533,6 +565,9 @@ ggplotly(UVPlotsMFI[[4]])
 ggplotly(UVPlotsMFI[[5]])
 ggplotly(UVPlotsMFI[[6]])
 ggplotly(UVPlotsMFI[[7]])
+ggplotly(UVPlotsMFI[[8]])
+ggplotly(UVPlotsMFI[[9]])
+ggplotly(UVPlotsMFI[[10]])
 ```
 
 ```{r}
@@ -545,6 +580,12 @@ ggplotly(VioletPlotsMFI[[5]])
 ggplotly(VioletPlotsMFI[[6]])
 ggplotly(VioletPlotsMFI[[7]])
 ggplotly(VioletPlotsMFI[[8]])
+ggplotly(VioletPlotsMFI[[9]])
+ggplotly(VioletPlotsMFI[[10]])
+ggplotly(VioletPlotsMFI[[11]])
+ggplotly(VioletPlotsMFI[[12]])
+ggplotly(VioletPlotsMFI[[13]])
+ggplotly(VioletPlotsMFI[[14]])
 ```
 
 ```{r}
@@ -554,6 +595,10 @@ ggplotly(BluePlotsMFI[[2]])
 ggplotly(BluePlotsMFI[[3]])
 ggplotly(BluePlotsMFI[[4]])
 ggplotly(BluePlotsMFI[[5]])
+ggplotly(BluePlotsMFI[[6]])
+ggplotly(BluePlotsMFI[[7]])
+ggplotly(BluePlotsMFI[[8]])
+ggplotly(BluePlotsMFI[[9]])
 ```
 
 ```{r}
@@ -563,6 +608,10 @@ ggplotly(YellowGreenPlotsMFI[[2]])
 ggplotly(YellowGreenPlotsMFI[[3]])
 ggplotly(YellowGreenPlotsMFI[[4]])
 ggplotly(YellowGreenPlotsMFI[[5]])
+ggplotly(YellowGreenPlotsMFI[[6]])
+ggplotly(YellowGreenPlotsMFI[[7]])
+ggplotly(YellowGreenPlotsMFI[[8]])
+ggplotly(YellowGreenPlotsMFI[[9]])
 ```
 
 ```{r}
@@ -570,12 +619,15 @@ ggplotly(YellowGreenPlotsMFI[[5]])
 ggplotly(RedPlotsMFI[[1]])
 ggplotly(RedPlotsMFI[[2]])
 ggplotly(RedPlotsMFI[[3]])
+ggplotly(RedPlotsMFI[[4]])
+ggplotly(RedPlotsMFI[[5]])
+ggplotly(RedPlotsMFI[[6]])
 ```
 
 ```{r}
 #| title: Scatter
 ggplotly(ScatterPlotsMFI[[1]])
-ggplotly(ScatterPlotsMFI[[3]])
+ggplotly(ScatterPlotsMFI[[2]])
 ```
 
 ```{r}
@@ -596,6 +648,7 @@ ggplotly(ScalingPlotsGain[[5]])
 ggplotly(ScalingPlotsGain[[4]])
 ```
 
+
 ## rCV {.tabset}
 
 ```{r}
@@ -607,6 +660,9 @@ ggplotly(UVPlotsRCV[[4]])
 ggplotly(UVPlotsRCV[[5]])
 ggplotly(UVPlotsRCV[[6]])
 ggplotly(UVPlotsRCV[[7]])
+ggplotly(UVPlotsRCV[[8]])
+ggplotly(UVPlotsRCV[[9]])
+ggplotly(UVPlotsRCV[[10]])
 ```
 
 ```{r}
@@ -616,9 +672,15 @@ ggplotly(VioletPlotsRCV[[2]])
 ggplotly(VioletPlotsRCV[[3]])
 ggplotly(VioletPlotsRCV[[4]])
 ggplotly(VioletPlotsRCV[[5]])
-ggplotly(VioletPlotsRCV[[6]])
 ggplotly(VioletPlotsRCV[[7]])
 ggplotly(VioletPlotsRCV[[8]])
+ggplotly(VioletPlotsRCV[[9]])
+ggplotly(VioletPlotsRCV[[11]])
+ggplotly(VioletPlotsRCV[[13]])
+ggplotly(VioletPlotsRCV[[14]])
+ggplotly(VioletPlotsRCV[[15]])
+ggplotly(VioletPlotsRCV[[16]])
+ggplotly(VioletPlotsRCV[[17]])
 ```
 
 ```{r}
@@ -628,6 +690,10 @@ ggplotly(BluePlotsRCV[[2]])
 ggplotly(BluePlotsRCV[[3]])
 ggplotly(BluePlotsRCV[[4]])
 ggplotly(BluePlotsRCV[[5]])
+ggplotly(BluePlotsRCV[[6]])
+ggplotly(BluePlotsRCV[[7]])
+ggplotly(BluePlotsRCV[[8]])
+ggplotly(BluePlotsRCV[[9]])
 ```
 
 ```{r}
@@ -637,6 +703,10 @@ ggplotly(YellowGreenPlotsRCV[[2]])
 ggplotly(YellowGreenPlotsRCV[[3]])
 ggplotly(YellowGreenPlotsRCV[[4]])
 ggplotly(YellowGreenPlotsRCV[[5]])
+ggplotly(YellowGreenPlotsRCV[[6]])
+ggplotly(YellowGreenPlotsRCV[[7]])
+ggplotly(YellowGreenPlotsRCV[[8]])
+ggplotly(YellowGreenPlotsRCV[[9]])
 ```
 
 ```{r}
@@ -644,6 +714,9 @@ ggplotly(YellowGreenPlotsRCV[[5]])
 ggplotly(RedPlotsRCV[[1]])
 ggplotly(RedPlotsRCV[[2]])
 ggplotly(RedPlotsRCV[[3]])
+ggplotly(RedPlotsRCV[[4]])
+ggplotly(RedPlotsRCV[[5]])
+ggplotly(RedPlotsRCV[[6]])
 ```
 
 ```{r}

@@ -2,6 +2,7 @@
 library(devtools)
 library(BiocManager)
 
+library(git2r)
 library(Luciernaga)
 library(flowCore)
 library(flowWorkspace)
@@ -17,4 +18,3 @@ library(plotly)
 library(htmltools)
 library(ggbeeswarm)
 library(shinylive)
-library(git2r)
