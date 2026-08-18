@@ -11,7 +11,7 @@ Windows <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 OperatingSystem <- Sys.info()["sysname"]
 # if(OperatingSystem == "Linux"){OS <- Linux
 # } else if (OperatingSystem == "Windows"){OS <- Windows}
-OS <- Windows
+OS <- Linux
 
 WorkingDirectory <- OS
 setwd(WorkingDirectory)
@@ -44,7 +44,7 @@ if (length(AnyFlags) == 0){
   #git2r::pull(TheRepo)
   
   # Locating Archive Folder
-  Instrument <- "Symphony-2"
+  Instrument <- "Symphony A3"
   MainFolder <- file.path(WorkingDirectory, "data")
   WorkingFolder <- file.path(WorkingDirectory, "data", Instrument)
   StorageFolder <- file.path(WorkingFolder, "Archive")
@@ -54,22 +54,22 @@ if (length(AnyFlags) == 0){
   LastMFIsItem <- MFIs |> dplyr::slice(1) |> dplyr::pull(DateTime)
   LastMFIsItem <- lubridate::ymd_hms(LastMFIsItem)
   LastMFIsItem <- as.Date(LastMFIsItem)
-  PotentialMFIDays <- seq.Date(from = LastMFIsItem, to = Today, by = "day")
-  MFIsRemoveIndex <- which(PotentialMFIDays == LastMFIsItem)
-  PotentialMFIDays <- PotentialMFIDays[-MFIsRemoveIndex]
+  PotentialMFIsDays <- seq.Date(from = LastMFIsItem, to = Today, by = "day")
+  MFIsRemoveIndex <- which(PotentialMFIsDays == LastMFIsItem)
+  PotentialMFIsDays <- PotentialMFIsDays[-MFIsRemoveIndex]
   
   if (!length(PotentialMFIDays) == 0){
     # MFI Starting Locations
-    SetupFolder <- file.path(SetupFolder, "DailyQC")
+    #SetupFolder <- #file.path(SetupFolder, "DailyQC")
     TheFCSFiles <- list.files(SetupFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
     
-    days <- format(PotentialMFIDays, "%m%d")
+    days <- format(PotentialMFIsDays, "%m%d")
     
     MFIMatches <- TheFCSFiles[str_detect(basename(TheFCSFiles), str_c(days, collapse = "|"))]
     
     if (!length(MFIMatches) == 0){
       file.copy(MFIMatches, WorkingFolder)
-      Template <- file.path(WorkingDirectory, "Symphony-2.csv")
+      Template <- file.path(WorkingDirectory, paste0(Instrument, ".csv"))
       # Rainbow bead Parse
       {
         Folder <- file.path(MainFolder, Instrument)
@@ -135,17 +135,17 @@ if (length(AnyFlags) == 0){
           name <- paste0("HolisticData", Instrument, ".csv")
           StorageLocation <- file.path(ArchiveFolder, name)
           write.csv(UpdatedData, StorageLocation, row.names = FALSE)
-        }
-        else {
+        } else {
           message("No fcs files to update with in ", x)
         }
-      }}
+      }
+    }
   } else {message("QC data has already been transferred")
     MFIMatches <- NULL
   }
   
   
-  if (length(PotentialMFIDays) > 0){
+  if (length(PotentialMFIsDays) > 0){
     
     if (length(MFIMatches) > 0){
       # Stage to Git

@@ -11,7 +11,7 @@ Windows <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 OperatingSystem <- Sys.info()["sysname"]
 # if(OperatingSystem == "Linux"){OS <- Linux
 # } else if (OperatingSystem == "Windows"){OS <- Windows}
-OS <- Linux
+OS <- Windows
 
 WorkingDirectory <- OS
 setwd(WorkingDirectory)
@@ -60,7 +60,7 @@ if (length(AnyFlags) == 0){
   
   if (!length(PotentialMFIDays) == 0){
     # MFI Starting Locations
-    #SetupFolder <- #file.path(SetupFolder, "DailyQC")
+    #SetupFolder <- file.path(SetupFolder, "DailyQC")
     TheFCSFiles <- list.files(SetupFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
     
     days <- format(PotentialMFIDays, "%m%d")
@@ -80,7 +80,8 @@ if (length(AnyFlags) == 0){
           DateFormat <- keyword(The_CS[[1]])$`$DATE`
           if (DateFormat == "01-Jan-0001") {
             sample.name1 <- "$FIL"
-          } else {
+          }
+          else {
             sample.name1 <- "$DATE"
           }
           Gating <- data.table::fread(Template)
@@ -138,8 +139,7 @@ if (length(AnyFlags) == 0){
         else {
           message("No fcs files to update with in ", x)
         }
-      }
-      }
+      }}
   } else {message("QC data has already been transferred")
     MFIMatches <- NULL
   }

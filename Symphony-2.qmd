@@ -263,7 +263,7 @@ Computer <- getwd()
 MainFolder <- file.path(Computer, "data")
 TheList <- c("Symphony-2")
 ArchiveFolder <- file.path(MainFolder, TheList, "Archive")
-ArchiveCSV <- list.files(ArchiveFolder, pattern = "Holistic", full.names = T)
+ArchiveCSV <- read.csv(list.files(file.path(MainFolder,TheList,"Archive"), pattern = "Holistic", full.names = T), check.names = F)
 #MainFolder <- "/home/david/Documents/InstrumentQC/data"
 
 CSTGates <- file.path(Computer, "Symphony-2.csv")
