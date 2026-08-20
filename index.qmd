@@ -17,62 +17,364 @@ library(stringr)
 library(plotly)
 library(Luciernaga)
 library(htmltools)
+library(lubridate)
+library(tidyr)
 
 Computer <- getwd()
 MainFolder <- file.path(Computer, "data")
-TheList <- c("Symphony-2", "Fortessa", "Aurora-1", "Aurora-2")
+TheList <- c("Symphony-1","Symphony-2", "Symphony-3","Symphony-4","Symphony-5","Fortessa","Symphony A3", "Celesta-1", "Celesta-2","Celesta-3","Aurora-1", "Aurora-2", "Symphony S6-1","Symphony S6-2","Symphony S6-3")
 
 # Updating Data
 #walk(.x=TheList, MainFolder=MainFolder, .f=Luciernaga:::DailyQCParse)
 #walk(.x=TheList, .f=Luciernaga:::QCBeadParse, MainFolder=MainFolder)
+BDSummary <- function (x, Instrument){
+  WindowOfInterest <- Sys.time() - weeks(1)
+  if (nrow(x) > 1) {
+    Data <- dplyr::filter(x, DateTime > WindowOfInterest)
+    if (nrow(Data) == 0) {
+      Data <- slice(x, 1)
+    }
+  }else {
+    Data <- x
+  }
+  TheColumns <- Data %>% select(where(~is.numeric(.)||is.integer(.))) %>% colnames()
+  TheColumns <- setdiff(TheColumns, "TIME")
+  
+  # MFIs
+  {
+  TheIntermediate <- TheColumns[!str_detect(TheColumns, "Gain")]
+  TheIntermediate <- TheIntermediate[!str_detect(TheIntermediate, "rCV")]
+  TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, "-A")]
+  if (length(TheColumnNames) == 0){
+    TheIntermediate <- TheIntermediate[str_detect(TheIntermediate, ".A")]
+    TheColumnNames <- TheIntermediate[!str_detect(TheIntermediate, "_")]
+  }
+  
+  if (Instrument == "Fortessa"){
+    UVNames <- TheColumnNames[16:22]  
+    VioletNames <- TheColumnNames[23:30]
+    BlueNames <- TheColumnNames[3:7]
+    YellowGreenNames <- TheColumnNames[8:12]
+    YellowGreenNames[length(YellowGreenNames)+1] <- TheColumnNames[31]
+    RedNames <- TheColumnNames[13:15]
+  } else if(Instrument == "Symphony-1"){
+    UVNames <- TheColumnNames[19:25]  
+    VioletNames <- TheColumnNames[11:18]
+    BlueNames <- TheColumnNames[3:7]
+    YellowGreenNames <- TheColumnNames[26:30]
+    RedNames <- TheColumnNames[8:10]
+  }else if(Instrument == "Symphony-2"){
+    UVNames <- c(TheColumnNames[9],TheColumnNames[18],TheColumnNames[25:28],TheColumnNames[10])
+    VioletNames <- c(TheColumnNames[7],TheColumnNames[14],TheColumnNames[22],TheColumnNames[16:17],TheColumnNames[23:24], TheColumnNames[8])
+    BlueNames <- c(TheColumnNames[3],TheColumnNames[19:20],TheColumnNames[4],TheColumnNames[21])
+    YellowGreenNames <- c(TheColumnNames[11],TheColumnNames[15],TheColumnNames[29:30],TheColumnNames[12])
+    RedNames <- c(TheColumnNames[5],TheColumnNames[13],TheColumnNames[6])
+  } else if(Instrument == "Symphony-3"){
+    UVNames <- TheColumnNames[32:41]  
+    VioletNames <- TheColumnNames[18:31]
+    BlueNames <- TheColumnNames[3:11]
+    YellowGreenNames <- TheColumnNames[42:50]
+    RedNames <- TheColumnNames[12:17]
+  }else if(Instrument == "Symphony-4"){
+    UVNames <- TheColumnNames[20:27]  
+    VioletNames <- TheColumnNames[12:19]
+    BlueNames <- TheColumnNames[3:8]
+    YellowGreenNames <- TheColumnNames[28:32]
+    RedNames <- TheColumnNames[9:11]
+  }else if(Instrument == "Symphony-5"){
+    UVNames <- TheColumnNames[3:12]  
+    VioletNames <- TheColumnNames[13:26]
+    BlueNames <- TheColumnNames[27:35]
+    YellowGreenNames <- TheColumnNames[36:45]
+    RedNames <- TheColumnNames[46:51]
+  }else if(Instrument == "Symphony A3"){
+    UVNames <- TheColumnNames[3:8]  
+    VioletNames <- TheColumnNames[9:14]
+    BlueNames <- TheColumnNames[15:18]
+    YellowGreenNames <- TheColumnNames[22:25]
+    RedNames <- TheColumnNames[19:21]
+  }else if(Instrument == "Celesta-1"){
+    UVNames <- NULL
+    VioletNames <- TheColumnNames[12:17]
+    BlueNames <- TheColumnNames[3:4]
+    YellowGreenNames <- TheColumnNames[8:11]
+    RedNames <- TheColumnNames[5:7]
+  } else if(Instrument == "Celesta-2"){
+    UVNames <- NULL
+    VioletNames <- TheColumnNames[12:17]
+    BlueNames <- TheColumnNames[3:4]
+    YellowGreenNames <- TheColumnNames[8:11]
+    RedNames <- TheColumnNames[5:7]
+  } else if(Instrument == "Celesta-3"){
+    UVNames <- NULL
+    VioletNames <- TheColumnNames[12:17]
+    BlueNames <- TheColumnNames[3:4]
+    YellowGreenNames <- TheColumnNames[8:11]
+    RedNames <- TheColumnNames[5:7]
+  }  else if(Instrument == "Symphony S6-1"){
+    UVNames <- TheColumnNames[26:33]  
+    VioletNames <- TheColumnNames[16:25]
+    BlueNames <- TheColumnNames[3:8]
+    YellowGreenNames <- TheColumnNames[9:13]
+    RedNames <- TheColumnNames[14:16]
+  }else if(Instrument == "Symphony S6-2"){
+    UVNames <- TheColumnNames[32:41]  
+    VioletNames <- TheColumnNames[18:31]
+    BlueNames <- TheColumnNames[3:11]
+    YellowGreenNames <- TheColumnNames[42:50]
+    RedNames <- TheColumnNames[12:17]
+  }else if(Instrument == "Symphony S6-3"){
+    UVNames <- TheColumnNames[3:12]  
+    VioletNames <- TheColumnNames[13:26]
+    BlueNames <- TheColumnNames[27:35]
+    YellowGreenNames <- TheColumnNames[36:44]
+    RedNames <- TheColumnNames[45:50]
+  }
+  
+  VioletMFI <- Data[,VioletNames]
+  BlueMFI <- Data[,BlueNames]
+  YellowGreenMFI <- Data[,YellowGreenNames]
+  RedMFI <- Data[,RedNames]
+  
+  if (!length(UVNames) == 0){
+    UVMFI <- Data[,UVNames]
+    InstrumentMFI <- relocate(mutate(bind_cols(c(UVMFI,VioletMFI,BlueMFI,YellowGreenMFI,RedMFI)), 
+                                     DateTime = Data$DateTime), DateTime, .before = 1)
+  } else{
+    InstrumentMFI <- relocate(mutate(bind_cols(c(VioletMFI,BlueMFI,YellowGreenMFI,RedMFI)), 
+                                     DateTime = Data$DateTime), DateTime, .before = 1)
+  }
+  }
+  # rCVs
+  {
+    TheIntermediate <- TheColumns[str_detect(TheColumns, "rCV")]
+    TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, "-A")]
+    if (length(TheColumnNames) == 0){
+      TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, ".A")]
+    }
+    if (Instrument == "Fortessa"){
+      UVNames <- TheColumnNames[16:22]  
+      VioletNames <- TheColumnNames[23:30]
+      BlueNames <- TheColumnNames[3:7]
+      YellowGreenNames <- TheColumnNames[8:12]
+      YellowGreenNames[length(YellowGreenNames)+1] <- TheColumnNames[31]
+      RedNames <- TheColumnNames[13:15]
+    } else if(Instrument == "Symphony-1"){
+      UVNames <- TheColumnNames[19:25]  
+      VioletNames <- TheColumnNames[11:18]
+      BlueNames <- TheColumnNames[3:7]
+      YellowGreenNames <- TheColumnNames[26:30]
+      RedNames <- TheColumnNames[8:10]
+    }else if(Instrument == "Symphony-2"){
+      UVNames <- c(TheColumnNames[9],TheColumnNames[18],TheColumnNames[25:28],TheColumnNames[10])
+      VioletNames <- c(TheColumnNames[7],TheColumnNames[14],TheColumnNames[22],TheColumnNames[16:17],TheColumnNames[23:24], TheColumnNames[8])
+      BlueNames <- c(TheColumnNames[3],TheColumnNames[19:20],TheColumnNames[4],TheColumnNames[21])
+      YellowGreenNames <- c(TheColumnNames[11],TheColumnNames[15],TheColumnNames[29:30],TheColumnNames[12])
+      RedNames <- c(TheColumnNames[5],TheColumnNames[13],TheColumnNames[6])
+    } else if(Instrument == "Symphony-3"){
+      UVNames <- TheColumnNames[32:41]  
+      VioletNames <- TheColumnNames[18:31]
+      BlueNames <- TheColumnNames[3:11]
+      YellowGreenNames <- TheColumnNames[42:50]
+      RedNames <- TheColumnNames[12:17]
+    }else if(Instrument == "Symphony-4"){
+      UVNames <- TheColumnNames[20:27]  
+      VioletNames <- TheColumnNames[12:19]
+      BlueNames <- TheColumnNames[3:8]
+      YellowGreenNames <- TheColumnNames[28:32]
+      RedNames <- TheColumnNames[9:11]
+    }else if(Instrument == "Symphony-5"){
+      UVNames <- TheColumnNames[3:12]  
+      VioletNames <- TheColumnNames[13:26]
+      BlueNames <- TheColumnNames[27:35]
+      YellowGreenNames <- TheColumnNames[36:45]
+      RedNames <- TheColumnNames[46:51]
+    }else if(Instrument == "Symphony A3"){
+      UVNames <- TheColumnNames[3:8]  
+      VioletNames <- TheColumnNames[9:14]
+      BlueNames <- TheColumnNames[15:18]
+      YellowGreenNames <- TheColumnNames[22:25]
+      RedNames <- TheColumnNames[19:21]
+    }else if(Instrument == "Celesta-1"){
+      UVNames <- NULL
+      VioletNames <- TheColumnNames[12:17]
+      BlueNames <- TheColumnNames[3:4]
+      YellowGreenNames <- TheColumnNames[8:11]
+      RedNames <- TheColumnNames[5:7]
+    } else if(Instrument == "Celesta-2"){
+      UVNames <- NULL
+      VioletNames <- TheColumnNames[12:17]
+      BlueNames <- TheColumnNames[3:4]
+      YellowGreenNames <- TheColumnNames[8:11]
+      RedNames <- TheColumnNames[5:7]
+    } else if(Instrument == "Celesta-3"){
+      UVNames <- NULL
+      VioletNames <- TheColumnNames[12:17]
+      BlueNames <- TheColumnNames[3:4]
+      YellowGreenNames <- TheColumnNames[8:11]
+      RedNames <- TheColumnNames[5:7]
+    }  else if(Instrument == "Symphony S6-1"){
+      UVNames <- TheColumnNames[26:33]  
+      VioletNames <- TheColumnNames[16:25]
+      BlueNames <- TheColumnNames[3:8]
+      YellowGreenNames <- TheColumnNames[9:13]
+      RedNames <- TheColumnNames[14:16]
+    }else if(Instrument == "Symphony S6-2"){
+      UVNames <- TheColumnNames[32:41]  
+      VioletNames <- TheColumnNames[18:31]
+      BlueNames <- TheColumnNames[3:11]
+      YellowGreenNames <- TheColumnNames[42:50]
+      RedNames <- TheColumnNames[12:17]
+    }else if(Instrument == "Symphony S6-3"){
+      UVNames <- TheColumnNames[3:12]  
+      VioletNames <- TheColumnNames[13:26]
+      BlueNames <- TheColumnNames[27:35]
+      YellowGreenNames <- TheColumnNames[36:44]
+      RedNames <- TheColumnNames[45:50]
+    }
+    VioletRCV <- Data[,VioletNames]
+    BlueRCV <- Data[,BlueNames]
+    YellowGreenRCV <- Data[,YellowGreenNames]
+    RedRCV <- Data[,RedNames]
+    
+    if (!length(UVNames) == 0){
+      UVRCV <- Data[,UVNames]
+      InstrumentRCV <- relocate(mutate(bind_cols(c(UVRCV,VioletRCV,BlueRCV,YellowGreenRCV,RedRCV)), 
+                                       DateTime = Data$DateTime), DateTime, .before = 1)
+    } else{
+      InstrumentRCV <- relocate(mutate(bind_cols(c(VioletRCV,BlueRCV,YellowGreenRCV,RedRCV)), 
+                                       DateTime = Data$DateTime), DateTime, .before = 1)
+    }
+  }
+  InstrumentStatus <- bind_cols(InstrumentMFI, InstrumentRCV[,-1])
+  return(InstrumentStatus)
+}
+DetailTable <- function(InstrumentStatus){
+  IntermediateTable <- tidyr::pivot_longer(InstrumentStatus[,!str_detect(colnames(InstrumentStatus), "rCV")], !DateTime, names_to="Detector", values_to="MFI")
+  RCVTable <- pivot_longer(mutate(DateTime = InstrumentStatus$DateTime, InstrumentStatus[,str_detect(colnames(InstrumentStatus), "rCV")]),
+                           !DateTime, values_to = "RCV")
+  IntermediateTable <- bind_cols(IntermediateTable, RCVTable[,3])
+  DetailTable <- arrange(IntermediateTable, desc(IntermediateTable$DateTime))
+  DetailTable <- DetailTable[str_detect(as_date(DetailTable$DateTime), 
+                                        as.character(as_date(DetailTable$DateTime[1]))),]
+  TableDate <- as.character(as_date(DetailTable$DateTime[1]))
+  DetailTable <- DetailTable[,-1]
+  
+  return(DetailTable)
+}
+FHCurrentData <- function(x, MainFolder){
+  ArchiveCSV <- read.csv(list.files(file.path(MainFolder,x,"Archive"), pattern = "Holistic", full.names = T), check.names = F)
+  InstrumentStatus <- BDSummary(ArchiveCSV, x)
+  return(InstrumentStatus)
+}
+FHStatus <- function(BDTable){
+  Status <- "Pass"
+  if (any(BDTable$MFI >12000)){
+    Status <- "Warning"
+  }
+if (any(BDTable$MFI < 8000)||any(BDTable$RCV >= 15)){
+  Status <- "Fail"
+}
+  return(Status)
+}
+FHColor <- function(x){
+  dplyr::case_when(x == "Pass" ~ "success", x == "Yellow" ~ 
+                     "#EBC106", x == "Warning" ~ "#d65d26", x == "Fail" ~ "danger", 
+                   TRUE ~ NA_character_)
+}
+
 ```
 
 ```{r}
-MFI_3L <- Luciernaga:::CurrentData(x="3L", MainFolder=MainFolder, type = "MFI")
-Gain_3L <- Luciernaga:::CurrentData(x="3L", MainFolder=MainFolder, type = "Gain")
+MFI_A1 <- Luciernaga:::CurrentData(x="Aurora-1", MainFolder=MainFolder, type = "MFI")
+Gain_A1 <- Luciernaga:::CurrentData(x="Aurora-1", MainFolder=MainFolder, type = "Gain")
 
-MFI_4L <- Luciernaga:::CurrentData(x="4L", MainFolder=MainFolder, type = "MFI")
-Gain_4L <- Luciernaga:::CurrentData(x="4L", MainFolder=MainFolder, type = "Gain")
+MFI_A2 <- Luciernaga:::CurrentData(x="Aurora-2", MainFolder=MainFolder, type = "MFI")
+Gain_A2 <- Luciernaga:::CurrentData(x="Aurora-2", MainFolder=MainFolder, type = "Gain")
 
-MFI_5L <- Luciernaga:::CurrentData(x="Aurora-1", MainFolder=MainFolder, type = "MFI")
-Gain_5L <- Luciernaga:::CurrentData(x="Aurora-1", MainFolder=MainFolder, type = "Gain")
+MFI_S1 <- FHCurrentData(x="Symphony-1", MainFolder=MainFolder)
 
-MFI_CS <- Luciernaga:::CurrentData(x="CS", MainFolder=MainFolder, type = "MFI")
-Gain_CS <- Luciernaga:::CurrentData(x="CS", MainFolder=MainFolder, type = "Gain")
+MFI_S2 <- FHCurrentData(x="Symphony-2", MainFolder=MainFolder)
 
-MFI_Fort <- Luciernaga:::CurrentData(x="Fortessa", MainFolder=MainFolder, type = "Both")
-#Gain_Fort
+MFI_S3 <- FHCurrentData(x="Symphony-3", MainFolder=MainFolder)
+
+MFI_S4 <- FHCurrentData(x="Symphony-4", MainFolder=MainFolder)
+
+MFI_S5 <- FHCurrentData(x="Symphony-5", MainFolder=MainFolder)
+
+MFI_Fort <- FHCurrentData(x="Fortessa", MainFolder=MainFolder)
+
+MFI_SA3 <- FHCurrentData(x="Symphony A3", MainFolder=MainFolder)
+
+MFI_C1 <- FHCurrentData(x="Celesta-1", MainFolder=MainFolder)
+
+MFI_C2 <- FHCurrentData(x="Celesta-2", MainFolder=MainFolder)
+
+MFI_C3 <- FHCurrentData(x="Celesta-3", MainFolder=MainFolder)
+
+MFI_S61 <- FHCurrentData(x="Symphony S6-1", MainFolder=MainFolder)
+
+MFI_S62 <- FHCurrentData(x="Symphony S6-2", MainFolder=MainFolder)
+
+MFI_S63 <- FHCurrentData(x="Symphony S6-3", MainFolder=MainFolder)
 ```
 
 ```{r}
 #| eval: false
 WindowOfInterest <- Sys.time() - months(24)
 
-MFI_3L <- MFI_3L |> filter(DateTime >= WindowOfInterest)
-Gain_3L <- Gain_3L |> filter(DateTime >= WindowOfInterest)
+MFI_A1 <- MFI_A1 |> filter(DateTime >= WindowOfInterest)
+Gain_A1 <- Gain_A1 |> filter(DateTime >= WindowOfInterest)
 
-MFI_4L <- MFI_4L |> filter(DateTime >= WindowOfInterest)
-Gain_4L <- Gain_4L |> filter(DateTime >= WindowOfInterest)
+MFI_A2 <- MFI_A2 |> filter(DateTime >= WindowOfInterest)
+Gain_A2 <- Gain_A2 |> filter(DateTime >= WindowOfInterest)
 
-MFI_5L <- MFI_5L |> filter(DateTime >= WindowOfInterest)
-Gain_5L <- Gain_5L |> filter(DateTime >= WindowOfInterest)
+MFI_S1 <- MFI_S1 |> filter(DateTime >= WindowOfInterest)
 
-MFI_CS <- MFI_CS |> filter(DateTime >= WindowOfInterest)
-Gain_CS <- Gain_CS |> filter(DateTime >= WindowOfInterest)
+MFI_S2 <- MFI_S2 |> filter(DateTime >= WindowOfInterest)
+
+MFI_S3 <- MFI_S3 |> filter(DateTime >= WindowOfInterest)
+
+MFI_S4 <- MFI_S4 |> filter(DateTime >= WindowOfInterest)
+
+MFI_S5 <- MFI_S5 |> filter(DateTime >= WindowOfInterest)
 
 MFI_Fort <- MFI_Fort |> filter(DateTime >= WindowOfInterest)
+
+MFI_SA3 <- MFI_SA3 |> filter(DateTime >= WindowOfInterest)
+
+MFI_C1 <- MFI_C1 |> filter(DateTime >= WindowOfInterest)
+
+MFI_C2 <- MFI_C2 |> filter(DateTime >= WindowOfInterest)
+
+MFI_C3 <- MFI_C3 |> filter(DateTime >= WindowOfInterest)
+
+MFI_S61 <- MFI_S61 |> filter(DateTime >= WindowOfInterest)
+
+MFI_S62 <- MFI_S62 |> filter(DateTime >= WindowOfInterest)
+
+MFI_S63 <- MFI_S63 |> filter(DateTime >= WindowOfInterest)
 ```
 
 ```{r}
-The3L <- Luciernaga:::VisualQCSummary(x=Gain_3L)
-The4L <- Luciernaga:::VisualQCSummary(x=Gain_4L)
-The5L <- Luciernaga:::VisualQCSummary(x=Gain_5L)
-TheCS <- Luciernaga:::VisualQCSummary(x=Gain_CS)
+TheA1 <- Luciernaga:::VisualQCSummary(x=Gain_A1)
+TheA2 <- Luciernaga:::VisualQCSummary(x=Gain_A2)
 
-Table3L <- Luciernaga:::SmallTable(data=The3L)
-Table4L <- Luciernaga:::SmallTable(data=The4L)
-Table5L <- Luciernaga:::SmallTable(data=The5L)
-TableCS <- Luciernaga:::SmallTable(data=TheCS)
+TableA1 <- Luciernaga:::SmallTable(data=TheA1)
+TableA2 <- Luciernaga:::SmallTable(data=TheA2)
+TableS1 <- DetailTable(MFI_S1)
+TableS2 <- DetailTable(MFI_S2)
+TableS3 <- DetailTable(MFI_S3)
+TableS4 <- DetailTable(MFI_S4)
+TableS5 <- DetailTable(MFI_S5)
+TableFort <- DetailTable(MFI_Fort)
+TableSA3 <- DetailTable(MFI_SA3)
+TableC1 <- DetailTable(MFI_C1)
+TableC2 <- DetailTable(MFI_C2)
+TableC3 <- DetailTable(MFI_C3)
+TableS61 <- DetailTable(MFI_S61)
+TableS62 <- DetailTable(MFI_S62)
+TableS63 <- DetailTable(MFI_S63)
 ```
 
 ```{r}
@@ -87,7 +389,7 @@ ShinyData <- read.csv(HistoricalPath, check.names = FALSE)
 ```
 
 ```{r}
-x <-  list("3L", "4L", "Aurora-1", "CS")
+x <-  list("Aurora-1", "Aurora-2")
 
 DataForPlot <- Luciernaga:::QCHistoryArchive(x=x, historydata=ShinyData, timewindow=24)
 Transposed <- t(DataForPlot)
@@ -98,9 +400,9 @@ DataForPlot1 <- DataForPlot1 %>% tibble::rownames_to_column(., var="Date")
 DataForPlot1$Date <- as.Date(DataForPlot1$Date) 
 Data <- DataForPlot1 |> arrange(desc(Date))
 
-Data <- Data |> relocate("3L", "4L", "Aurora-1", "CS", .after="Date")
+Data <- Data |> relocate("Aurora-1", "Aurora-2", .after="Date")
 
-Data[2:5] <- Data[2:5] |> mutate(across(everything(), ~ na_if(., "Unknown")))
+Data[2:3] <- Data[2:3] |> mutate(across(everything(), ~ na_if(., "Unknown")))
 
 AltData <- Data |> dplyr::filter(Date > lubridate::ymd("2023-04-10"))
 
@@ -112,14 +414,36 @@ TheDate <- Data |> slice(1) |> pull(Date)
 ```
 
 ```{r}
-TheStatus3L <- Luciernaga:::CurrentStatus(x="3L", data=Data) %>% Luciernaga:::InstrumentText(.)
-TheColor3L <- Luciernaga:::CurrentStatus(x="3L", data=Data) %>% Luciernaga:::InstrumentColor(.)
-TheStatus4L <- Luciernaga:::CurrentStatus(x="4L", data=Data) %>% Luciernaga:::InstrumentText(.)
-TheColor4L <- Luciernaga:::CurrentStatus(x="4L", data=Data) %>% Luciernaga:::InstrumentColor(.)
-TheStatus5L <- Luciernaga:::CurrentStatus(x="Aurora-1", data=Data) %>% Luciernaga:::InstrumentText(.)
-TheColor5L <- Luciernaga:::CurrentStatus(x="Aurora-1", data=Data) %>% Luciernaga:::InstrumentColor(.)
-TheStatusCS <- Luciernaga:::CurrentStatus(x="CS", data=Data) %>% Luciernaga:::InstrumentText(.)
-TheColorCS <- Luciernaga:::CurrentStatus(x="CS", data=Data) %>% Luciernaga:::InstrumentColor(.)
+TheStatusA1 <- Luciernaga:::CurrentStatus(x="Aurora-1", data=Data) %>% Luciernaga:::InstrumentText(.)
+TheColorA1 <- Luciernaga:::CurrentStatus(x="Aurora-1", data=Data) %>% Luciernaga:::InstrumentColor(.)
+TheStatusA2 <- Luciernaga:::CurrentStatus(x="Aurora-2", data=Data) %>% Luciernaga:::InstrumentText(.)
+TheColorA2 <- Luciernaga:::CurrentStatus(x="Aurora-2", data=Data) %>% Luciernaga:::InstrumentColor(.)
+TheStatusS1 <- FHStatus(TableS1)
+TheColorS1 <- FHColor(TheStatusS1)
+TheStatusS2 <- FHStatus(TableS2)
+TheColorS2 <- FHColor(TheStatusS2)
+TheStatusS3 <- FHStatus(TableS3)
+TheColorS3 <- FHColor(TheStatusS3)
+TheStatusS4 <- FHStatus(TableS4)
+TheColorS4 <- FHColor(TheStatusS4)
+TheStatusS5 <- FHStatus(TableS5)
+TheColorS5 <- FHColor(TheStatusS5)
+TheStatusFort <- FHStatus(TableFort)
+TheColorFort <- FHColor(TheStatusFort)
+TheStatusSA3 <- FHStatus(TableSA3)
+TheColorSA3 <- FHColor(TheStatusSA3)
+TheStatusC1 <- FHStatus(TableC1)
+TheColorC1 <- FHColor(TheStatusC1)
+TheStatusC2 <- FHStatus(TableC2)
+TheColorC2 <- FHColor(TheStatusC2)
+TheStatusC3 <- FHStatus(TableC3)
+TheColorC3 <- FHColor(TheStatusC3)
+TheStatusS61 <- FHStatus(TableS61)
+TheColorS61 <- FHColor(TheStatusS61)
+TheStatusS62 <- FHStatus(TableS62)
+TheColorS62 <- FHColor(TheStatusS62)
+TheStatusS63 <- FHStatus(TableS63)
+TheColorS63 <- FHColor(TheStatusS63)
 ```
 
 ## {.sidebar}
@@ -154,8 +478,8 @@ This dashboard was created with [Quarto](https://quarto.org/) and is maintained 
 #| title: "Symphony-1"
 #| icon: cup-hot
 
-list(value = paste0("QC Status: ", TheStatus3L),
-     color = TheColor3L)
+list(value = paste0("QC Status: ", TheStatusS1),
+     color = TheColorS1)
 
 ```
 
@@ -166,8 +490,8 @@ list(value = paste0("QC Status: ", TheStatus3L),
 #| title: "Symphony-2"
 #| icon: yin-yang
 
-list(value = paste0("QC Status: ", TheStatus4L),
-     color = TheColor4L)
+list(value = paste0("QC Status: ", TheStatusS2),
+     color = TheColorS2)
 
 ```
 
@@ -178,8 +502,8 @@ list(value = paste0("QC Status: ", TheStatus4L),
 #| title: "SP Symphony-3"
 #| icon: umbrella
 
-list(value = paste0("QC Status: ", TheStatus4L),
-     color = TheColor4L)
+list(value = paste0("QC Status: ", TheStatusS3),
+     color = TheColorS3)
 
 ```
 
@@ -190,8 +514,8 @@ list(value = paste0("QC Status: ", TheStatus4L),
 #| title: "SP Symphony-4"
 #| icon: rocket-takeoff
 
-list(value = paste0("QC Status: ", TheStatus5L),
-     color = TheColor5L)
+list(value = paste0("QC Status: ", TheStatusS4),
+     color = TheColorS4)
 ```
 
 #### Column 
@@ -201,8 +525,8 @@ list(value = paste0("QC Status: ", TheStatus5L),
 #| title: "Symphony 5"
 #| icon: minecart-loaded
 
-list(value = paste0("QC Status: ", TheStatusCS),
-     color = TheColorCS)
+list(value = paste0("QC Status: ", TheStatusS5),
+     color = TheColorS5)
 ```
 
 ### Row {height="33%"}
@@ -214,8 +538,8 @@ list(value = paste0("QC Status: ", TheStatusCS),
 #| title: "Fortessa"
 #| icon: moon-stars
 
-list(value = paste0("QC Status: ", TheStatus3L),
-     color = TheColor3L)
+list(value = paste0("QC Status: ", TheStatusFort),
+     color = TheColorFort)
 
 ```
 
@@ -226,8 +550,8 @@ list(value = paste0("QC Status: ", TheStatus3L),
 #| title: "Symphony A3"
 #| icon: gem
 
-list(value = paste0("QC Status: ", TheStatus4L),
-     color = TheColor4L)
+list(value = paste0("QC Status: ", TheStatusSA3),
+     color = TheColorSA3)
 
 ```
 
@@ -238,8 +562,8 @@ list(value = paste0("QC Status: ", TheStatus4L),
 #| title: "Celesta-1"
 #| icon: flask
 
-list(value = paste0("QC Status: ", TheStatus4L),
-     color = TheColor4L)
+list(value = paste0("QC Status: ", TheStatusC1),
+     color = TheColorC1)
 
 ```
 
@@ -250,8 +574,8 @@ list(value = paste0("QC Status: ", TheStatus4L),
 #| title: "SP Celesta-2"
 #| icon: eye
 
-list(value = paste0("QC Status: ", TheStatus5L),
-     color = TheColor5L)
+list(value = paste0("QC Status: ", TheStatusC2),
+     color = TheColorC2)
 ```
 
 #### Column 
@@ -261,8 +585,8 @@ list(value = paste0("QC Status: ", TheStatus5L),
 #| title: "SP Celesta-3"
 #| icon: clipboard-data
 
-list(value = paste0("QC Status: ", TheStatusCS),
-     color = TheColorCS)
+list(value = paste0("QC Status: ", TheStatusC3),
+     color = TheColorC3)
 ```
 
 ### Row  {height="33%"}
@@ -275,8 +599,8 @@ list(value = paste0("QC Status: ", TheStatusCS),
 #| icon: calendar-day-fill
 
 
-list(value = paste0("QC Status: ", TheStatus5L),
-     color = TheColor5L)
+list(value = paste0("QC Status: ", TheStatusA1),
+     color = TheColorA1)
 ```
 
 #### Column 
@@ -287,8 +611,8 @@ list(value = paste0("QC Status: ", TheStatus5L),
 #| icon: bullseye
 
 
-list(value = paste0("QC Status: ", TheStatusCS),
-     color = TheColorCS)
+list(value = paste0("QC Status: ", TheStatusA2),
+     color = TheColorA2)
 ```
 
 #### Column
@@ -298,8 +622,8 @@ list(value = paste0("QC Status: ", TheStatusCS),
 #| title: "Symphony S6-1"
 #| icon: brilliance
 
-list(value = paste0("QC Status: ", TheStatus5L),
-     color = TheColor5L)
+list(value = paste0("QC Status: ", TheStatusS61),
+     color = TheColorS61)
 ```
 
 #### Column
@@ -309,8 +633,8 @@ list(value = paste0("QC Status: ", TheStatus5L),
 #| title: "SP Symphony-2"
 #| icon: beaker
 
-list(value = paste0("QC Status: ", TheStatus5L),
-     color = TheColor5L)
+list(value = paste0("QC Status: ", TheStatusS62),
+     color = TheColorS62)
 ```
 
 #### Column {scrolling=FALSE}
@@ -320,8 +644,8 @@ list(value = paste0("QC Status: ", TheStatus5L),
 #| title: "Symphony S6-3"
 #| icon: cup-hot
 
-list(value = paste0("QC Status: ", TheStatusCS),
-     color = TheColorCS)
+list(value = paste0("QC Status: ", TheStatusS63),
+     color = TheColorS63)
 ```
 
 ## Third {.fill}{width="7%"}
@@ -336,17 +660,17 @@ HTML("
   <li><a href='Symphony-2.html'>Symphony-2</a></li>
   <li><a href='Symphony-3.html'>SP Symphony-3</a></li>
     <li><a href='Symphony-4.html'>SP Symphony-4</a></li>
-  <li><a href='data/3L/Archive/BeadData3L.csv'>Symphony-5</a></li>
+  <li><a href='Symphony-5.html'>Symphony-5</a></li>
   <li><a href='Fortessa.html'>Fortessa</a></li>
     <li><a href='Symphony_A3.html'>Symphony A3</a></li>
   <li><a href='Celesta-1.html'>Celesta-1</a></li>
   <li><a href='Celesta-2.html'>SP Celesta-2</a></li>
     <li><a href='Celesta-3.html>SP Celesta-3</a></li>
   <li><a href='Aurora-1.html'>SP Aurora-1</a></li>
-  <li><a href='data/QCPlots_3L.pdf'>Aurora-2</a></li>
+  <li><a href='Aurora-2.html'>Aurora-2</a></li>
     <li><a href='Symphony_S6-1.html'>Symphony S6-1</a></li>
-  <li><a href='Symphony_S6-1.html'>SP Symphony S6-2</a></li>
-  <li><a href='data/QCPlots_3L.pdf'>Symphony S6-3</a></li>
+  <li><a href='Symphony_S6-2.html'>SP Symphony S6-2</a></li>
+  <li><a href='Symphony_S6-3.html'>Symphony S6-3</a></li>
 </ul>
 ")
 ```
