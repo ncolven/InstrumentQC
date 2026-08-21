@@ -20,3 +20,4 @@ usethis::edit_r_environ()
 ## Add key to github: https://github.com/settings/keys
 
 ##Task scheduling:https://www.r-bloggers.com/2018/10/how-to-run-r-from-the-task-scheduler/
+## -e "source('')"
