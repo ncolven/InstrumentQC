@@ -18,3 +18,5 @@ usethis::edit_r_environ()
 
 ## Generate ssh key: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 ## Add key to github: https://github.com/settings/keys
+
+##Task scheduling:https://www.r-bloggers.com/2018/10/how-to-run-r-from-the-task-scheduler/
