@@ -1,7 +1,3 @@
-#git config --global user.email ""
-#git config --global user.name ""
-#usethis::edit_r_environ()
-
 username <- Sys.info()["user"]
 
 # Setup in Correct Directory
@@ -38,9 +34,10 @@ if (length(AnyFlags) == 0){
   # Git Pull
   RepositoryPath <- WorkingDirectory
   RepositoryPath <- file.path(RepositoryPath, ".git")
+  cred <- git2r::cred_ssh_key(publickey = ssh_path("id_ed25519.pub"), privatekey = ssh_path("id_ed25519"))
   TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
   #TheRepo <- git2r::repository(RepositoryPath)
-  #git2r::pull(TheRepo)
+  git2r::pull(TheRepo, credentials = cred)
   
   # Locating Archive Folder
   Instrument <- "Celesta-3"
@@ -59,7 +56,7 @@ if (length(AnyFlags) == 0){
   
   if (!length(PotentialMFIDays) == 0){
     # MFI Starting Locations
-    SetupFolder <- file.path(SetupFolder, "DailyQC")
+    SetupFolder <- file.path("D:", "Flowlab", "QCData")
     TheFCSFiles <- list.files(SetupFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
     
     days <- format(PotentialMFIDays, "%m%d")
@@ -153,7 +150,7 @@ if (length(AnyFlags) == 0){
       TheCommitMessage <- paste0("Update for ", Instrument, " on ", Today)
       git2r::commit(TheRepo, message = TheCommitMessage)
       #cred <- git2r::cred_token(token = "GITHUB_PAT")
-      cred <- git2r::cred_ssh_key(publickey = ssh_path("id_ed25519.pub"), privatekey = ssh_path("id_ed25519"))
+      cred <- git2r::cred_ssh_key(publickey = file.path("C:","Users","BDAdmin",".ssh","id_ed25519.pub"), privatekey = file.path("C:","Users","BDAdmin",".ssh","id_ed25519"), passphrase = "488Fitc%#)")
       git2r::push(TheRepo, credentials = cred)
       message("Done ", Today)
     } else {message("No files to process ", Today)}
