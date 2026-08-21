@@ -19,3 +19,4 @@ TheScript.R
 .DS_Store
 **/*.quarto_ipynb
 .positai
+robocopy.log
