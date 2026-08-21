@@ -149,12 +149,12 @@ if (length(AnyFlags) == 0){
       
       TheCommitMessage <- paste0("Update for ", Instrument, " on ", Today)
       git2r::commit(TheRepo, message = TheCommitMessage)
-      #cred <- git2r::cred_token(token = "GITHUB_PAT")
-      cred <- git2r::cred_ssh_key(publickey = file.path("C:","Users","BDAdmin",".ssh","id_ed25519.pub"), privatekey = file.path("C:","Users","BDAdmin",".ssh","id_ed25519"), passphrase = "488Fitc%#)")
+      cred <- git2r::cred_token(token = "GITHUB_PAT")
+      #cred <- git2r::cred_ssh_key(publickey = file.path("C:","Users","BDAdmin",".ssh","id_ed25519.pub"), privatekey = file.path("C:","Users","BDAdmin",".ssh","id_ed25519"))
       git2r::push(TheRepo, credentials = cred)
       message("Done ", Today)
     } else {message("No files to process ", Today)}
   } else {message("No files to process 2", Today)}
 } else {message("Automation Skipped ", Today)}
 
-
+#test
