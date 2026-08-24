@@ -85,8 +85,8 @@ BDSummary <- function (x, Instrument){
     UVNames <- TheColumnNames[3:12]  
     VioletNames <- TheColumnNames[13:26]
     BlueNames <- TheColumnNames[27:35]
-    YellowGreenNames <- TheColumnNames[36:45]
-    RedNames <- TheColumnNames[46:51]
+    YellowGreenNames <- TheColumnNames[36:44]
+    RedNames <- TheColumnNames[45:50]
   }else if(Instrument == "Symphony A3"){
     UVNames <- TheColumnNames[3:8]  
     VioletNames <- TheColumnNames[9:14]
@@ -187,8 +187,8 @@ BDSummary <- function (x, Instrument){
       UVNames <- TheColumnNames[3:12]  
       VioletNames <- TheColumnNames[13:26]
       BlueNames <- TheColumnNames[27:35]
-      YellowGreenNames <- TheColumnNames[36:45]
-      RedNames <- TheColumnNames[46:51]
+      YellowGreenNames <- TheColumnNames[36:44]
+      RedNames <- TheColumnNames[45:50]
     }else if(Instrument == "Symphony A3"){
       UVNames <- TheColumnNames[3:8]  
       VioletNames <- TheColumnNames[9:14]
@@ -249,6 +249,7 @@ BDSummary <- function (x, Instrument){
   InstrumentStatus <- bind_cols(InstrumentMFI, InstrumentRCV[,-1])
   return(InstrumentStatus)
 }
+
 DetailTable <- function(InstrumentStatus){
   IntermediateTable <- tidyr::pivot_longer(InstrumentStatus[,!str_detect(colnames(InstrumentStatus), "rCV")], !DateTime, names_to="Detector", values_to="MFI")
   RCVTable <- pivot_longer(mutate(DateTime = InstrumentStatus$DateTime, InstrumentStatus[,str_detect(colnames(InstrumentStatus), "rCV")]),
@@ -445,7 +446,9 @@ TheColorS62 <- FHColor(TheStatusS62)
 TheStatusS63 <- FHStatus(TableS63)
 TheColorS63 <- FHColor(TheStatusS63)
 ```
-
+```{r}
+TheDate <- as.Date(Sys.Date())
+```
 ## {.sidebar}
 Dashboard data last updated on **`r TheDate`**
 
@@ -465,7 +468,7 @@ This dashboard contains the visualized QC data for the Cytek and BD cytometers a
 
 For additional flow cytometry resources, visit our [website](https://extranet.fredhutch.org/u/shared-resources/training-and-educational-materials/flow-cytometry.html)
 
-This dashboard was created with [Quarto](https://quarto.org/) and is maintained by [David Rach](https://github.com/DavidRach)
+This dashboard was created with [Quarto](https://quarto.org/) and is maintained by [Nate Colven](https://github.com/ncolven). It was adapted from [David Rach's](https://github.com/DavidRach) work at UMGCC.
 
 ## First {.fit}{width="50%"}
 

@@ -56,8 +56,8 @@ BDSummary <- function (x, Instrument){
     UVNames <- TheColumnNames[3:12]  
     VioletNames <- TheColumnNames[13:26]
     BlueNames <- TheColumnNames[27:35]
-    YellowGreenNames <- TheColumnNames[36:45]
-    RedNames <- TheColumnNames[46:51]
+    YellowGreenNames <- TheColumnNames[36:44]
+    RedNames <- TheColumnNames[45:50]
   }else if(Instrument == "Symphony A3"){
     UVNames <- TheColumnNames[3:8]  
     VioletNames <- TheColumnNames[9:14]
@@ -158,8 +158,8 @@ BDSummary <- function (x, Instrument){
       UVNames <- TheColumnNames[3:12]  
       VioletNames <- TheColumnNames[13:26]
       BlueNames <- TheColumnNames[27:35]
-      YellowGreenNames <- TheColumnNames[36:45]
-      RedNames <- TheColumnNames[46:51]
+      YellowGreenNames <- TheColumnNames[36:44]
+      RedNames <- TheColumnNames[45:50]
     }else if(Instrument == "Symphony A3"){
       UVNames <- TheColumnNames[3:8]  
       VioletNames <- TheColumnNames[9:14]
