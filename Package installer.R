@@ -4,7 +4,8 @@ install.packages(c("devtools",
                    "shinylive", 
                    "pandoc", 
                    "ggbeeswarm",
-                   "git2r"))
+                   "git2r",
+                   "lubridate"))
 
 BiocManager::install(c("flowCore",
                        "flowWorkspace",
