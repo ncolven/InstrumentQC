@@ -5,9 +5,12 @@ install.packages(c("devtools",
                    "pandoc", 
                    "ggbeeswarm",
                    "git2r",
+<<<<<<< HEAD
                    "stringr",
                    "purrr",
                    "dplyr",
+=======
+>>>>>>> cf95ae7407da04b15edffdd049eeb39332ab7a4e
                    "lubridate"))
 
 BiocManager::install(c("flowCore",
