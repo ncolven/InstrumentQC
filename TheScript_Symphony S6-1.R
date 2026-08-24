@@ -156,4 +156,5 @@ if (length(AnyFlags) == 0){
   } else {message("No files to process 2", Today)}
 } else {message("Automation Skipped ", Today)}
 
-
+FCSTransfer <- file.path("D:", "Flowlab", "QCData", "QCData_to_sgw.bat")
+shell(FCSTransfer)
