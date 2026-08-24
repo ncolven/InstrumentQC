@@ -5,17 +5,10 @@
 username <- Sys.info()["user"]
 
 # Setup in Correct Directory
-Linux <- file.path("/Users", "Nate", "Documents", "InstrumentQC", "InstrumentQC")
-Windows <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 
-OperatingSystem <- Sys.info()["sysname"]
-# if(OperatingSystem == "Linux"){OS <- Linux
-# } else if (OperatingSystem == "Windows"){OS <- Windows}
-OS <- Linux
-
-WorkingDirectory <- OS
+WorkingDirectory <-  file.path("C:", "Users", username, "Documents", "InstrumentQC")
 setwd(WorkingDirectory)
-source("renv/activate.R")
+#source("renv/activate.R")
 
 library(stringr)
 library(purrr)
@@ -41,7 +34,7 @@ if (length(AnyFlags) == 0){
   RepositoryPath <- file.path(RepositoryPath, ".git")
   TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
   #TheRepo <- git2r::repository(RepositoryPath)
-  #git2r::pull(TheRepo)
+  git2r::pull(TheRepo)
   
   # Locating Archive Folder
   Instrument <- "Symphony S6-3"
@@ -60,7 +53,7 @@ if (length(AnyFlags) == 0){
   
   if (!length(PotentialMFIDays) == 0){
     # MFI Starting Locations
-    #SetupFolder <- #file.path(SetupFolder, "DailyQC")
+    SetupFolder <- file.path("D:", "Flowlab", "QCData")
     TheFCSFiles <- list.files(SetupFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
     TheFCSFiles2 <- list.files(SetupFolder, pattern="Tube", full.names=TRUE, recursive=TRUE)
     TheFCSFiles <- intersect(TheFCSFiles, TheFCSFiles2)
