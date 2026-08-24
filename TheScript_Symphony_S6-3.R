@@ -148,12 +148,12 @@ if (length(AnyFlags) == 0){
       
       TheCommitMessage <- paste0("Update for ", Instrument, " on ", Today)
       git2r::commit(TheRepo, message = TheCommitMessage)
-      #cred <- git2r::cred_token(token = "GITHUB_PAT")
-      cred <- git2r::cred_ssh_key(publickey = ssh_path("id_ed25519.pub"), privatekey = ssh_path("id_ed25519"))
+      cred <- git2r::cred_token(token = "GITHUB_PAT")
       git2r::push(TheRepo, credentials = cred)
       message("Done ", Today)
     } else {message("No files to process ", Today)}
   } else {message("No files to process 2", Today)}
 } else {message("Automation Skipped ", Today)}
 
-
+FCSTransfer <- file.path("D:", "Flowlab", "QCData", "QCData_to_sgw.bat")
+shell(FCSTransfer)
