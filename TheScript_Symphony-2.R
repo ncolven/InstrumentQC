@@ -31,9 +31,9 @@ if (length(AnyFlags) == 0){
   
   # Git Pull
   RepositoryPath <- WorkingDirectory
-  RepositoryPath <- file.path(RepositoryPath, ".git")
-  TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
-  #TheRepo <- git2r::repository(RepositoryPath)
+  #RepositoryPath <- file.path(RepositoryPath, ".git")
+  #TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
+  TheRepo <- git2r::repository(RepositoryPath)
   git2r::pull(TheRepo)
   
   # Locating Archive Folder

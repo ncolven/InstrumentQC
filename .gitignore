@@ -20,3 +20,6 @@ TheScript.R
 **/*.quarto_ipynb
 .positai
 robocopy.log
+.Rproj.user
+.Rproj.user
+TheScript_Symphony-2.log
