@@ -17,14 +17,38 @@ website:
     left:
     - text: "Home"
       href: index.qmd
-    - text: "Levey-Jennings Plots"
+    - text: "Instruments"
       menu:
-      - text: "Cytek Aurora 1"
-        href: Aurora-1.html
-      - text: "BD Symphony 2"
+      - text: "Symphony 1"
+        href: Symphony-1.html
+      - text: "Symphony 2"
         href: Symphony-2.html
+      - text: "SP Symphony 3"
+        href: Symphony-3.html
+      - text: "SP Symphony 4"
+        href: Symphony-4.html
+      - text: "Symphony 5"
+        href: Symphony-5.html
       - text: "Fortessa"
-        href: Fortessa.html  
+        href: Fortessa.html 
+      - text: "Symphony A3"
+        href: Symphony-A3.html
+      - text: "Celesta 1"
+        href: Celesta-1.html
+      - text: "SP Celesta 2"
+        href: Celesta-2.html 
+      - text: "SP Celesta 3"
+        href: Celesta-3.html
+      - text: "SP Aurora-1"
+        href: Aurora-1.html
+      - text: "Aurora-2"
+        href: Aurora-2.html
+      - text: "Symphony S6-1"
+        href: SymphonyS6-1.html
+      - text: "SP Symphony S6-2"
+        href: SymphonyS6-2.html
+      - text: "Symphony S6-3"
+        href: SymphonyS6-3.html
     - text: "Historical"
       menu:
       - text: "Cytek Aurora 1"

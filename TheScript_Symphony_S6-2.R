@@ -5,17 +5,10 @@
 username <- Sys.info()["user"]
 
 # Setup in Correct Directory
-Linux <- file.path("/Users", "Nate", "Documents", "InstrumentQC", "InstrumentQC")
-Windows <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 
-OperatingSystem <- Sys.info()["sysname"]
-# if(OperatingSystem == "Linux"){OS <- Linux
-# } else if (OperatingSystem == "Windows"){OS <- Windows}
-OS <- Linux
-
-WorkingDirectory <- OS
+WorkingDirectory <- Windows <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 setwd(WorkingDirectory)
-source("renv/activate.R")
+#gsource("renv/activate.R")
 
 library(stringr)
 library(purrr)
@@ -41,7 +34,7 @@ if (length(AnyFlags) == 0){
   RepositoryPath <- file.path(RepositoryPath, ".git")
   TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
   #TheRepo <- git2r::repository(RepositoryPath)
-  #git2r::pull(TheRepo)
+  git2r::pull(TheRepo)
   
   # Locating Archive Folder
   Instrument <- "Symphony S6-2"
@@ -54,18 +47,18 @@ if (length(AnyFlags) == 0){
   LastMFIsItem <- MFIs |> dplyr::slice(1) |> dplyr::pull(DateTime)
   LastMFIsItem <- lubridate::ymd_hms(LastMFIsItem)
   LastMFIsItem <- as.Date(LastMFIsItem)
-  PotentialMFIsDays <- seq.Date(from = LastMFIsItem, to = Today, by = "day")
-  MFIsRemoveIndex <- which(PotentialMFIsDays == LastMFIsItem)
-  PotentialMFIsDays <- PotentialMFIsDays[-MFIsRemoveIndex]
+  PotentialMFIDays <- seq.Date(from = LastMFIsItem, to = Today, by = "day")
+  MFIsRemoveIndex <- which(PotentialMFIDays == LastMFIsItem)
+  PotentialMFIDays <- PotentialMFIDays[-MFIsRemoveIndex]
   
   if (!length(PotentialMFIDays) == 0){
     # MFI Starting Locations
-    #SetupFolder <- #file.path(SetupFolder, "DailyQC")
+    SetupFolder <- file.path("D:", "Flowlab", "QCData")
     TheFCSFiles <- list.files(SetupFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
     TheFCSFiles2 <- list.files(SetupFolder, pattern="Tube", full.names=TRUE, recursive=TRUE)
     TheFCSFiles <- intersect(TheFCSFiles, TheFCSFiles2)
     
-    days <- format(PotentialMFIsDays, "%m%d")
+    days <- format(PotentialMFIDays, "%m%d")
     
     MFIMatches <- TheFCSFiles[str_detect(basename(TheFCSFiles), str_c(days, collapse = "|"))]
     
@@ -147,20 +140,21 @@ if (length(AnyFlags) == 0){
   }
   
   
-  if (length(PotentialMFIsDays) > 0){
+  if (length(PotentialMFIDays) > 0){
     
     if (length(MFIMatches) > 0){
       # Stage to Git
       git2r::add(TheRepo, "*")
-      
       TheCommitMessage <- paste0("Update for ", Instrument, " on ", Today)
       git2r::commit(TheRepo, message = TheCommitMessage)
-      #cred <- git2r::cred_token(token = "GITHUB_PAT")
-      cred <- git2r::cred_ssh_key(publickey = ssh_path("id_ed25519.pub"), privatekey = ssh_path("id_ed25519"))
+      cred <- git2r::cred_token(token = "GITHUB_PAT")
+      #cred <- git2r::cred_ssh_key(publickey = ssh_path("id_ed25519.pub"), privatekey = ssh_path("id_ed25519"))
       git2r::push(TheRepo, credentials = cred)
       message("Done ", Today)
     } else {message("No files to process ", Today)}
   } else {message("No files to process 2", Today)}
 } else {message("Automation Skipped ", Today)}
 
+FCSTransfer <- file.path("D:", "Flowlab", "QCData", "QCData_to_sgw.bat")
+shell(FCSTransfer)
 

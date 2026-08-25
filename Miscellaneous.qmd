@@ -17,8 +17,11 @@ Location <- file.path(Computer, "data")
 The5L <- list.files(Location, pattern="ArchivedDataAurora-1", recursive = TRUE, full.names = TRUE)
 The5L <- read.csv(The5L[[1]], check.names=FALSE) %>% 
     select(DateTime, Temperature) %>% mutate(Instrument="Aurora-1")
+The4L <- list.files(Location, pattern="ArchivedDataAurora-2", recursive = TRUE, full.names = TRUE)
+The4L <- read.csv(The4L[[1]], check.names=FALSE) %>% 
+    select(DateTime, Temperature) %>% mutate(Instrument="Aurora-2")
 
-TheTimes <- rbind(The5L)
+TheTimes <- rbind(The5L, The4L)
 ```
 
 ```{r}
@@ -52,20 +55,15 @@ plotly::ggplotly(Plot)
 
 library(lubridate)
 
-The3L <- list.files(Location, pattern="BeadData3L", recursive = TRUE, full.names = TRUE)
-The3L <- read.csv(The3L[[1]], check.names=FALSE) %>% 
-    select(DateTime)
-The4L <- list.files(Location, pattern="BeadData4L", recursive = TRUE, full.names = TRUE)
-The4L <- read.csv(The4L[[1]], check.names=FALSE) %>% 
-    select(DateTime)
 The5L <- list.files(Location, pattern="BeadDataAurora-1", recursive = TRUE, full.names = TRUE)
 The5L <- read.csv(The5L[[1]], check.names=FALSE) %>% 
     select(DateTime)
-TheCS <- list.files(Location, pattern="BeadDataCS", recursive = TRUE, full.names = TRUE)
-TheCS <- read.csv(TheCS[[1]], check.names=FALSE) %>% 
+The4L <- list.files(Location, pattern="BeadDataAurora-2", recursive = TRUE, full.names = TRUE)
+The4L <- read.csv(The4L[[1]], check.names=FALSE) %>% 
     select(DateTime)
 
-TheTimes <- rbind(The3L, The4L, The5L, TheCS)
+
+TheTimes <- rbind(The5L, The4L)
 
 TheTimes$DateTime <- lubridate::ymd_hms(TheTimes$DateTime)
 
@@ -122,13 +120,11 @@ TheQCPlot
 #| echo: false
 Computer <- getwd()
 MainFolder <- file.path(Computer, "data")
-The3L <- list.files(MainFolder, pattern="ApplicationData3L", full.names=TRUE, recursive=TRUE)
-The3L <- read.csv(The3L, check.names=FALSE) |> dplyr::mutate(Instrument = "3L")
-The4L <- list.files(MainFolder, pattern="ApplicationData4L", full.names=TRUE, recursive=TRUE)
-The4L <- read.csv(The4L, check.names=FALSE) |> dplyr::mutate(Instrument = "4L")
 The5L <- list.files(MainFolder, pattern="ApplicationDataAurora-1", full.names=TRUE, recursive=TRUE)
 The5L <- read.csv(The5L, check.names=FALSE) |> dplyr::mutate(Instrument = "Aurora-1")
-Data <- rbind(The3L, The4L, The5L)
+The4L <- list.files(MainFolder, pattern="ApplicationDataAurora-2", full.names=TRUE, recursive=TRUE)
+The4L <- read.csv(The4L, check.names=FALSE) |> dplyr::mutate(Instrument = "Aurora-2")
+Data <- rbind(The5L, The4L)
 ```
 
 ```{r}
@@ -149,31 +145,8 @@ Outpath <- file.path(MainFolder, Name)
 #write.csv(Data, Outpath, row.names=FALSE)
 ```
 
-#### 3L
 
-```{r}
-#| echo: false
-The3L <- Luciernaga:::UsagePlot(data=Data, TheInstrument="3L")
-```
-
-```{r}
-#| echo: false
-plotly::ggplotly(The3L)
-```
-
-#### 4L
-
-```{r}
-#| echo: false
-The4L <- Luciernaga:::UsagePlot(data=Data, TheInstrument="4L")
-```
-
-```{r}
-#| echo: false
-plotly::ggplotly(The4L)
-```
-
-#### 5L
+#### Aurora-1
 
 ```{r}
 #| echo: false
@@ -183,4 +156,15 @@ The5L <- Luciernaga:::UsagePlot(data=Data, TheInstrument="Aurora-1")
 ```{r}
 #| echo: false
 plotly::ggplotly(The5L)
+```
+#### Aurora-2
+
+```{r}
+#| echo: false
+The4L <- Luciernaga:::UsagePlot(data=Data, TheInstrument="Aurora-2")
+```
+
+```{r}
+#| echo: false
+plotly::ggplotly(The4L)
 ```

@@ -5,17 +5,10 @@
 username <- Sys.info()["user"]
 
 # Setup in Correct Directory
-Linux <- file.path("/Users", "Nate", "Documents", "InstrumentQC", "InstrumentQC")
-Windows <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 
-OperatingSystem <- Sys.info()["sysname"]
-# if(OperatingSystem == "Linux"){OS <- Linux
-# } else if (OperatingSystem == "Windows"){OS <- Windows}
-OS <- Windows
-
-WorkingDirectory <- OS
+WorkingDirectory <- file.path("C:", "Users", "fhcrc", "OneDrive", "Documents", "InstrumentQC")
 setwd(WorkingDirectory)
-source("renv/activate.R")
+#source("renv/activate.R")
 
 library(stringr)
 library(purrr)
@@ -88,10 +81,10 @@ if (length(AnyFlags) == 0){
   
   # Git Pull
   RepositoryPath <- WorkingDirectory
-  #RepositoryPath <- file.path(RepositoryPath, ".git")
-  #TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
+  RepositoryPath <- file.path(RepositoryPath, ".git")
+  TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
   #TheRepo <- git2r::repository(RepositoryPath)
-  #git2r::pull(TheRepo)
+  git2r::pull(TheRepo)
   
   # Locating Archive Folder
   Instrument <- "Aurora-2"
@@ -133,7 +126,7 @@ if (length(AnyFlags) == 0){
   if (!length(PotentialGainDays) == 0){
     # Gain Starting Locations
     
-    SetupFolder <- file.path("C:", "Users", username, "Documents", "Aurora QC data", "CytekbioExport", "Setup")
+    SetupFolder <- file.path("C:", "CytekbioExport", "Setup")
     TheSetupFiles <- list.files(SetupFolder, pattern="DailyQC", full.names=TRUE)
     
     Dates <- as.character(PotentialGainDays)
@@ -152,7 +145,7 @@ if (length(AnyFlags) == 0){
   if (!length(PotentialMFIDays) == 0){
     # MFI Starting Locations
     
-    FCSFolder <- file.path(SetupFolder, "DailyQC")
+    FCSFolder <- file.path("C:", "CytekData", "Experiments", "Admin", "QbSure")
    ## MonthStyle <- format(Today, "%Y-%m")
    ## MonthFolder <- paste0("QC_", MonthStyle)
    ## MonthFolder <- file.path(FCSFolder, MonthFolder)
@@ -172,7 +165,7 @@ if (length(AnyFlags) == 0){
   }
   
   if (!length(PotentialAppsDays) == 0){
-    SetupFolder <- file.path("C:", "Users", username, "Documents", "Aurora QC data", "CytekbioExport")
+    SetupFolder <-file.path("C:", "CytekbioExport")
     TheSetupFiles <- list.files(SetupFolder, pattern="Application", full.names=TRUE)
     MonthStyle <- format(Today, "%Y-%m")
     MonthStyle <- sub("([0-9]{4})-([0-9]{2})", "\\2-\\1", MonthStyle)

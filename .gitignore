@@ -19,3 +19,8 @@ TheScript.R
 .DS_Store
 **/*.quarto_ipynb
 .positai
+robocopy.log
+.Rproj.user
+.Rproj.user
+TheScript_Symphony-2.log
+TheScript_SymphonyS6-2.log
