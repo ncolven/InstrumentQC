@@ -17,6 +17,7 @@ library(flowCore)
 library(openCyto)
 library(lubridate)
 library(dplyr)
+library(Luciernaga)
 
 QbSureParse <- function (x, MainFolder, Template) {
   Folder <- file.path(MainFolder, x)
@@ -164,7 +165,7 @@ walk(.x=Instrument, .f=QbSureParse, MainFolder=MainFolder, Template=Template)
   }
 
 if (!length(PotentialAppsDays) == 0){
-  SetupFolder <- file.path("C:", "Users", username, "Documents", "Aurora QC data", "CytekbioExport")
+  SetupFolder <- file.path("C:", "CytekbioExport")
     TheSetupFiles <- list.files(SetupFolder, pattern="Application", full.names=TRUE)
     MonthStyle <- format(Today, "%Y-%m")
     MonthStyle <- sub("([0-9]{4})-([0-9]{2})", "\\2-\\1", MonthStyle)
@@ -191,8 +192,7 @@ if (any(length(PotentialGainDays)|length(PotentialMFIDays)|length(PotentialAppsD
     
     TheCommitMessage <- paste0("Update for ", Instrument, " on ", Today)
     git2r::commit(TheRepo, message = TheCommitMessage)
-    #cred <- git2r::cred_token(token = "GITHUB_PAT")
-    cred <- git2r::cred_ssh_key(publickey = ssh_path("id_ed25519.pub"), privatekey = ssh_path("id_ed25519"))
+    cred <- git2r::cred_token(token = "GITHUB_PAT")
     git2r::push(TheRepo, credentials = cred)
     message("Done ", Today)
   } else {message("No files to process ", Today)}
