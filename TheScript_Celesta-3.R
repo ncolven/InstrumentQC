@@ -1,15 +1,8 @@
 username <- Sys.info()["user"]
 
 # Setup in Correct Directory
-Linux <- file.path("/Users", "Nate", "Documents", "InstrumentQC", "InstrumentQC")
-Windows <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 
-OperatingSystem <- Sys.info()["sysname"]
-# if(OperatingSystem == "Linux"){OS <- Linux
-# } else if (OperatingSystem == "Windows"){OS <- Windows}
-OS <- Windows
-
-WorkingDirectory <- OS
+WorkingDirectory <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 setwd(WorkingDirectory)
 #source("renv/activate.R")
 
@@ -34,7 +27,6 @@ if (length(AnyFlags) == 0){
   # Git Pull
   RepositoryPath <- WorkingDirectory
   RepositoryPath <- file.path(RepositoryPath, ".git")
-  cred <- git2r::cred_ssh_key(publickey = ssh_path("id_ed25519.pub"), privatekey = ssh_path("id_ed25519"))
   TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
   #TheRepo <- git2r::repository(RepositoryPath)
   git2r::pull(TheRepo, credentials = cred)
@@ -150,9 +142,11 @@ if (length(AnyFlags) == 0){
       TheCommitMessage <- paste0("Update for ", Instrument, " on ", Today)
       git2r::commit(TheRepo, message = TheCommitMessage)
       cred <- git2r::cred_token(token = "GITHUB_PAT")
-      #cred <- git2r::cred_ssh_key(publickey = file.path("C:","Users","BDAdmin",".ssh","id_ed25519.pub"), privatekey = file.path("C:","Users","BDAdmin",".ssh","id_ed25519"))
       git2r::push(TheRepo, credentials = cred)
       message("Done ", Today)
     } else {message("No files to process ", Today)}
   } else {message("No files to process 2", Today)}
 } else {message("Automation Skipped ", Today)}
+
+FCSTransfer <- file.path("D:", "Flowlab", "QCData", "QCData_to_sgw.bat")
+shell(FCSTransfer)
