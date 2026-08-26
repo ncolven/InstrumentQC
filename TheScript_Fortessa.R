@@ -52,7 +52,7 @@ if (length(AnyFlags) == 0){
   
   if (!length(PotentialMFIsDays) == 0){
     # MFI Starting Locations
-    SetupFolder <- file.path("D:", "Flowlab", "QCData")
+    SetupFolder <- file.path("D:", "UserData", "Flow Core QC","Fortessa")
     TheFCSFiles <- list.files(SetupFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
     
     days <- format(PotentialMFIsDays, "%m%d")
