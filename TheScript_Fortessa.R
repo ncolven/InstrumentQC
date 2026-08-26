@@ -5,17 +5,10 @@
 username <- Sys.info()["user"]
 
 # Setup in Correct Directory
-Linux <- file.path("/Users", "Nate", "Documents", "InstrumentQC", "InstrumentQC")
-Windows <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 
-OperatingSystem <- Sys.info()["sysname"]
-# if(OperatingSystem == "Linux"){OS <- Linux
-# } else if (OperatingSystem == "Windows"){OS <- Windows}
-OS <- Windows
-
-WorkingDirectory <- OS
+WorkingDirectory <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 setwd(WorkingDirectory)
-source("renv/activate.R")
+#source("renv/activate.R")
 
 library(stringr)
 library(purrr)
@@ -24,7 +17,7 @@ library(openCyto)
 library(flowWorkspace)
 library(flowCore)
 library(lubridate)
-
+library(Luciernaga)
 # Find out current date
 Today <- Sys.Date()
 Today <- as.Date(Today)
@@ -40,7 +33,7 @@ if (length(AnyFlags) == 0){
   RepositoryPath <- file.path(RepositoryPath, ".git")
   TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
   #TheRepo <- git2r::repository(RepositoryPath)
-  #git2r::pull(TheRepo)
+  git2r::pull(TheRepo)
   
   # Locating Archive Folder
   Instrument <- "Fortessa"
@@ -57,9 +50,9 @@ if (length(AnyFlags) == 0){
   MFIsRemoveIndex <- which(PotentialMFIsDays == LastMFIsItem)
   PotentialMFIsDays <- PotentialMFIsDays[-MFIsRemoveIndex]
   
-  if (!length(PotentialMFIDays) == 0){
+  if (!length(PotentialMFIsDays) == 0){
     # MFI Starting Locations
-    #SetupFolder <- #file.path(SetupFolder, "DailyQC")
+    SetupFolder <- file.path("D:", "Flowlab", "QCData")
     TheFCSFiles <- list.files(SetupFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
     
     days <- format(PotentialMFIsDays, "%m%d")
@@ -152,12 +145,12 @@ if (length(AnyFlags) == 0){
       
       TheCommitMessage <- paste0("Update for ", Instrument, " on ", Today)
       git2r::commit(TheRepo, message = TheCommitMessage)
-      #cred <- git2r::cred_token(token = "GITHUB_PAT")
-      cred <- git2r::cred_ssh_key(publickey = ssh_path("id_ed25519.pub"), privatekey = ssh_path("id_ed25519"))
+      cred <- git2r::cred_token(token = "GITHUB_PAT")
       git2r::push(TheRepo, credentials = cred)
       message("Done ", Today)
     } else {message("No files to process ", Today)}
   } else {message("No files to process 2", Today)}
 } else {message("Automation Skipped ", Today)}
 
-
+FCSTransfer <- file.path("D:", "Flowlab", "QCData", "QCData_to_sgw.bat")
+shell(FCSTransfer)
