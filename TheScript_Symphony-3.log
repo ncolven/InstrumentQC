@@ -54,3 +54,37 @@ Using the serial version of flowClust
 done!
 done.
 finished.
+Error in git2r::push(TheRepo, credentials = cred) : 
+  Error in 'git2r_push': cannot push because a reference that you are trying to update on the remote contains commits that are not present locally.
+Execution halted
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+As part of improvements to flowWorkspace, some behavior of
+GatingSet objects has changed. For details, please read the section
+titled "The cytoframe and cytoset classes" in the package vignette:
+
+  vignette("flowWorkspace-Introduction", "flowWorkspace")
+
+Attaching package: 'lubridate'
+
+The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union
+
+[updated] 2a96a8a688..73f26b29ff refs/remotes/origin/main
+Adding population:Beads
+Gating for 'Beads'
+The prior specification has no effect when usePrior=no
+Using the serial version of flowClust
+done!
+done.
+finished.
