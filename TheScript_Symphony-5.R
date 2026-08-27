@@ -112,6 +112,7 @@ if (length(AnyFlags) == 0){
               }
               NewData <- Parsed %>% anti_join(ArchiveData, 
                                               by = c("DATE", "TIME"))
+              NewData$CYTSN <- as.integer(NewData$CYTSN)
               UpdatedData <- bind_rows(NewData, ArchiveData)
               file.remove(ArchiveCSV)
             }
