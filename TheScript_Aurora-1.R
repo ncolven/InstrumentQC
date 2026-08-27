@@ -5,17 +5,10 @@
 username <- Sys.info()["user"]
 
 # Setup in Correct Directory
-Linux <- file.path("/Users", "Nate", "Documents", "InstrumentQC", "InstrumentQC")
-Windows <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 
-OperatingSystem <- Sys.info()["sysname"]
-# if(OperatingSystem == "Linux"){OS <- Linux
-# } else if (OperatingSystem == "Windows"){OS <- Windows}
-OS <- Windows
-
-WorkingDirectory <- OS
+WorkingDirectory <- file.path("C:", "Users", username, "Documents", "InstrumentQC")
 setwd(WorkingDirectory)
-source("renv/activate.R")
+#source("renv/activate.R")
 
 library(stringr)
 library(purrr)
@@ -23,6 +16,8 @@ library(flowWorkspace)
 library(flowCore)
 library(openCyto)
 library(lubridate)
+library(dplyr)
+library(Luciernaga)
 
 QbSureParse <- function (x, MainFolder, Template) {
   Folder <- file.path(MainFolder, x)
@@ -90,7 +85,7 @@ RepositoryPath <- WorkingDirectory
 RepositoryPath <- file.path(RepositoryPath, ".git")
 TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
 #TheRepo <- git2r::repository(RepositoryPath)
-#git2r::pull(TheRepo)
+git2r::pull(TheRepo)
 
 # Locating Archive Folder
 Instrument <- "Aurora-1"
@@ -132,7 +127,7 @@ PotentialAppsDays <- PotentialAppsDays[-AppsRemoveIndex]
 if (!length(PotentialGainDays) == 0){
 # Gain Starting Locations
 
-SetupFolder <- file.path("C:", "Users", username, "Documents", "Aurora QC data", "CytekbioExport", "Setup")
+SetupFolder <- file.path("C:", "CytekbioExport", "Setup")
 TheSetupFiles <- list.files(SetupFolder, pattern="DailyQC", full.names=TRUE)
 
 Dates <- as.character(PotentialGainDays)
@@ -151,7 +146,7 @@ if (!length(GainMatches) == 0){
 if (!length(PotentialMFIDays) == 0){
 # MFI Starting Locations
 
-FCSFolder <- file.path(SetupFolder, "DailyQC")
+FCSFolder <- file.path("D:", "CytekData","Experiments", "Admin", "Aurora QC","Raw")
 MonthFolder <- format(Today, "%B %Y")
 MonthFolder <- file.path(FCSFolder, MonthFolder)
 TheFCSFiles <- list.files(MonthFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
@@ -170,7 +165,7 @@ walk(.x=Instrument, .f=QbSureParse, MainFolder=MainFolder, Template=Template)
   }
 
 if (!length(PotentialAppsDays) == 0){
-  SetupFolder <- file.path("C:", "Users", username, "Documents", "Aurora QC data", "CytekbioExport")
+  SetupFolder <- file.path("C:", "CytekbioExport")
     TheSetupFiles <- list.files(SetupFolder, pattern="Application", full.names=TRUE)
     MonthStyle <- format(Today, "%Y-%m")
     MonthStyle <- sub("([0-9]{4})-([0-9]{2})", "\\2-\\1", MonthStyle)
@@ -197,8 +192,7 @@ if (any(length(PotentialGainDays)|length(PotentialMFIDays)|length(PotentialAppsD
     
     TheCommitMessage <- paste0("Update for ", Instrument, " on ", Today)
     git2r::commit(TheRepo, message = TheCommitMessage)
-    #cred <- git2r::cred_token(token = "GITHUB_PAT")
-    cred <- git2r::cred_ssh_key(publickey = ssh_path("id_ed25519.pub"), privatekey = ssh_path("id_ed25519"))
+    cred <- git2r::cred_token(token = "GITHUB_PAT")
     git2r::push(TheRepo, credentials = cred)
     message("Done ", Today)
   } else {message("No files to process ", Today)}
