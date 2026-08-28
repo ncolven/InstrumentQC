@@ -1,6 +1,6 @@
 library(git2r)
-Local <- file.path("C:", "Users", "12692")
-RepositoryPath <- file.path(Local, "Documents", "InstrumentQC")
+username <- Sys.info()["user"]
+RepositoryPath <- file.path("Users", username, "Documents", "InstrumentQC")
 TheRepo <- repository(RepositoryPath)
 git2r::pull(TheRepo)
 

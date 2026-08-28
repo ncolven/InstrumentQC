@@ -1,11 +1,3 @@
 TODO/potential issues
 
-Aurora-1 TheScript line 53:Error in seq.int(from = unclass(from), to = unclass(to), by = by) : 
-  wrong sign in 'by' argument
-  - Potentially fixed by removing 'by' variable
-  - Also might not actually be a bug?? Potential weird SP computer things
-  
-  
-Replace Aurora Luciernaga:::QCBeadParse with modified version, requires Before/After fcs files
-
-QbSure data transfer, take from D: drive?
+Fix links to help page, check help page definitions
