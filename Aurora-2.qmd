@@ -22,8 +22,8 @@ walk(.x=TheList, .f=Luciernaga:::QCBeadParse, MainFolder=MainFolder)
 ```
 
 ```{r}
-MFI_5L <- Luciernaga:::CurrentData(x="Aurora-1", MainFolder=MainFolder, type = "MFI")
-Gain_5L <- Luciernaga:::CurrentData(x="Aurora-1", MainFolder=MainFolder, type = "Gain")
+MFI_5L <- Luciernaga:::CurrentData(x="Aurora-2", MainFolder=MainFolder, type = "MFI")
+Gain_5L <- Luciernaga:::CurrentData(x="Aurora-2", MainFolder=MainFolder, type = "Gain")
 TheDate <- MFI_5L %>% slice(1) %>% pull(DATE)
 ```
 
