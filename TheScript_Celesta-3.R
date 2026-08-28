@@ -29,7 +29,7 @@ if (length(AnyFlags) == 0){
   RepositoryPath <- file.path(RepositoryPath, ".git")
   TheRepo <- git2r::repository(RepositoryPath, discover = FALSE)
   #TheRepo <- git2r::repository(RepositoryPath)
-  git2r::pull(TheRepo, credentials = cred)
+  git2r::pull(TheRepo)
   
   # Locating Archive Folder
   Instrument <- "Celesta-3"
