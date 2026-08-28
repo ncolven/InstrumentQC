@@ -21,6 +21,37 @@ The following objects are masked from 'package:base':
 
     date, intersect, setdiff, union
 
+QC data has already been transferred
+No files to process 22026-08-26
+'D:/Flowlab/QCData/QCData_to_sgw.bat' is not recognized as an internal or external command,
+operable program or batch file.
+Warning message:
+In shell(FCSTransfer) :
+  'D:/Flowlab/QCData/QCData_to_sgw.bat' execution failed with error code 1
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+As part of improvements to flowWorkspace, some behavior of
+GatingSet objects has changed. For details, please read the section
+titled "The cytoframe and cytoset classes" in the package vignette:
+
+  vignette("flowWorkspace-Introduction", "flowWorkspace")
+
+Attaching package: 'lubridate'
+
+The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union
+
+[updated] 2a96a8a688..db6deb524c refs/remotes/origin/main
 Adding population:Beads
 Gating for 'Beads'
 The prior specification has no effect when usePrior=no
@@ -59,20 +90,14 @@ The following objects are masked from 'package:base':
 
     date, intersect, setdiff, union
 
-[updated] f07147937e..2a96a8a688 refs/remotes/origin/main
-Adding population:Beads
-Gating for 'Beads'
-The prior specification has no effect when usePrior=no
-Using the serial version of flowClust
-done!
-done.
-finished.
-Done 2026-08-26
+[updated] 18f28521d3..f07147937e refs/remotes/origin/main
+QC data has already been transferred
+No files to process 22026-08-25
 
  Log File : C:\Users\BDAdmin\Documents\InstrumentQC\robocopy.log
 Warning message:
 In shell(FCSTransfer) :
-  'D:/Flowlab/QCData/QCData_to_sgw.bat' execution failed with error code 3
+  'D:/Flowlab/QCData/QCData_to_sgw.bat' execution failed with error code 2
 
 Attaching package: 'dplyr'
 
@@ -96,7 +121,7 @@ The following objects are masked from 'package:base':
 
     date, intersect, setdiff, union
 
-[updated] db6deb524c..73f26b29ff refs/remotes/origin/main
+[updated] f07147937e..2a96a8a688 refs/remotes/origin/main
 Adding population:Beads
 Gating for 'Beads'
 The prior specification has no effect when usePrior=no
