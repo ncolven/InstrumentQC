@@ -496,7 +496,7 @@ PDF <- Utility_Patchwork(x=PDFPlots, filename=Filename, returntype="pdf", outfol
 ```
 
 ## {.sidebar}
-Dashboard data for the **BD LSRFortessa X-50** last updated on **`r TheDate`**
+Dashboard data for the **BD Symphony-1** last updated on **`r TheDate`**
 
 **First Column: MFI** Median Fluorescent Intensity (MFI) values for the QC beads. Measures stability over time. 
 
