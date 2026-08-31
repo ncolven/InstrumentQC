@@ -633,7 +633,7 @@ list(value = paste0("QC Status: ", TheStatusS61),
 
 ```{r}
 #| content: valuebox
-#| title: "SP Symphony-2"
+#| title: "SP Symphony S6-2"
 #| icon: beaker
 
 list(value = paste0("QC Status: ", TheStatusS62),
