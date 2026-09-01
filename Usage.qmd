@@ -21,13 +21,11 @@ library(dplyr)
 #| message: false
 Computer <- getwd()
 MainFolder <- file.path(Computer, "data")
-The3L <- list.files(MainFolder, pattern="ApplicationData3L", full.names=TRUE, recursive=TRUE)
-The3L <- read.csv(The3L, check.names=FALSE) |> dplyr::mutate(Instrument = "3L")
-The4L <- list.files(MainFolder, pattern="ApplicationData4L", full.names=TRUE, recursive=TRUE)
-The4L <- read.csv(The4L, check.names=FALSE) |> dplyr::mutate(Instrument = "4L")
 The5L <- list.files(MainFolder, pattern="ApplicationDataAurora-1", full.names=TRUE, recursive=TRUE)
 The5L <- read.csv(The5L, check.names=FALSE) |> dplyr::mutate(Instrument = "Aurora-1")
-Data <- rbind(The3L, The4L, The5L)
+TheA2 <- list.files(MainFolder, pattern="ApplicationDataAurora-2", full.names=TRUE, recursive=TRUE)
+TheA2 <- read.csv(TheA2, check.names=FALSE) |> dplyr::mutate(Instrument = "Aurora-2")
+Data <- rbind(The5L, TheA2)
 ```
 
 ```{r}
@@ -50,31 +48,7 @@ write.csv(Data, Outpath, row.names=FALSE)
 
 ## All Time {.tabset}
 
-#### 3L
-
-```{r}
-The3L <- Luciernaga:::UsagePlot(data=Data, TheInstrument="3L")
-```
-
-```{r}
-#| viewerHeight: 900
-#plotly::ggplotly(The3L)
-The3L
-```
-
-#### 4L
-
-```{r}
-The4L <- Luciernaga:::UsagePlot(data=Data, TheInstrument="4L")
-```
-
-```{r}
-#| viewerHeight: 900
-#plotly::ggplotly(The4L)
-The4L
-```
-
-#### 5L
+#### SP Aurora-1
 
 ```{r}
 The5L <- Luciernaga:::UsagePlot(data=Data, TheInstrument="Aurora-1")
@@ -82,10 +56,20 @@ The5L <- Luciernaga:::UsagePlot(data=Data, TheInstrument="Aurora-1")
 
 ```{r}
 #| viewerHeight: 900
-#plotly::ggplotly(The5L)
+plotly::ggplotly(The5L)
 The5L
 ```
+#### Aurora-2
 
+```{r}
+TheA2 <- Luciernaga:::UsagePlot(data=Data, TheInstrument="Aurora-2")
+```
+
+```{r}
+#| viewerHeight: 900
+plotly::ggplotly(TheA2)
+TheA2
+```
 #### Historical
 
 ```{r}
@@ -117,9 +101,8 @@ ui <- fluidPage(
            ),
            fluidRow(
              column(12, align = "center",
-                    actionButton("btn_3L", label = "3L"),
-                    actionButton("btn_4L", label = "4L"),
-                    actionButton("btn_Aurora-1", label = "Aurora-1")
+                    actionButton("btn_Aurora-1", label = "Aurora-1"),
+                    actionButton("btn_Aurora-2", label = "Aurora-2")
              )
            ),
            fluidRow(
@@ -163,9 +146,8 @@ server <- function(input, output, session) {
   
   selected_instrument <- reactiveVal()
   
-  observeEvent(input$btn_3L, { selected_instrument("3L") })
-  observeEvent(input$btn_4L, { selected_instrument("4L") })
   observeEvent(input$btn_5L, { selected_instrument("Aurora-1") })
+  observeEvent(input$btn_5L, { selected_instrument("Aurora-2") })
 
   table_data <- eventReactive(input$render, {
     req(input$date, selected_instrument())

@@ -33,3 +33,16 @@ RCVStatus <- tidyr::pivot_longer(RCVStatus, !DateTime, names_to = "Detector", va
 RCVTable <- mutate(InstrumentRCV, Status = RCVStatus$Status)
 InstrumentStatus <- mutate(MFITable[,1:3], MFIStatus=MFITable$Status, 
                            RCV = RCVTable$RCV, RCVStatus = RCVStatus$Status)
+
+
+Computer <- getwd()
+MainFolder <- file.path(Computer, "data")
+TheName <- "HistoricalData.csv"
+HistoricalPath <- file.path(MainFolder, TheName)
+ShinyData <- read.csv(HistoricalPath, check.names = FALSE)
+A1Data <- ShinyData[ShinyData$Instrument=="Aurora-1",]
+A12025 <- A1Data[year(A1Data$Date)=="2025",]
+for (i in c("3L","4L","5L", "CS", "")){
+ShinyData <- ShinyData[ShinyData$Instrument !=i,]
+}
+tail(ShinyData)
