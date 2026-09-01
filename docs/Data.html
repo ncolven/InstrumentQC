@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>data</title>
+<title>data – FHCC Flow Core</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,35 +26,226 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="data_files/libs/clipboard/clipboard.min.js"></script>
-<script src="data_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="data_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="data_files/libs/quarto-html/popper.min.js"></script>
-<script src="data_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="data_files/libs/quarto-html/anchor.min.js"></script>
-<link href="data_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="data_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="data_files/libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="data_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="data_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="data_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="data_files/libs/bootstrap/bootstrap-56116c090c35464f02ce059e4a88a059.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="data_files/libs/bootstrap/bootstrap-dark-56116c090c35464f02ce059e4a88a059.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="data_files/libs/bootstrap/bootstrap-56116c090c35464f02ce059e4a88a059.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<script src="data_files/libs/quarto-dashboard/quarto-dashboard.js"></script>
-<script src="data_files/libs/quarto-dashboard/stickythead.js"></script>
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c216ab2cbe2395318bb12faabe1657fd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-c216ab2cbe2395318bb12faabe1657fd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-c216ab2cbe2395318bb12faabe1657fd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-dashboard/quarto-dashboard.js"></script>
+<script src="site_libs/quarto-dashboard/stickythead.js"></script>
 
 
 
-<script src="data_files/libs/quarto-dashboard/web-components.js" type="module"></script>
-<script src="data_files/libs/quarto-dashboard/components.js"></script>
+<script src="site_libs/quarto-dashboard/web-components.js" type="module"></script>
+<script src="site_libs/quarto-dashboard/components.js"></script>
 
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=asdas"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'asdas', { 'anonymize_ip': true});
+</script>
 
 
 </head>
 
-<body class="quarto-dashboard dashboard-fill dashboard-sidebar fullcontent quarto-light">
+<body class="quarto-dashboard nav-fixed dashboard-fill dashboard-sidebar fullcontent quarto-light">
 
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/hex.png" alt="" class="navbar-logo light-content">
+    <img src="./images/hex.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">FHCC Flow Core</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-instruments" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Instruments</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-instruments">    
+        <li>
+    <a class="dropdown-item" href="./Symphony-1.html">
+ <span class="dropdown-text">Symphony 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Symphony-2.html">
+ <span class="dropdown-text">Symphony 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Symphony-3.html">
+ <span class="dropdown-text">SP Symphony 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Symphony-4.html">
+ <span class="dropdown-text">SP Symphony 4</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Symphony-5.html">
+ <span class="dropdown-text">Symphony 5</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Fortessa.html">
+ <span class="dropdown-text">Fortessa</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Symphony-A3.html">
+ <span class="dropdown-text">Symphony A3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Celesta-1.html">
+ <span class="dropdown-text">Celesta 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Celesta-2.html">
+ <span class="dropdown-text">SP Celesta 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Celesta-3.html">
+ <span class="dropdown-text">SP Celesta 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Aurora-1.html">
+ <span class="dropdown-text">SP Aurora-1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Aurora-2.html">
+ <span class="dropdown-text">Aurora-2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./SymphonyS6-1.html">
+ <span class="dropdown-text">Symphony S6-1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./SymphonyS6-2.html">
+ <span class="dropdown-text">SP Symphony S6-2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./SymphonyS6-3.html">
+ <span class="dropdown-text">Symphony S6-3</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-historical" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Historical</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-historical">    
+        <li>
+    <a class="dropdown-item" href="https://umgccfcss.github.io/Aurora5L/">
+ <span class="dropdown-text">Cytek Aurora 1</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://fhcc.ilab.agilent.com/service_center/3134/?tab=about"> 
+<span class="menu-text">FHCC iLab</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./help.html"> 
+<span class="menu-text">Help</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./Data.html" aria-current="page"> 
+<span class="menu-text">Download Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-other" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Other</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-other">    
+        <li>
+    <a class="dropdown-item" href="./Miscellaneous.html">
+ <span class="dropdown-text">Miscellaneous</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./CytekQCBead.html">
+ <span class="dropdown-text">QC Bead Lots</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./BleachVsLot2006Beads.html">
+ <span class="dropdown-text">Bleach Vs. QC Bead Lot 2006</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ncolven/InstrumentQC"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="5493a822b64e4a2824c620aceb147b52" class="alert alert-info hidden"><i class="bi bi-info-circle quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p>Please see left-sidebar for definitions</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
 <header id="quarto-dashboard-header">
 <nav class="navbar navbar-expand-md slim" data-bs-theme="dark">
   <div class="navbar-container container-fluid">
@@ -64,8 +255,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 </div></nav>
-</header>
-<div class="page-layout-custom quarto-dashboard-content bslib-gap-spacing html-fill-container bslib-page-fill dashboard-sidebar-container">  
+</header></header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-layout-custom page-navbar quarto-dashboard-content bslib-gap-spacing html-fill-container bslib-page-fill dashboard-sidebar-container">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+<!-- main -->
 
 <div class="bslib-sidebar-layout html-fill-item html-fill-container" data-bslib-sidebar-open="desktop" data-bslib-sidebar-init="true" data-bslib-sidebar-border="false" data-bslib-sidebar-border-radius="false"><div class="main html-fill-container html-fill-item"><div class="sidebar-content html-fill-item html-fill-container">
 <div class="bslib-grid html-fill-item html-fill-container" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
@@ -333,7 +528,7 @@ Extra
 </div>
 </div>
 </div></div><aside id="bslib-sidebar-1" class="sidebar html-fill-container html-fill-item"><div class="html-fill-container html-fill-item">
-<p>Dashboard data last updated on <strong>2026-06-29</strong></p>
+<p>Dashboard data last updated on <strong>2026-08-31</strong></p>
 <p><strong>Contents:</strong></p>
 <p><strong>Gain and RCV</strong> A .csv file containing the Daily Cytek QC data used for the Gain and RCV plots.</p>
 <p><strong>MFI</strong> A .csv file containing Gain and MFI information derrived from before and after Daily QC .fcs files.</p>
@@ -756,7 +951,20 @@ bslib.Sidebar.initCollapsibleAll()
     }
   });
   </script>
-</div> <!-- /container fluid -->
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Fred Hutch Cancer Center, Seattle</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a>. How? <a href="https://davidrach.github.io/InstrumentQC_Install/" target="_blank">Find Out</a></p>
+</div>
+  </div>
+</footer>
 
 <script type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (_event) {

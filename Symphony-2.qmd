@@ -493,7 +493,7 @@ ScalingPlotsGain <- QC_Plots(x=x, FailedFlag=FALSE, MeasurementType=ScalingGains
 #| echo: false
 PDFPlots <- c(UVPlotsMFI, VioletPlotsMFI, BluePlotsMFI, YellowGreenPlotsMFI, RedPlotsMFI, ScatterPlotsMFI, UVPlotsGain, VioletPlotsGain, BluePlotsGain, YellowGreenPlotsGain, RedPlotsGain, ScatterPlotsGain, LaserPlotsGain, ScalingPlotsGain, UVPlotsRCV, VioletPlotsRCV, BluePlotsRCV, YellowGreenPlotsRCV, RedPlotsRCV, ScatterPlotsRCV)
 
-Filename <- paste0("QCPlots_Fortessa")
+Filename <- paste0("QCPlots_Symphony-2")
 
 PDF <- Utility_Patchwork(x=PDFPlots, filename=Filename, returntype="pdf", outfolder=MainFolder, thecolumns=1)
 ```
@@ -576,7 +576,7 @@ ggplotly(RedPlotsMFI[[3]])
 ```{r}
 #| title: Scatter
 ggplotly(ScatterPlotsMFI[[1]])
-ggplotly(ScatterPlotsMFI[[3]])
+ggplotly(ScatterPlotsMFI[[2]])
 ```
 
 ```{r}
