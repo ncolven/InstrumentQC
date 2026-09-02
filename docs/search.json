@@ -117,5 +117,12 @@
     "title": "FHCC Flow Core",
     "section": "",
     "text": "Instrument Temperature\n\n\n\n\n\n\n\n\nMorning QC Time\n\n\n\n\n\n\n\n\nPeak Use Hours\n\nAurora-1\n\n\nWarning in min(x): no non-missing arguments to min; returning Inf\n\n\nWarning in max(x): no non-missing arguments to max; returning -Inf\n\n\n\n\n\n\n\n\nAurora-2"
+  },
+  {
+    "objectID": "test.html",
+    "href": "test.html",
+    "title": "Panel tabset",
+    "section": "",
+    "text": "First example:\n\nRPython\n\n\n\n1+1\n\n[1] 2\n\n\n\n\n\n\"Test\"\n\n[1] \"Test\"\n\n\n\n\n\nSecond example:\n\nRPython\n\n\nTab content\n\n\nTab content"
   }
 ]
