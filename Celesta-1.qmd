@@ -131,7 +131,7 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
   WindowOfInterest <- Sys.time() - weeks(1)
   if (nrow(x) > 1) {
     Data <- dplyr::filter(x, DateTime > WindowOfInterest)
-    if (nrow(Data) == 0) {
+    if (nrow(Data) != 0) {
       Data <- slice(x, 1)
     }
   }else {
@@ -177,10 +177,10 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
     RedNames <- TheColumnNames[9:11]
   } else if(Instrument == "Celesta-1"){
     UVNames <- NULL
-    VioletNames <- TheColumnNames[12:17]
-    BlueNames <- TheColumnNames[3:4]
-    YellowGreenNames <- TheColumnNames[8:11]
-    RedNames <- TheColumnNames[5:7]
+    VioletNames <- TheColumnNames[15:18]
+    BlueNames <- TheColumnNames[3:5]
+    YellowGreenNames <- TheColumnNames[9:14]
+    RedNames <- TheColumnNames[6:8]
   }
   
   VioletMFI <- Data[,VioletNames]
@@ -240,10 +240,10 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
       RedNames <- TheColumnNames[9:11]
     }else if(Instrument == "Celesta-1"){
     UVNames <- NULL
-    VioletNames <- TheColumnNames[12:17]
-    BlueNames <- TheColumnNames[3:4]
-    YellowGreenNames <- TheColumnNames[8:11]
-    RedNames <- TheColumnNames[5:7]
+     VioletNames <- TheColumnNames[15:18]
+    BlueNames <- TheColumnNames[3:5]
+    YellowGreenNames <- TheColumnNames[9:14]
+    RedNames <- TheColumnNames[6:8]
   }
     VioletRCV <- Data[,VioletNames]
     BlueRCV <- Data[,BlueNames]
@@ -340,10 +340,10 @@ TheIntermediate <- TheColumns[!str_detect(TheColumns, "Gain")]
 TheIntermediate <- TheIntermediate[!str_detect(TheIntermediate, "rCV")]
 TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, "-A")]
 
-VioletGains <- TheColumnNames[12:17]
-BlueGains <- TheColumnNames[3:4]
-YellowGreenGains <- TheColumnNames[8:11]
-RedGains <- TheColumnNames[5:7]
+ VioletGains <- TheColumnNames[9:14]
+    BlueGains <- TheColumnNames[3:5]
+    YellowGreenGains <- TheColumnNames[15:18]
+    RedGains <- TheColumnNames[6:8]
 
 ScatterGains <- TheIntermediate[str_detect(TheIntermediate, "SC-")]
 ScatterGains <- Luciernaga:::ScalePriority(ScatterGains)
@@ -394,10 +394,10 @@ TheIntermediate <- TheColumns[!str_detect(TheColumns, "Gain")]
 TheIntermediate <- TheIntermediate[str_detect(TheIntermediate, "rCV")]
 TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, "-A")]
   
-VioletGains <- TheColumnNames[12:17]
-BlueGains <- TheColumnNames[3:4]
-YellowGreenGains <- TheColumnNames[8:11]
-RedGains <- TheColumnNames[5:7]
+ VioletGains <- TheColumnNames[9:14]
+    BlueGains <- TheColumnNames[3:5]
+    YellowGreenGains <- TheColumnNames[15:18]
+    RedGains <- TheColumnNames[6:8]
 
 ScatterGains <- TheIntermediate[str_detect(TheIntermediate, "SC-")]
 ScatterGains <- Luciernaga:::ScalePriority(ScatterGains)
@@ -437,10 +437,10 @@ TheColumns <- setdiff(TheColumns, "TIME")
 TheColumnNames <- TheColumns[str_detect(TheColumns, "Gain")]
 TheColumnNames <- TheColumnNames[str_detect(TheColumnNames, "-A")]
 
-VioletGains <- TheColumnNames[11:16]
-BlueGains <- TheColumnNames[2:3]
-YellowGreenGains <- TheColumnNames[7:10]
-RedGains <- TheColumnNames[4:6]
+ VioletGains <- TheColumnNames[8:13]
+    BlueGains <- TheColumnNames[2:4]
+    YellowGreenGains <- TheColumnNames[14:17]
+    RedGains <- TheColumnNames[5:7]
 
 ScatterGains <- TheColumnNames[str_detect(TheColumnNames, "SC-")]
 ScatterGains <- Luciernaga:::ScalePriority(ScatterGains)
@@ -491,7 +491,7 @@ PDF <- Utility_Patchwork(x=PDFPlots, filename=Filename, returntype="pdf", outfol
 ```
 
 ## {.sidebar}
-Dashboard data for the **BD LSRFortessa X-50** last updated on **`r TheDate`**
+Dashboard data for the **BD Celesta-1** last updated on **`r TheDate`**
 
 **First Column: MFI** Median Fluorescent Intensity (MFI) values for the QC beads. Measures stability over time. 
 
@@ -530,6 +530,7 @@ ggplotly(VioletPlotsMFI[[6]])
 #| title: Blue
 ggplotly(BluePlotsMFI[[1]])
 ggplotly(BluePlotsMFI[[2]])
+ggplotly(BluePlotsMFI[[3]])
 ```
 
 ```{r}
@@ -550,7 +551,7 @@ ggplotly(RedPlotsMFI[[3]])
 ```{r}
 #| title: Scatter
 ggplotly(ScatterPlotsMFI[[1]])
-ggplotly(ScatterPlotsMFI[[2]])
+ggplotly(ScatterPlotsMFI[[4]])
 ```
 
 ```{r}
@@ -586,6 +587,7 @@ ggplotly(VioletPlotsRCV[[6]])
 #| title: Blue
 ggplotly(BluePlotsRCV[[1]])
 ggplotly(BluePlotsRCV[[2]])
+ggplotly(BluePlotsRCV[[3]])
 ```
 
 ```{r}
@@ -606,7 +608,7 @@ ggplotly(RedPlotsRCV[[3]])
 ```{r}
 #| title: Scatter
 ggplotly(ScatterPlotsRCV[[1]])
-ggplotly(ScatterPlotsRCV[[2]])
+ggplotly(ScatterPlotsRCV[[4]])
 ```
 
 ```{r}

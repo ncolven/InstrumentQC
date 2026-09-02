@@ -490,13 +490,13 @@ ScalingPlotsGain <- QC_Plots(x=x, FailedFlag=FALSE, MeasurementType=ScalingGains
 #| echo: false
 PDFPlots <- c(UVPlotsMFI, VioletPlotsMFI, BluePlotsMFI, YellowGreenPlotsMFI, RedPlotsMFI, ScatterPlotsMFI, UVPlotsGain, VioletPlotsGain, BluePlotsGain, YellowGreenPlotsGain, RedPlotsGain, ScatterPlotsGain, LaserPlotsGain, ScalingPlotsGain, UVPlotsRCV, VioletPlotsRCV, BluePlotsRCV, YellowGreenPlotsRCV, RedPlotsRCV, ScatterPlotsRCV)
 
-Filename <- paste0("QCPlots_Fortessa")
+Filename <- paste0("QCPlots_Symphony-1")
 
 PDF <- Utility_Patchwork(x=PDFPlots, filename=Filename, returntype="pdf", outfolder=MainFolder, thecolumns=1)
 ```
 
 ## {.sidebar}
-Dashboard data for the **BD LSRFortessa X-50** last updated on **`r TheDate`**
+Dashboard data for the **BD Symphony-1** last updated on **`r TheDate`**
 
 **First Column: MFI** Median Fluorescent Intensity (MFI) values for the QC beads. Measures stability over time. 
 
@@ -573,7 +573,7 @@ ggplotly(RedPlotsMFI[[3]])
 ```{r}
 #| title: Scatter
 ggplotly(ScatterPlotsMFI[[1]])
-ggplotly(ScatterPlotsMFI[[3]])
+ggplotly(ScatterPlotsMFI[[2]])
 ```
 
 ```{r}

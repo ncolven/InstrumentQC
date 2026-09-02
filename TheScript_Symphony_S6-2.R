@@ -47,9 +47,9 @@ if (length(AnyFlags) == 0){
   LastMFIsItem <- MFIs |> dplyr::slice(1) |> dplyr::pull(DateTime)
   LastMFIsItem <- lubridate::ymd_hms(LastMFIsItem)
   LastMFIsItem <- as.Date(LastMFIsItem)
-  PotentialMFIsDays <- seq.Date(from = LastMFIsItem, to = Today, by = "day")
-  MFIsRemoveIndex <- which(PotentialMFIsDays == LastMFIsItem)
-  PotentialMFIsDays <- PotentialMFIsDays[-MFIsRemoveIndex]
+  PotentialMFIDays <- seq.Date(from = LastMFIsItem, to = Today, by = "day")
+  MFIsRemoveIndex <- which(PotentialMFIDays == LastMFIsItem)
+  PotentialMFIDays <- PotentialMFIDays[-MFIsRemoveIndex]
   
   if (!length(PotentialMFIDays) == 0){
     # MFI Starting Locations
@@ -58,7 +58,7 @@ if (length(AnyFlags) == 0){
     TheFCSFiles2 <- list.files(SetupFolder, pattern="Tube", full.names=TRUE, recursive=TRUE)
     TheFCSFiles <- intersect(TheFCSFiles, TheFCSFiles2)
     
-    days <- format(PotentialMFIsDays, "%m%d")
+    days <- format(PotentialMFIDays, "%m%d")
     
     MFIMatches <- TheFCSFiles[str_detect(basename(TheFCSFiles), str_c(days, collapse = "|"))]
     
@@ -140,7 +140,7 @@ if (length(AnyFlags) == 0){
   }
   
   
-  if (length(PotentialMFIsDays) > 0){
+  if (length(PotentialMFIDays) > 0){
     
     if (length(MFIMatches) > 0){
       # Stage to Git

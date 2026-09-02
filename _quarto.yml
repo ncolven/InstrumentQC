@@ -54,6 +54,8 @@ website:
       - text: "Cytek Aurora 1"
         href: https://umgccfcss.github.io/Aurora5L/
     right:
+    - text: "FHCC iLab"
+      href: https://fhcc.ilab.agilent.com/service_center/3134/?tab=about
     - text: "Help"
       href: help.qmd
     - text: "Download Data"

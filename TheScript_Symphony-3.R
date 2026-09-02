@@ -53,7 +53,7 @@ if (length(AnyFlags) == 0){
   MFIsRemoveIndex <- which(PotentialMFIsDays == LastMFIsItem)
   PotentialMFIsDays <- PotentialMFIsDays[-MFIsRemoveIndex]
   
-  if (!length(PotentialMFIDays) == 0){
+  if (!length(PotentialMFIsDays) == 0){
     # MFI Starting Locations
     SetupFolder <- file.path("D:", "Flowlab", "QCData")
     TheFCSFiles <- list.files(SetupFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
@@ -115,6 +115,7 @@ if (length(AnyFlags) == 0){
               }
               NewData <- Parsed %>% anti_join(ArchiveData, 
                                               by = c("DATE", "TIME"))
+              NewData$CYTSN <- as.integer(NewData$CYTSN)
               UpdatedData <- bind_rows(NewData, ArchiveData)
               file.remove(ArchiveCSV)
             }
@@ -149,11 +150,11 @@ if (length(AnyFlags) == 0){
       TheCommitMessage <- paste0("Update for ", Instrument, " on ", Today)
       git2r::commit(TheRepo, message = TheCommitMessage)
       cred <- git2r::cred_token(token = "GITHUB_PAT")
-      #cred <- git2r::cred_ssh_key(publickey = ssh_path("id_ed25519.pub"), privatekey = ssh_path("id_ed25519"))
       git2r::push(TheRepo, credentials = cred)
       message("Done ", Today)
     } else {message("No files to process ", Today)}
   } else {message("No files to process 2", Today)}
 } else {message("Automation Skipped ", Today)}
 
-
+FCSTransfer <- file.path("D:", "Flowlab", "QCData", "QCData_to_sgw.bat")
+shell(FCSTransfer)

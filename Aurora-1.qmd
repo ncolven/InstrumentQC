@@ -211,13 +211,13 @@ ScatterPlotsRCV <- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=ScatterGains,
 
 PDFPlots <- c(UltraVioletPlotsMFI, VioletPlotsMFI, BluePlotsMFI, YellowGreenPlotsMFI, RedPlotsMFI, LaserPlotsMFI, ScatterPlotsMFI, UltraVioletPlotsGain, VioletPlotsGain, BluePlotsGain, YellowGreenPlotsGain, RedPlotsGain, ScatterPlotsGain, LaserDelayPlotsGain, LaserPowerPlotsGain,  ScalingPlotsGain, UltraVioletPlotsRCV, VioletPlotsRCV, BluePlotsRCV, YellowGreenPlotsRCV, RedPlotsRCV, ScatterPlotsRCV)
 
-Filename <- paste0("QCPlots_5L")
+Filename <- paste0("QCPlots_Aurora-1")
 
 PDF <- Utility_Patchwork(x=PDFPlots, filename=Filename, returntype="pdf", outfolder=MainFolder, thecolumns=1)
 ```
 
 ## {.sidebar}
-Dashboard data  for the **Cytek Aurora 5L** last updated on **`r TheDate`**
+Dashboard data  for the **Cytek SP Aurora-1** last updated on **`r TheDate`**
 
 **Note:** Cytek QC Bead Lots were switched on 12-06-2024. MFI change on this date was expected.
 
@@ -229,11 +229,11 @@ For additional information concerning individual parameter tabs, navigate to the
 
 **About**
 
-This dashboard contains the visualized QC data for the Cytek and BD cytometers at the [UMGCC FCSS](https://www.medschool.umaryland.edu/cibr/core/umgccc_flow/)
+This dashboard contains the visualized QC data for the Cytek and BD cytometers at the [FHCC Flow Core](https://www.fredhutch.org/en/research/shared-resources/core-facilities/flow-cytometry.html)
 
-For additional flow cytometry resources, visit our [website](https://sites.google.com/view/umgcccflow/home)
+For additional flow cytometry resources, visit our [website](https://extranet.fredhutch.org/u/shared-resources/training-and-educational-materials/flow-cytometry.html)
 
-This dashboard was created with [Quarto](https://quarto.org/) and is maintained by [David Rach](https://github.com/DavidRach)
+This dashboard was created with [Quarto](https://quarto.org/) and is maintained by [Nate Colven](https://github.com/ncolven). It was adapted from [David Rach's](https://github.com/DavidRach) work at UMGCC.
 
 
 ## MFI {.tabset}
