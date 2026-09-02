@@ -633,7 +633,7 @@ list(value = paste0("QC Status: ", TheStatusS61),
 
 ```{r}
 #| content: valuebox
-#| title: "SP Symphony-2"
+#| title: "SP Symphony S6-2"
 #| icon: beaker
 
 list(value = paste0("QC Status: ", TheStatusS62),
@@ -668,7 +668,7 @@ HTML("
     <li><a href='Symphony_A3.html'>Symphony A3</a></li>
   <li><a href='Celesta-1.html'>Celesta-1</a></li>
   <li><a href='Celesta-2.html'>SP Celesta-2</a></li>
-    <li><a href='Celesta-3.html>SP Celesta-3</a></li>
+    <li><a href='Celesta-3.html'>SP Celesta-3</a></li>
   <li><a href='Aurora-1.html'>SP Aurora-1</a></li>
   <li><a href='Aurora-2.html'>Aurora-2</a></li>
     <li><a href='Symphony_S6-1.html'>Symphony S6-1</a></li>

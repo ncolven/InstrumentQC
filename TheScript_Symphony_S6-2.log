@@ -21,86 +21,76 @@ The following objects are masked from 'package:base':
 
     date, intersect, setdiff, union
 
-[updated] eb057685ff..185d21cdf6 refs/remotes/origin/main
-Error: object 'PotentialMFIDays' not found
-Execution halted
-
-Attaching package: 'dplyr'
-
-The following objects are masked from 'package:stats':
-
-    filter, lag
-
-The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union
-
-As part of improvements to flowWorkspace, some behavior of
-GatingSet objects has changed. For details, please read the section
-titled "The cytoframe and cytoset classes" in the package vignette:
-
-  vignette("flowWorkspace-Introduction", "flowWorkspace")
-
-Attaching package: 'lubridate'
-
-The following objects are masked from 'package:base':
-
-    date, intersect, setdiff, union
-
-Error: object 'PotentialMFIDays' not found
-Execution halted
-
-Attaching package: 'dplyr'
-
-The following objects are masked from 'package:stats':
-
-    filter, lag
-
-The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union
-
-As part of improvements to flowWorkspace, some behavior of
-GatingSet objects has changed. For details, please read the section
-titled "The cytoframe and cytoset classes" in the package vignette:
-
-  vignette("flowWorkspace-Introduction", "flowWorkspace")
-
-Attaching package: 'lubridate'
-
-The following objects are masked from 'package:base':
-
-    date, intersect, setdiff, union
-
-Error: object 'PotentialMFIsDays' not found
-Execution halted
-
-Attaching package: 'dplyr'
-
-The following objects are masked from 'package:stats':
-
-    filter, lag
-
-The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union
-
-As part of improvements to flowWorkspace, some behavior of
-GatingSet objects has changed. For details, please read the section
-titled "The cytoframe and cytoset classes" in the package vignette:
-
-  vignette("flowWorkspace-Introduction", "flowWorkspace")
-
-Attaching package: 'lubridate'
-
-The following objects are masked from 'package:base':
-
-    date, intersect, setdiff, union
-
 Adding population:Beads
 Gating for 'Beads'
 The prior specification has no effect when usePrior=no
 Using the serial version of flowClust
+done!
+done.
+finished.
+Done 2026-08-28
+
+ Log File : C:\Users\BDAdmin\Documents\InstrumentQC\robocopy.log
+Warning message:
+In shell(FCSTransfer) :
+  'D:/Flowlab/QCData/QCData_to_sgw.bat' execution failed with error code 3
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+As part of improvements to flowWorkspace, some behavior of
+GatingSet objects has changed. For details, please read the section
+titled "The cytoframe and cytoset classes" in the package vignette:
+
+  vignette("flowWorkspace-Introduction", "flowWorkspace")
+
+Attaching package: 'lubridate'
+
+The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union
+
+[updated] f91eaa7691..a9a35513f3 refs/remotes/origin/main
+QC data has already been transferred
+No files to process 22026-08-28
+
+ Log File : C:\Users\BDAdmin\Documents\InstrumentQC\robocopy.log
+Warning message:
+In shell(FCSTransfer) :
+  'D:/Flowlab/QCData/QCData_to_sgw.bat' execution failed with error code 2
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+As part of improvements to flowWorkspace, some behavior of
+GatingSet objects has changed. For details, please read the section
+titled "The cytoframe and cytoset classes" in the package vignette:
+
+  vignette("flowWorkspace-Introduction", "flowWorkspace")
+
+Attaching package: 'lubridate'
+
+The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union
+
+[updated] a9a35513f3..b82c9fefa0 refs/remotes/origin/main
+Adding population:Beads
+Gating for 'Beads'
 The prior specification has no effect when usePrior=no
 Using the serial version of flowClust
 done!
