@@ -149,6 +149,10 @@ if (!length(PotentialMFIDays) == 0){
 FCSFolder <- file.path("D:", "CytekData","Experiments", "Admin", "Aurora QC","Raw")
 MonthFolder <- format(Today, "%B %Y")
 MonthFolder <- file.path(FCSFolder, MonthFolder)
+if (!dir.exists(MonthFolder)){
+  MonthFolder <- format(Today, "%b %Y")
+  MonthFolder <- file.path(FCSFolder, MonthFolder)
+}
 TheFCSFiles <- list.files(MonthFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
 
 days <- format(PotentialMFIDays, "%d")
