@@ -133,8 +133,8 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
   WindowOfInterest <- Sys.time() - weeks(1)
   if (nrow(x) > 1) {
     Data <- dplyr::filter(x, DateTime > WindowOfInterest)
-    if (nrow(Data) == 0) {
-      Data <- slice(x, 1)
+    if (nrow(Data) != 0) {
+      Data <- slice(arrange(x, desc(DateTime)), 1)
     }
   }else {
     Data <- x
