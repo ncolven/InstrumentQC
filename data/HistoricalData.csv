@@ -1,5 +1,4 @@
 "Date","Instrument","Detector","GainValue","Gain","rCVValue","rCV"
-<<<<<<< HEAD
 2026-09-03,"Aurora-1","FSC",369,"Green",2.4,"Green"
 2026-09-03,"Aurora-1","SSC",185,"Green",4.26,"Green"
 2026-09-03,"Aurora-1","SSC-B",150,"Green",4.33,"Green"
@@ -67,7 +66,6 @@
 2026-09-03,"Aurora-1","R6",203,"Green",1.26,"Green"
 2026-09-03,"Aurora-1","R7",336,"Green",1.35,"Green"
 2026-09-03,"Aurora-1","R8",197,"Green",1.88,"Green"
-=======
 2026-09-04,"Aurora-2","FSC",337,"Green",1.66,"Green"
 2026-09-04,"Aurora-2","SSC",251,"Green",1.12,"Green"
 2026-09-04,"Aurora-2","SSC-B",229,"Green",3.76,"Green"
@@ -135,7 +133,6 @@
 2026-09-04,"Aurora-2","R6",198,"Green",1,"Green"
 2026-09-04,"Aurora-2","R7",301,"Green",1.16,"Green"
 2026-09-04,"Aurora-2","R8",223,"Green",1.09,"Green"
->>>>>>> 65a74c38b132c4956fc834aea6dacfc46d9fa42d
 2026-09-04,"Aurora-1","FSC",369,"Green",2.27,"Green"
 2026-09-04,"Aurora-1","SSC",185,"Green",3.98,"Green"
 2026-09-04,"Aurora-1","SSC-B",150,"Green",4.13,"Green"
@@ -203,7 +200,6 @@
 2026-09-04,"Aurora-1","R6",203,"Green",1.18,"Green"
 2026-09-04,"Aurora-1","R7",336,"Green",1.27,"Green"
 2026-09-04,"Aurora-1","R8",197,"Green",1.6,"Green"
-<<<<<<< HEAD
 2026-09-08,"Aurora-1","FSC",369,"Green",1.9,"Green"
 2026-09-08,"Aurora-1","SSC",187,"Green",4.51,"Green"
 2026-09-08,"Aurora-1","SSC-B",150,"Green",4.79,"Green"
@@ -338,8 +334,6 @@
 2026-09-02,"Aurora-1","R6",203,"Green",1.13,"Green"
 2026-09-02,"Aurora-1","R7",336,"Green",1.25,"Green"
 2026-09-02,"Aurora-1","R8",197,"Green",1.55,"Green"
-=======
->>>>>>> 65a74c38b132c4956fc834aea6dacfc46d9fa42d
 2026-08-31,"Aurora-1","FSC",346,"Green",2.84,"Green"
 2026-08-31,"Aurora-1","SSC",186,"Green",4.73,"Green"
 2026-08-31,"Aurora-1","SSC-B",151,"Green",4.48,"Green"
@@ -474,8 +468,6 @@
 2026-09-01,"Aurora-1","R6",202,"Green",1.72,"Green"
 2026-09-01,"Aurora-1","R7",334,"Green",1.83,"Green"
 2026-09-01,"Aurora-1","R8",197,"Green",2.39,"Green"
-<<<<<<< HEAD
-=======
 2026-09-02,"Aurora-1","FSC",369,"Green",2.18,"Green"
 2026-09-02,"Aurora-1","SSC",185,"Green",4.11,"Green"
 2026-09-02,"Aurora-1","SSC-B",150,"Green",4.09,"Green"
@@ -811,7 +803,6 @@
 2026-09-01,"Aurora-2","R6",195,"Green",1.2,"Green"
 2026-09-01,"Aurora-2","R7",296,"Green",1.36,"Green"
 2026-09-01,"Aurora-2","R8",220,"Green",1.43,"Green"
->>>>>>> 65a74c38b132c4956fc834aea6dacfc46d9fa42d
 2026-08-26,"Aurora-2","FSC",337,"Green",1.68,"Green"
 2026-08-26,"Aurora-2","SSC",250,"Green",1.22,"Green"
 2026-08-26,"Aurora-2","SSC-B",227,"Green",3.84,"Green"
