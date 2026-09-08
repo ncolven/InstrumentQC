@@ -326,9 +326,9 @@ Data <- read.csv("AuroraMaintenance.csv", check.names=FALSE)
 
 #Data <- read.csv("/home/david/Documents/InstrumentQC/AuroraMaintenance.csv", check.names=FALSE)
 
-Data <- Data %>% dplyr::filter(!str_detect(reason, "lean"))
+#Data <- Data %>% dplyr::filter(!str_detect(reason, "lean"))
 
-RepairAria <- Data %>% dplyr::filter(instrument %in% "Symphony-4")
+RepairAria <- Data %>% dplyr::filter(instrument %in% "Symphony S6-3")
 Maintenance <- RepairAria
 ```
 
