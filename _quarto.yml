@@ -44,11 +44,11 @@ website:
       - text: "Aurora-2"
         href: Aurora-2.html
       - text: "Symphony S6-1"
-        href: SymphonyS6-1.html
+        href: Symphony_S6-1.html
       - text: "SP Symphony S6-2"
-        href: SymphonyS6-2.html
+        href: Symphony_S6-2.html
       - text: "Symphony S6-3"
-        href: SymphonyS6-3.html
+        href: Symphony_S6-3.html
     - text: "Historical"
       menu:
       - text: "Cytek Aurora 1"
