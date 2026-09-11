@@ -219,7 +219,7 @@ PDF <- Utility_Patchwork(x=PDFPlots, filename=Filename, returntype="pdf", outfol
 ## {.sidebar}
 Dashboard data  for the **Cytek Aurora-2** last updated on **`r TheDate`**
 
-**Note:** Cytek QC Bead Lots were switched on 12-06-2024. MFI change on this date was expected.
+**Note:** Cytek QC Bead Lots were switched on 04-09-2026. MFI change on this date was expected.
 
 **First Column: MFI** Median Fluorescent Intensity (MFI) values for QC beads acquired Before and After QC. Measures stability over time. 
 **Second Column: Gain** Gain (Voltage) values set for instrument after QC. Changes over time reflective of laser health. 

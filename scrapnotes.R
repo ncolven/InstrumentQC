@@ -46,3 +46,29 @@ for (i in c("3L","4L","5L", "CS", "")){
 ShinyData <- ShinyData[ShinyData$Instrument !=i,]
 }
 tail(ShinyData)
+
+TheDateTime <- x$DateTime
+x <- x %>% select(contains(BlueNames))
+TheData <- cbind(TheDateTime, x)
+testPlots <- map(.x = BlueNames, .f=ggplot)
+
+Plots <- map(.x = BlueName, .f = Luciernaga:::LevyJennings, FailedFlag = FailedFlag, 
+             xValue = "DateTime", TheData = TheData, Metadata = Metadata, 
+             plotType = plotType, YAxisLabel = YAxisLabel, EngineerVisits = NULL)
+
+
+Computer <- getwd()
+MainFolder <- file.path(Computer, "data")
+TheName <- "Symphony-5"
+ArchiveFolder <- file.path(MainFolder, TheName, "Archive")
+ArchiveCSV <- list.files(ArchiveFolder, pattern = ".csv", full.names = T)
+ArchiveCSV <- read.csv(ArchiveCSV, check.names = F)
+NameDate <- ArchiveCSV[,1:2]
+Data <- ArchiveCSV[,9:length(colnames(ArchiveCSV))]
+SummaryName <- paste0(TheName, "Summary.csv")
+DataSummary <- ArchiveCSV %>% summarise(across(where(is.numeric), list(mean= ~mean(., na.rm=T), 
+                                                                       Percentsd = ~((sd(.,na.rm=T)/mean(., na.rm=T))*100),
+                                                                       range = ~(max(., na.rm=T)-min(.,na.rm=T)))))
+DataSummary <- DataSummary[,!str_detect(colnames(DataSummary), "Gain")]
+
+
