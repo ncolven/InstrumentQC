@@ -837,4 +837,44 @@ function (x, filename, outfolder, thecolumns = 2, therows = 3,
 }
 <bytecode: 0x7f7aa52362b0>
   <environment: namespace:Luciernaga>
+  #############
+###############
+###############
+Luciernaga:::QCHistoryArchive
+function (x, historydata, timewindow = 24) 
+{
+  InstrumentLength <- length(x)
+  if (InstrumentLength > 1) {
+    TheInstrumentLength <- 2
+  }
+  else {
+    TheInstrumentLength <- 1
+  }
+  TheDataset <- bind_rows(map(.x = x, data = historydata, .f = Luciernaga:::InternalColorCodeStatus))
+  TheDates <- pull(filter(mutate(group_by(TheDataset, DateTime), 
+                                 TheInstrumentCount = n()), TheInstrumentCount >= TheInstrumentLength), 
+                   DateTime)
+  Assembled <- filter(TheDataset, DateTime %in% TheDates)
+  Assembled <- ungroup(slice(group_by(Assembled, DateTime, 
+                                      Instrument), 1))
+  Figure <- pivot_wider(group_by(Assembled, Instrument), names_from = DateTime, 
+                        values_from = QCStatus)
+  return(Figure)
+}
+<bytecode: 0xc14fd1ea8>
+  <environment: namespace:Luciernaga>
   
+  
+  
+  Luciernaga:::InternalColorCodeStatus
+function (x, data) 
+{
+  TheInstrument <- x
+  TheSubset <- filter(data, Instrument %in% TheInstrument)
+  TheDates <- unique(pull(data, Date))
+  TheInstrumentHistory <- bind_rows(map(.x = TheDates, .f = Luciernaga:::InternalColorDateFilter, 
+                                        TheInstrument = TheInstrument, TheSubset = TheSubset))
+  return(TheInstrumentHistory)
+}
+<bytecode: 0xc1395bee0>
+  <environment: namespace:Luciernaga>
