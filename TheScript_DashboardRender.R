@@ -1,6 +1,11 @@
 library(git2r)
 username <- Sys.info()["user"]
+OS <- Sys.info()["sysname"]
+if (OS == "Windows"){
 RepositoryPath <- file.path("Users", username, "Documents", "InstrumentQC")
+} else{
+  RepositoryPath <- file.path("/Users", username, "Documents", "InstrumentQC")
+}
 TheRepo <- repository(RepositoryPath)
 git2r::pull(TheRepo)
 
@@ -14,7 +19,7 @@ Today <- as.Date(Today)
 # Stage to Git
 add(TheRepo, "*")
 
-TheCommitMessage <- paste0("Updated dashboard on ", Today)
+TheCommitMessage <- paste("Dashboard Update", Today)
 commit(TheRepo, message = TheCommitMessage)
 cred <- cred_token(token = "GITHUB_PAT")
 push(TheRepo, credentials = cred)
