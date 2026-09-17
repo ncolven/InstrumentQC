@@ -450,7 +450,7 @@ TheColorS63 <- FHColor(TheStatusS63)
 TheDate <- as.Date(Sys.Date())
 ```
 ## {.sidebar}
-Dashboard data last updated on **`r TheDate`**
+Dashboard data last updated on **`r TheDate`**. Data for specific instruments may not be current, check their individual pages for more info.
 
 **Definitions:**
 

@@ -70,5 +70,12 @@ DataSummary <- ArchiveCSV %>% summarise(across(where(is.numeric), list(mean= ~me
                                                                        Percentsd = ~((sd(.,na.rm=T)/mean(., na.rm=T))*100),
                                                                        range = ~(max(., na.rm=T)-min(.,na.rm=T)))))
 DataSummary <- DataSummary[,!str_detect(colnames(DataSummary), "Gain")]
-
+DataSummary <- DataSummary[,!str_detect(colnames(DataSummary), "AreaScaling")]
+DataSummary <- DataSummary[,!str_detect(colnames(DataSummary), "LaserDelay")]
+DataSummary <- DataSummary[,!str_detect(colnames(DataSummary), "CYTSN")]
+test <-DataSummary %>% pivot_longer(everything(), names_to=c("Variable", "Statistic"), names_sep="_") %>% pivot_wider(names_from = Statistic, values_from=value)
+test$Percentsd <- as.numeric(test$Percentsd)
+test$range <- as.numeric(test$range)
+test$mean <- as.numeric(test$mean)
+FinalSummary <- test %>% arrange(desc(Percentsd))
 
