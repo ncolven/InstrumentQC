@@ -79,7 +79,7 @@ Today <- as.Date(Today)
 AnyFlags <- list.files(WorkingDirectory, pattern="Flag.csv", full.names=TRUE)
 
 if (length(AnyFlags) == 0){
-
+print(paste("Starting", Sys.Date()))
 # Git Pull
 RepositoryPath <- WorkingDirectory
 RepositoryPath <- file.path(RepositoryPath, ".git")
