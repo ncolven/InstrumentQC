@@ -49,7 +49,6 @@ if (length(AnyFlags) == 0){
   LastMFIsItem <- as.Date(LastMFIsItem)
   PotentialMFIDays <- seq.Date(from = LastMFIsItem, to = Today, by = "day")
   MFIsRemoveIndex <- which(PotentialMFIDays == LastMFIsItem)
-  PotentialMFIDays <- PotentialMFIDays[-MFIsRemoveIndex]
   
   if (!length(PotentialMFIDays) == 0){
     # MFI Starting Locations
