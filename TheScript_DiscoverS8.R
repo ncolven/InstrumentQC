@@ -17,6 +17,7 @@ library(flowWorkspace)
 library(flowCore)
 library(lubridate)
 library(Luciernaga)
+library(tidyr)
 
 # Find out current date
 Today <- Sys.Date()
@@ -37,3 +38,7 @@ colnames(SetupImg) <- SetupImg[1,]
 SetupImg <- SetupImg[-1,]
 SetupDetectors <- SetupCSV[41:126,2:19]
 colnames(SetupDetectors) <- SetupCSV[40,2:19]
+DetectorData <- SetupDetectors[,c(1,5,6,10,11)]
+DetectorData$Date<- as.Date(DateTime)
+#colnames(DetectorData) <- c("Name", "IsOnTarget", "GainValue", "MFIValue", "rCVValue", "Date")
+NewData <- DetectorData %>% pivot_wider(id_cols = Date, names_from = Name, values_from = c(' MFI-A',' rCV','Gain (dB)',IsOnTarget))
