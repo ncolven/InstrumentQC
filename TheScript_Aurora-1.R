@@ -197,7 +197,11 @@ if (any(length(PotentialGainDays)|length(PotentialMFIDays)|length(PotentialAppsD
     TheCommitMessage <- paste0("Update for ", Instrument, " on ", Today)
     git2r::commit(TheRepo, message = TheCommitMessage)
     cred <- git2r::cred_token(token = "GITHUB_PAT")
-    git2r::push(TheRepo, credentials = cred)
+   tryCatch(expr ={git2r::push(TheRepo, credentials = cred)
+     message("git2r push success")}, error = function(e){
+       message("git2r failed")
+       system("git push origin main")
+     })
     message("Done ", Today)
   } else {message("No files to process ", Today)}
 } else {message("No files to process 2", Today)}
