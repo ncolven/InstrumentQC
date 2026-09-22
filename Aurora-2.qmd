@@ -43,6 +43,11 @@ Repair5L <- Data %>% filter(instrument %in% "Aurora-2")
 ```
 
 ```{r}
+The5L <- Luciernaga:::VisualQCSummary(x=Gain_5L)
+SmallTable <- Luciernaga:::SmallTable(The5L)
+```
+
+```{r}
 x <- MFI_5L
 TheColumns <- x %>% select(where(~is.numeric(.)||is.integer(.))) %>% colnames()
 TheColumns <- setdiff(TheColumns, "TIME")
@@ -235,6 +240,11 @@ For additional flow cytometry resources, visit our [website](https://extranet.fr
 
 This dashboard was created with [Quarto](https://quarto.org/) and is maintained by [Nate Colven](https://github.com/ncolven). It was adapted from [David Rach's](https://github.com/DavidRach) work at UMGCC.
 
+## Table
+```{r}
+#| title: Current Status
+SmallTable
+```
 
 ## MFI {.tabset}
 
