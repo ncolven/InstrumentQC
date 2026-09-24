@@ -48,8 +48,8 @@ if (length(AnyFlags) == 0){
   LastMFIsItem <- lubridate::ymd_hms(LastMFIsItem)
   LastMFIsItem <- as.Date(LastMFIsItem)
   PotentialMFIDays <- seq.Date(from = LastMFIsItem, to = Today, by = "day")
-  MFIsRemoveIndex <- which(PotentialMFIDays == LastMFIsItem)
-  PotentialMFIDays <- PotentialMFIDays[-MFIsRemoveIndex]
+  #MFIsRemoveIndex <- which(PotentialMFIDays == LastMFIsItem)
+  #PotentialMFIDays <- PotentialMFIDays[-MFIsRemoveIndex]
   
   if (!length(PotentialMFIDays) == 0){
     # MFI Starting Locations
