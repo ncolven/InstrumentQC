@@ -1,4 +1,5 @@
 "Date","Instrument","Detector","GainValue","Gain","rCVValue","rCV"
+<<<<<<< HEAD
 2026-09-24,"Aurora-1","FSC",369,"Green",2.42,"Green"
 2026-09-24,"Aurora-1","SSC",192,"Green",4.44,"Green"
 2026-09-24,"Aurora-1","SSC-B",151,"Green",4.59,"Green"
@@ -202,6 +203,8 @@ NA,"","",NA,"",NA,""
 2026-09-23,"Aurora-1","R7",342,"Green",4.87,"Green"
 2026-09-23,"Aurora-1","R8",202,"Green",5.78,"Green"
 NA,"","",NA,"",NA,""
+=======
+>>>>>>> main
 2026-09-24,"Aurora-2","FSC",337,"Green",1.66,"Green"
 2026-09-24,"Aurora-2","SSC",254,"Green",1.23,"Green"
 2026-09-24,"Aurora-2","SSC-B",232,"Green",3.71,"Green"
@@ -336,7 +339,10 @@ NA,"","",NA,"",NA,""
 2026-09-23,"Aurora-2","R6",197,"Green",4.41,"Green"
 2026-09-23,"Aurora-2","R7",301,"Green",4.55,"Green"
 2026-09-23,"Aurora-2","R8",225,"Green",4.73,"Green"
+<<<<<<< HEAD
 NA,"","",NA,"",NA,""
+=======
+>>>>>>> main
 2026-09-22,"Aurora-2","FSC",337,"Green",1.68,"Green"
 2026-09-22,"Aurora-2","SSC",254,"Green",1.22,"Green"
 2026-09-22,"Aurora-2","SSC-B",230,"Green",3.76,"Green"
