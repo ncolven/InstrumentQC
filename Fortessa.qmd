@@ -153,12 +153,12 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
   }
   
   if (Instrument == "Fortessa"){
-    UVNames <- TheColumnNames[16:22]  
-    VioletNames <- TheColumnNames[23:30]
+     UVNames <- TheColumnNames[15:21]  
+    VioletNames <- TheColumnNames[22:29]
     BlueNames <- TheColumnNames[3:7]
-    YellowGreenNames <- TheColumnNames[8:12]
-    YellowGreenNames[length(YellowGreenNames)+1] <- TheColumnNames[31]
-    RedNames <- TheColumnNames[13:15]
+    YellowGreenNames <- TheColumnNames[8:11]
+    YellowGreenNames[length(YellowGreenNames)+1] <- TheColumnNames[30]
+    RedNames <- TheColumnNames[12:14]
   } else if(Instrument == "Symphony-1"){
     UVNames <- TheColumnNames[19:25]  
     VioletNames <- TheColumnNames[11:18]
@@ -210,12 +210,12 @@ BDSummary <- function (x, Instrument, detectorType = "-A"){
       TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, ".A")]
     }
     if (Instrument == "Fortessa"){
-      UVNames <- TheColumnNames[16:22]  
-      VioletNames <- TheColumnNames[23:30]
-      BlueNames <- TheColumnNames[3:7]
-      YellowGreenNames <- TheColumnNames[8:12]
-      YellowGreenNames[length(YellowGreenNames)+1] <- TheColumnNames[31]
-      RedNames <- TheColumnNames[13:15]
+        UVNames <- TheColumnNames[15:21]  
+    VioletNames <- TheColumnNames[22:29]
+    BlueNames <- TheColumnNames[3:7]
+    YellowGreenNames <- TheColumnNames[8:11]
+    YellowGreenNames[length(YellowGreenNames)+1] <- TheColumnNames[30]
+    RedNames <- TheColumnNames[12:14]
     } else if(Instrument == "Symphony-1"){
       UVNames <- TheColumnNames[19:25]  
       VioletNames <- TheColumnNames[11:18]
@@ -332,11 +332,11 @@ TheIntermediate <- TheColumns[!str_detect(TheColumns, "Gain")]
 TheIntermediate <- TheIntermediate[!str_detect(TheIntermediate, "rCV")]
 TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, "-A")]
 
-UVGains <- TheColumnNames[16:22]  
-      VioletGains <- TheColumnNames[23:30]
+UVGains <- TheColumnNames[15:21]  
+      VioletGains <- TheColumnNames[22:29]
       BlueGains <- TheColumnNames[3:7]
-      YellowGreenGains <- c(TheColumnNames[8:12],TheColumnNames[31])
-      RedGains <- TheColumnNames[13:15]
+      YellowGreenGains <- c(TheColumnNames[8:11],TheColumnNames[30])
+      RedGains <- TheColumnNames[12:14]
 
 ScatterGains <- TheIntermediate[str_detect(TheIntermediate, "SC-")]
 ScatterGains <- Luciernaga:::ScalePriority(ScatterGains)
@@ -392,11 +392,11 @@ TheIntermediate <- TheColumns[!str_detect(TheColumns, "Gain")]
 TheIntermediate <- TheIntermediate[str_detect(TheIntermediate, "rCV")]
 TheColumnNames <- TheIntermediate[str_detect(TheIntermediate, "-A")]
   
-UVGains <- TheColumnNames[16:22]  
-      VioletGains <- TheColumnNames[23:30]
+UVGains <- TheColumnNames[15:21]  
+      VioletGains <- TheColumnNames[22:29]
       BlueGains <- TheColumnNames[3:7]
-      YellowGreenGains <- c(TheColumnNames[8:12],TheColumnNames[31])
-      RedGains <- TheColumnNames[13:15]
+      YellowGreenGains <- c(TheColumnNames[8:11],TheColumnNames[30])
+      RedGains <- TheColumnNames[12:14]
 
 ScatterGains <- TheIntermediate[str_detect(TheIntermediate, "SC-")]
 ScatterGains <- Luciernaga:::ScalePriority(ScatterGains)
@@ -440,11 +440,11 @@ TheColumns <- setdiff(TheColumns, "TIME")
 TheColumnNames <- TheColumns[str_detect(TheColumns, "Gain")]
 TheColumnNames <- TheColumnNames[str_detect(TheColumnNames, "-A")]
 
-UVGains <- TheColumnNames[15:21]  
-      VioletGains <- TheColumnNames[22:29]
+UVGains <- TheColumnNames[14:20]  
+      VioletGains <- TheColumnNames[21:28]
       BlueGains <- TheColumnNames[2:6]
-      YellowGreenGains <- c(TheColumnNames[7:11],TheColumnNames[30])
-      RedGains <- TheColumnNames[12:14]
+      YellowGreenGains <- c(TheColumnNames[7:10],TheColumnNames[29])
+      RedGains <- TheColumnNames[11:13]
 
 ScatterGains <- TheColumnNames[str_detect(TheColumnNames, "SC-")]
 ScatterGains <- Luciernaga:::ScalePriority(ScatterGains)
