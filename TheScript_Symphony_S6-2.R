@@ -75,8 +75,7 @@ if (length(AnyFlags) == 0){
           DateFormat <- keyword(The_CS[[1]])$`$DATE`
           if (DateFormat == "01-Jan-0001") {
             sample.name1 <- "$FIL"
-          }
-          else {
+          }else {
             sample.name1 <- "$DATE"
           }
           Gating <- data.table::fread(Template)
@@ -117,12 +116,10 @@ if (length(AnyFlags) == 0){
                                               by = c("DATE", "TIME"))
               UpdatedData <- bind_rows(NewData, ArchiveData)
               file.remove(ArchiveCSV)
-            }
-            else {
+            } else {
               stop("Two Holistic csv files in the archive folder!")
             }
-          }
-          else {
+          } else {
             UpdatedData <- Parsed
           }
           UpdatedData <- UpdatedData %>% arrange(desc(DateTime))
