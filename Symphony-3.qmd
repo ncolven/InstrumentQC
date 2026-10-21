@@ -8,6 +8,8 @@ format:
 ```{r}
 #| message: FALSE
 library(flowCore)
+library(flowWorkspace)
+library(openCyto)
 library(lubridate)
 library(dplyr)
 library(purrr)
@@ -275,7 +277,6 @@ Computer <- getwd()
 MainFolder <- file.path(Computer, "data")
 TheList <- "Symphony-3"
 ArchiveCSV <- read.csv(list.files(file.path(MainFolder,TheList,"Archive"), pattern = "Holistic", full.names = T), check.names = F)
-#MainFolder <- "/home/david/Documents/InstrumentQC/data"
 
 CSTGates <- file.path(Computer, "Symphony-3.csv")
 
@@ -285,7 +286,6 @@ InstrumentStatus <- BDSummary(ArchiveCSV, TheList)
 ```
 
 ```{r}
-#MainFolder <- "/home/david/Documents/InstrumentQC/data"
 AriaData <- Luciernaga:::CurrentData(x=TheList, MainFolder=MainFolder, type = "Both")
 TheDate <- AriaData %>% slice(1) %>% pull(DATE)
 ```
