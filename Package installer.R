@@ -15,7 +15,7 @@ BiocManager::install(c("flowCore",
                        "ggcyto"))
 devtools::install_github("https://github.com/DavidRach/Luciernaga",
                dependencies = TRUE)
-
+devtools::install_local(file.path(getwd(), "FHFCQC"))
 ## Generate new github token: https://github.com/settings/tokens
 gitcreds::gitcreds_set()
 usethis::edit_r_environ()
