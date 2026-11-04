@@ -7,9 +7,6 @@
 #' @param sample.name Keyword used, usually to be ignored
 #' @return Writes a .csv file with updated QC data from supplied FCS files to the instrument's archive folder
 #' @export
-
-
-
 FHCCQCParse <- function (x, MainFolder, Template = NULL, subsets = NULL,
                          sample.name = "$DATE") {
   Folder <- file.path(MainFolder, x)
@@ -32,8 +29,6 @@ FHCCQCParse <- function (x, MainFolder, Template = NULL, subsets = NULL,
       Gating <- data.table::fread(Template)
       MyGatingSet <- flowWorkspace::GatingSet(The_CS)
       MyGatingTemplate <- openCyto::gatingTemplate(Gating)
-      #MyGatingSet <- Luciernaga:::GateCheck(gs = MyGatingSet, gatingtemplate = MyGatingTemplate,
-      #   subsets = subsets)
       if (is.null(MyGatingSet)) {
         return(MyGatingSet)
       }
