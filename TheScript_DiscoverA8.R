@@ -18,77 +18,21 @@ library(flowCore)
 library(lubridate)
 library(Luciernaga)
 library(tidyr)
+library(FHFCQC)
 
 # Find out current date
 Today <- Sys.Date()
 Today <- as.Date(Today)
 
-ImgParse <- function (SetupCSV){
-  max_cols <- max(count.fields(SetupCSV, sep=","))
-  col_names <- paste0("V", 1:max_cols)
-  SetupCSV <- read.csv(SetupCSV, check.names = F, header = F, col.names = col_names, fill=T)
-  StatusRow <- which(SetupCSV[,1]=="Status:")
-  SetupStatus <- SetupCSV[StatusRow,2]
-  if (str_detect(SetupStatus,"Cancelled")){
-    return(NULL)
-  }
-  Setup2 <- as.data.frame(t(SetupCSV))
-  colnames(Setup2) <- Setup2[1,]
-  Setup2 <- Setup2[-1,]
-  DateTime <- mdy_hms(Setup2$`Setup Data time:`[1])
-  
-  SetupImg <- as.data.frame(t(Setup2[1:4,21:27]))
-  colnames(SetupImg) <- SetupImg[1,]
-  SetupImg <- SetupImg[-1,]
-  SetupImg$DateTime <- DateTime
-  SetupImg <- SetupImg %>% relocate(DateTime) 
-  SetupImg <- SetupImg %>% pivot_wider(id_cols = 'DateTime', 
-                                       names_from = Channel, 
-                                       values_from = colnames(SetupImg)[3:5])
-  rownames(SetupImg) <- NULL
-  return(SetupImg)
-}
-DiscoverParse <- function (SetupCSV){
-  # Fluorescent detectors
-  max_cols <- max(count.fields(SetupCSV, sep=","))
-  col_names <- paste0("V", 1:max_cols)
-  SetupCSV <- read.csv(SetupCSV, check.names = F, header = F, col.names = col_names, fill=T)
-  StatusRow <- which(SetupCSV[,1]=="Status:")
-  SetupStatus <- SetupCSV[StatusRow,2]
-  if (str_detect(SetupStatus,"Cancelled")){
-    return(NULL)
-  }
-  Setup2 <- as.data.frame(t(SetupCSV))
-  colnames(Setup2) <- Setup2[1,]
-  Setup2 <- Setup2[-1,]
-  DateTime <- mdy_hms(Setup2$`Setup Data time:`[1])
-  SetupDetectors <- SetupCSV[41:126,2:19]
-  colnames(SetupDetectors) <- SetupCSV[40,2:19]
-  DetectorData <- SetupDetectors[,c(1,5,6,10,11)]
-  DetectorData$DateTime<- DateTime
-  HistoricData <- DetectorData
-  DetectorData <- DetectorData %>% pivot_wider(id_cols = DateTime, 
-                                               names_from = Name, 
-                                               values_from = c(' MFI-A',' rCV','Gain (dB)',IsOnTarget))
-  ## Laser Delays
-  LaserDelays <- Setup2[1:5,13:19]
-  LaserDelays$DateTime <- DateTime 
-  LaserDelays <- LaserDelays %>% pivot_wider(id_cols = "DateTime",
-                                             names_from = Laser, 
-                                             values_from = colnames(LaserDelays)[2:7])
-  LaserDelays <- LaserDelays[,-1]
-  NewData <- bind_cols(DetectorData, LaserDelays)
-  return(NewData)
-}
-Instrument <- "Discover S8"
-SetupFolder <- '/Users/Nate/Documents/ManualQC/Discover S8'
+Instrument <- "Discover A8"
+SetupFolder <- '/Users/Nate/Documents/ManualQC/Discover A8'
 WorkingFolder <- file.path(WorkingDirectory, "data", Instrument)
 ArchiveFolder <- file.path(WorkingDirectory, "data", Instrument, "Archive")
 SetupCSV <- list.files(SetupFolder, pattern = "csv", full.names = T)
 
 QCs <- list.files(ArchiveFolder, pattern = "Detector", full.names = T)
 if (length(QCs)==0){
-  LastQCItem <- as.Date("20260901")
+  LastQCItem <- as.Date("2026/09/01")
 }else{
 QCs <- read.csv(QCs[1], check.names = F)
 LastQCItem <- QCs$DateTime[1] %>% ymd_hms(.) %>% as.Date(.)
@@ -105,7 +49,8 @@ if (length(QCMatches) > 0){
   QC_Files <- list.files(WorkingFolder, pattern = "csv", full.names = T)
   
   # Imaging Parameters
-  ParsedImg <- bind_rows(map(.x = QC_Files, .f=ImgParse))
+  ImgQC_Files <- QC_Files[!str_detect(QC_Files, "HighSpeed")]
+  ParsedImg <- bind_rows(map(.x = ImgQC_Files, .f=ImgParse))
   ParsedImg[] <- lapply(ParsedImg, as.character)
   ArchiveCSV <- list.files(ArchiveFolder, pattern = "Imaging", full.names = T)
   if (!length(ArchiveCSV)==0){
@@ -115,7 +60,7 @@ if (length(QCMatches) > 0){
   } else {
     UpdatedData <- ParsedImg
   }
-  UpdatedData <- UpdatedData %>% arrange(desc(DateTime))
+  UpdatedData <- UpdatedData %>% distinct() %>% arrange(desc(DateTime))
   ArchivePath <- file.path(ArchiveFolder, paste0("ImagingData", Instrument, ".csv"))
   write.csv(UpdatedData, ArchivePath, row.names = F)
   
@@ -130,7 +75,7 @@ if (length(QCMatches) > 0){
   } else {
     UpdatedData <- ParsedFluor
   }
-  UpdatedData <- UpdatedData %>% arrange(desc(DateTime))
+  UpdatedData <- UpdatedData %>% distinct() %>% arrange(desc(DateTime))
   ArchivePath <- file.path(ArchiveFolder, paste0("DetectorData", Instrument, ".csv"))
   write.csv(UpdatedData, ArchivePath, row.names = F)
   file.remove(QC_Files)
