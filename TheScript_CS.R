@@ -342,9 +342,8 @@ if (!length(PotentialMFIDays) == 0){
 # MFI Starting Locations
 
 FCSFolder <- file.path("C:", "CytekbioExport_CS", "FcsFiles", "Admin")
-MonthStyle <- format(Today, "%Y-%m")
-MonthFolder <- paste0("QC ", MonthStyle)
-MonthFolder <- file.path(FCSFolder, MonthFolder)
+MonthStyle <- format(Today, "%b %Y")
+MonthFolder <- file.path(FCSFolder, MonthStyle)
 TheFCSFiles <- list.files(MonthFolder, pattern="fcs", full.names=TRUE, recursive=TRUE)
 
 days <- format(PotentialMFIDays, "%d")
@@ -353,7 +352,8 @@ MFIMatches <- TheFCSFiles[str_detect(basename(TheFCSFiles), str_c(days, collapse
 
 if (!length(MFIMatches) == 0){
 file.copy(MFIMatches, WorkingFolder)
-walk(.x=Instrument, .f=Luciernaga:::QCBeadParse, MainFolder=MainFolder)
+Template = file.path(WorkingDirectory, "Aurora-CS.csv")
+walk(.x=Instrument, .f=QbSureParse, MainFolder=MainFolder, Template=Template)
 }
 } else {message("QC data has already been transferred")
   MFIMatches <- NULL
