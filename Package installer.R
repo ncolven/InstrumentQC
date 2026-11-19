@@ -12,6 +12,7 @@ install.packages(c("devtools",
                    "lubridate"))
 # If on a Windows computer
 install.packages("taskscheduler")
+# Always
 BiocManager::install(c("flowCore",
                        "flowWorkspace",
                        "ggcyto"))
